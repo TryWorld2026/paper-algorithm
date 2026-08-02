@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+  <defs>
+    <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="4"/>
+    </filter>
+  </defs>
+  <g filter="url(#rough)">
+    <rect x="18" y="18" width="324" height="324" rx="30" fill="#C0452F"/>
+    <rect x="36" y="36" width="288" height="288" rx="20" fill="none" stroke="#F4EFE4" stroke-width="6"/>
+  </g>
+  <text x="180" y="150" font-family="KaiTi, STKaiti, serif" font-size="86" fill="#F4EFE4" text-anchor="middle">试界</text>
+  <text x="180" y="242" font-family="KaiTi, STKaiti, serif" font-size="86" fill="#F4EFE4" text-anchor="middle">原创</text>
+  <text x="180" y="308" font-family="Arial, sans-serif" font-size="22" letter-spacing="4" fill="#F4EFE4" text-anchor="middle">TRYWORLD</text>
+</svg>

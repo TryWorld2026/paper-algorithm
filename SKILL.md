@@ -1,0 +1,63 @@
+---
+name: tryworld-paper-video
+description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Paper Algorithm" (纸上算法) style with HyperFrames. Input is a Chinese voiceover script and optional images; output is a 16:9 horizontal video with Azure YunxiNeural (真·云希) voiceover, word-synced captions, ink/paper animations and unified transitions, anti-counterfeit watermark + red seal, plus horizontal (16:9) and vertical (9:16) cover images and platform-optimized titles for Bilibili/Douyin/Xiaohongshu. Use when the user provides an AI 科普/教程/内容解读/知识分享 script and wants a TryWorld/试界 branded video, asks for the 纸上算法/Paper Algorithm style, or wants a consistent script-to-video pipeline with covers and titles.
+---
+
+# TryWorld Paper Video（试界 · 纸上算法视频）
+
+为试界TryWorld 制作 AI 知识类视频。所有产出必须遵守本文件与 `references/style-system.md` 锁定的设计系统，任何一条都不允许为了省事而让步。
+
+## 锁定品牌契约（不可更改）
+
+- 平台名：**试界TryWorld**（视频、封面、水印、标题统一使用）
+- 画幅：横屏 1920x1080，时长不限（短到抖音 30 秒，长到 B 站深度视频均可）
+- 配音：**Azure YunxiNeural（真·云希）**，用 `scripts/tts_yunxi.py` 合成
+- 风格：**纸上算法 Paper Algorithm**（科学手稿 + 中文印刷传统）
+- 防伪：常驻水印 + 每 45-60 秒盖朱红"试界原创"印章（`assets/seal.svg`）
+- 交付物：主视频、横版封面（1920x1080）、竖版封面（1080x1920）、3-5 个平台标题、字幕/时间轴
+
+## 启动前必读
+
+1. 读 `references/style-system.md` —— 视觉契约。编写任何 HTML/CSS 前必须先读，并作为 hyperframes 流程中的 DESIGN.md 使用。
+2. 读 `references/workflow.md` —— 生产流程与命令，按顺序执行。
+3. 编写构图时遵循 hyperframes skill（`$hyperframes`）的全部规则。
+4. 生成标题前读 `references/titles.md`。
+
+## 工作流
+
+1. **输入**：口播稿（文本或 .txt/.md 文件）与可选图片。图片缺失时跳过图片场景，不允许降级风格。
+2. **分段**：按口播时长分段，每章 40-90 秒；不足 1 分钟不分章，10 分钟以上按章递增；标记章节标题、关键词、数据点、图片提示。规则见 workflow.md。
+3. **配音**：`python scripts/tts_yunxi.py <脚本文件> --out work/audio` 生成云希配音、分段时间与合并音轨。
+4. **时间轴**：字幕时间轴来自 `work/audio/sentences.json`（edge-tts 句级时间戳，已带绝对时间）；如需词级时间轴可用 `npx hyperframes transcribe`（依赖 whisper，可选）。
+5. **场景规划**：按章节规划场景与节奏（开场-讲解-数据-小结），先声明节奏模式再写 HTML。
+6. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
+7. **检查**：`npx hyperframes lint`、`npx hyperframes validate`（含对比度）、`npx hyperframes inspect` 全部通过。
+8. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频。
+9. **封面**：按 style-system.md 封面系统制作 16:9 与 9:16 静态构图，渲染后取帧为 PNG。
+10. **标题**：按 titles.md 生成 3-5 个候选并标注平台推荐。
+11. **交付**：主视频、横竖封面、标题、字幕文件统一放入 `outputs/`。
+
+## 质量门禁（不通过不交付）
+
+- `lint` / `validate` / `inspect` 全部通过。
+- 场景间必须转场，禁止硬切；每个场景元素必须有入场动画（hyperframes 硬性规则）。
+- 对比度：正文 4.5:1，大字（24px+ 或 19px+ 粗体）3:1，只能在本风格色板内调整。
+- 确定性：禁止 `Math.random()` / `Date.now()`；动画 repeat 必须有限值。
+- 配音：句子只允许在句号/问号/感叹号处停顿；`tts_yunxi.py` 会自动规整文本并按句切分，禁止句子中间产生停顿或卡顿。
+- 防 AI 味：禁止紫蓝霓虹、黑底光效、通用科技字体、机械匀速动画、空荡背景、每句整屏大字。
+
+## 语音回退（按序）
+
+1. 默认：`scripts/tts_yunxi.py`（edge-tts，Azure YunxiNeural，需联网）。
+2. 用户提供云希音频：直接导入并转写，跳过合成步骤。
+3. 离线兜底：`npx hyperframes tts --voice zm_yunxi`（音色偏平，需告知用户差异）。
+
+## 资源
+
+- `references/style-system.md`：设计契约（色板/字体/动效/转场/字幕/图片处理/防伪/封面）
+- `references/workflow.md`：详细生产流程与命令
+- `references/titles.md`：平台标题规则
+- `scripts/tts_yunxi.py`：云希配音管线
+- `assets/paper-grain.svg`：纸纹叠加层
+- `assets/seal.svg`：朱红"试界原创"印章
+- `assets/watermark.svg`：试界TryWorld 水印
