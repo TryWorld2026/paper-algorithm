@@ -33,7 +33,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 6. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
 7. **检查**：`npx hyperframes lint`、`npx hyperframes validate`（含对比度）、`npx hyperframes inspect` 全部通过。
 8. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频。
-9. **封面**：按 style-system.md 封面系统独立设计 4:3 与 3:4 静态构图（禁止截取主视频画面），渲染后取帧为 PNG。
+9. **封面**：按 style-system.md 封面系统独立设计 4:3 与 3:4 静态构图（深墨海报，与视频浅纸面两套视觉语言；禁止截取主视频画面），渲染后取帧为 PNG。
 10. **标题**：按 titles.md 生成 3-5 个候选并标注平台推荐。
 11. **交付**：主视频、横竖封面、标题、字幕文件统一放入 `outputs/`。
 
