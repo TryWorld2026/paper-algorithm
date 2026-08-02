@@ -84,12 +84,12 @@ npx hyperframes render --fps 30 --quality high --output outputs/tryworld_<slug>.
 
 ## 8. 封面
 
-制作两个静态构图（可用主构图截帧，但推荐独立构图保证信息密度）：
+封面必须独立制作，禁止从主视频截帧或裁切画面（截帧封面会降低平台流量）。制作两个独立静态构图：
 
 - `covers/horizontal.html`：1920x1440（4:3）
 - `covers/vertical.html`：1080x1440（3:4）
 
-构图规则见 style-system.md 封面系统。渲染后取帧：
+构图规则见 style-system.md 封面系统，标题与信息块为封面单独设计，不复用视频画面。渲染后取帧为 PNG：
 
 ```powershell
 npx hyperframes render --output covers/h.mp4

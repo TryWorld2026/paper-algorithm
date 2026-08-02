@@ -33,7 +33,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 6. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
 7. **检查**：`npx hyperframes lint`、`npx hyperframes validate`（含对比度）、`npx hyperframes inspect` 全部通过。
 8. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频。
-9. **封面**：按 style-system.md 封面系统制作 4:3 与 3:4 静态构图，渲染后取帧为 PNG。
+9. **封面**：按 style-system.md 封面系统独立设计 4:3 与 3:4 静态构图（禁止截取主视频画面），渲染后取帧为 PNG。
 10. **标题**：按 titles.md 生成 3-5 个候选并标注平台推荐。
 11. **交付**：主视频、横竖封面、标题、字幕文件统一放入 `outputs/`。
 
@@ -44,6 +44,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 对比度：正文 4.5:1，大字（24px+ 或 19px+ 粗体）3:1，只能在本风格色板内调整。
 - 确定性：禁止 `Math.random()` / `Date.now()`；动画 repeat 必须有限值。
 - 配音：句子只允许在句号/问号/感叹号处停顿；`tts_yunxi.py` 会自动规整文本并按句切分，禁止句子中间产生停顿或卡顿。
+- 封面：必须独立构图设计，禁止从主视频截帧或裁切充当封面（截帧封面会降低平台流量）。
 - 防 AI 味：禁止紫蓝霓虹、黑底光效、通用科技字体、机械匀速动画、空荡背景、每句整屏大字。
 
 ## 语音回退（按序）
