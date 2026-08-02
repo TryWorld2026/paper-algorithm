@@ -86,16 +86,16 @@ npx hyperframes render --fps 30 --quality high --output outputs/tryworld_<slug>.
 
 制作两个静态构图（可用主构图截帧，但推荐独立构图保证信息密度）：
 
-- `covers/horizontal.html`：1920x1080
-- `covers/vertical.html`：1080x1920
+- `covers/horizontal.html`：1920x1440（4:3）
+- `covers/vertical.html`：1080x1440（3:4）
 
 构图规则见 style-system.md 封面系统。渲染后取帧：
 
 ```powershell
 npx hyperframes render --output covers/h.mp4
-ffmpeg -y -i covers/h.mp4 -frames:v 1 outputs/cover_16x9.png
+ffmpeg -y -i covers/h.mp4 -frames:v 1 outputs/cover_4x3.png
 npx hyperframes render --output covers/v.mp4
-ffmpeg -y -i covers/v.mp4 -frames:v 1 outputs/cover_9x16.png
+ffmpeg -y -i covers/v.mp4 -frames:v 1 outputs/cover_3x4.png
 ```
 
 封面必须含：主标题、2-4 个信息块、品牌条、水印、印章。
@@ -109,7 +109,7 @@ ffmpeg -y -i covers/v.mp4 -frames:v 1 outputs/cover_9x16.png
 `outputs/` 下应有：
 
 - `tryworld_<slug>.mp4`（主视频）
-- `cover_16x9.png`、`cover_9x16.png`
+- `cover_4x3.png`、`cover_3x4.png`
 - `titles.txt`（含平台推荐）
 - `narration.mp3` + `transcript.json`（配音与字幕时间轴，便于二次编辑）
 - `plan.json`（场景规划，便于复用章节结构）

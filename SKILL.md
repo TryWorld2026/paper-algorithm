@@ -1,6 +1,6 @@
 ---
 name: tryworld-paper-video
-description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Paper Algorithm" (纸上算法) style with HyperFrames. Input is a Chinese voiceover script and optional images; output is a 16:9 horizontal video with Azure YunxiNeural (真·云希) voiceover, word-synced captions, ink/paper animations and unified transitions, anti-counterfeit watermark + red seal, plus horizontal (16:9) and vertical (9:16) cover images and platform-optimized titles for Bilibili/Douyin/Xiaohongshu. Use when the user provides an AI 科普/教程/内容解读/知识分享 script and wants a TryWorld/试界 branded video, asks for the 纸上算法/Paper Algorithm style, or wants a consistent script-to-video pipeline with covers and titles.
+description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Paper Algorithm" (纸上算法) style with HyperFrames. Input is a Chinese voiceover script and optional images; output is a 16:9 horizontal video with Azure YunxiNeural (真·云希) voiceover, word-synced captions, ink/paper animations and unified transitions, anti-counterfeit watermark + red seal, plus horizontal (4:3) and vertical (3:4) cover images and platform-optimized titles for Bilibili/Douyin/Xiaohongshu. Use when the user provides an AI 科普/教程/内容解读/知识分享 script and wants a TryWorld/试界 branded video, asks for the 纸上算法/Paper Algorithm style, or wants a consistent script-to-video pipeline with covers and titles.
 ---
 
 # TryWorld Paper Video（试界 · 纸上算法视频）
@@ -14,7 +14,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 配音：**Azure YunxiNeural（真·云希）**，用 `scripts/tts_yunxi.py` 合成
 - 风格：**纸上算法 Paper Algorithm**（科学手稿 + 中文印刷传统）
 - 防伪：常驻水印 + 每 45-60 秒盖朱红"试界原创"印章（`assets/seal.svg`）
-- 交付物：主视频、横版封面（1920x1080）、竖版封面（1080x1920）、3-5 个平台标题、字幕/时间轴
+- 交付物：主视频、横版封面（1920x1440，4:3）、竖版封面（1080x1440，3:4）、3-5 个平台标题、字幕/时间轴
 
 ## 启动前必读
 
@@ -33,7 +33,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 6. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
 7. **检查**：`npx hyperframes lint`、`npx hyperframes validate`（含对比度）、`npx hyperframes inspect` 全部通过。
 8. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频。
-9. **封面**：按 style-system.md 封面系统制作 16:9 与 9:16 静态构图，渲染后取帧为 PNG。
+9. **封面**：按 style-system.md 封面系统制作 4:3 与 3:4 静态构图，渲染后取帧为 PNG。
 10. **标题**：按 titles.md 生成 3-5 个候选并标注平台推荐。
 11. **交付**：主视频、横竖封面、标题、字幕文件统一放入 `outputs/`。
 
