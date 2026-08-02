@@ -84,7 +84,7 @@ npx hyperframes render --fps 30 --quality high --output outputs/tryworld_<slug>.
 
 ## 8. 封面
 
-封面必须独立制作，禁止从主视频截帧或裁切画面（截帧封面会降低平台流量）。制作两个独立静态构图：
+封面必须独立制作，禁止从主视频截帧或裁切画面（截帧封面会降低平台流量）；封面采用**深墨海报**视觉（深墨底 + 朱红光晕 + 浅色大字 + 深色卡片），与视频浅纸面画面刻意区分，避免被平台判定为截图。制作两个独立静态构图：
 
 - `covers/horizontal.html`：1920x1440（4:3）
 - `covers/vertical.html`：1080x1440（3:4）
