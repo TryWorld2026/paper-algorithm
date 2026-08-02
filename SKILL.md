@@ -1,5 +1,5 @@
 ---
-name: tryworld-paper-video
+name: paper-algorithm
 description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Paper Algorithm" (纸上算法) style with HyperFrames. Input is a Chinese voiceover script and optional images; output is a 16:9 horizontal video with Azure YunxiNeural (真·云希) voiceover, word-synced captions, ink/paper animations and unified transitions, anti-counterfeit watermark + red seal, plus horizontal (4:3) and vertical (3:4) cover images and platform-optimized titles for Bilibili/Douyin/Xiaohongshu. Use when the user provides an AI 科普/教程/内容解读/知识分享 script and wants a TryWorld/试界 branded video, asks for the 纸上算法/Paper Algorithm style, or wants a consistent script-to-video pipeline with covers and titles.
 ---
 
