@@ -117,13 +117,13 @@ python scripts/tts_yunxi.py script.txt --out work/audio
 ## 5. 构图
 
 - 项目结构：`npx hyperframes init <slug> --non-interactive`（或用现有项目）。
-- 把 `assets/` 的纸纹、印章、水印复制进项目。
+- 把 `assets/` 的纸纹、印章复制进项目。
 - 主构图 `index.html`：1920x1080；多章节用子构图（sub-composition）组织。
 - 先按 style-system.md 写静态布局（hero frame），再加 GSAP 入场；遵守 hyperframes 全部规则（时间轴注册、data-track-index、无 repeat:-1、无随机、场景转场等）。
 - 布局以 hero frame（元素完全就位的那一帧）为准：禁止元素重叠、文字溢出/出画布/截断；入场动画的临时溢出需标 `data-layout-allow-overflow`，最终帧必须干净。
 - 图表：用 GSAP + SVG/CSS 实现（禁图表库）；同一概念数据保持同一版式只变数值；数字配视觉载体（填充条/环/形状）；数据动画出现时刻与口播时间轴对齐。
 - 字幕为强制元素：全片逐句烧录在画面内并与配音同步；逐词时间轴驱动关键词高亮，不逐词闪动普通句子。
-- 防伪：水印（右下角）常驻、印章（右上角）按 45-60s 间隔或章节起始时间点出现（用精确时间位置，不用随机）；水印/印章为保护区，字幕与内容动画不得进入或贴近，先预留再构图。
+- 防伪：印章（右上角）全程常驻显示；印章为保护区，字幕与内容动画不得进入或贴近，先预留再构图。
 
 ## 6. 检查
 
@@ -143,7 +143,7 @@ npx hyperframes inspect --strict --samples 15
 2. **配音**：真云希（Azure YunxiNeural）、语速默认 +8%、句级切分、无句中停顿/卡顿；`sentences.json` 时间轴与口播对得上；结尾为默认签名句（试界TryWorld 标准收尾）。
 3. **字幕**：全片烧录在画面内、无字幕空段；样式为墨黑字 + 当前句关键词朱红，与配音句级同步。
 4. **风格**：4 色板无越界色、字体合规（无被禁字体）、动效只用三种签名、场景间有墨染转场、无硬切。
-5. **防伪**：右下角单行"试界TryWorld 纸上算法"水印 + 右上角每 45-60 秒朱红"试界原创"印章；与字幕/内容/动画保持安全距离，无重叠、不贴近；封面同样适用。
+5. **防伪**：右上角朱红"试界原创"印章全程常驻显示；与字幕/内容/动画保持安全距离，无重叠、不贴近；封面同样适用。
 6. **图片与图表**：所有外部图片已纸面化处理，无原图直出；图表已重绘为本风格动态图表（GSAP/SVG、无原图截图、数字有视觉载体）。
 7. **封面**：独立深墨海报构图、横 4:3 / 竖 3:4、素材与视频完全独立、不截取视频画面。
 8. **工程**：`lint` / `validate` / `inspect --strict` 全部通过（错误与警告清零，无排版错误/元素重叠/文字溢出）；封面构图同样核验；视频时长与口播 + 头尾留白对齐。
@@ -165,7 +165,7 @@ npx hyperframes render --fps 30 --quality high --output outputs/tryworld_<slug>.
 - `covers/horizontal.html`：1920x1440（4:3）
 - `covers/vertical.html`：1080x1440（3:4）
 
-构图规则见 style-system.md 封面系统，标题与信息块为封面单独设计，不复用视频画面；水印（右下）与印章（右上）为保护区，主标题与信息卡片不得与其重叠或贴近。封面 HTML 必须为独立构图（standalone composition，不可用 `<template>` 包裹）。渲染时用 `--composition` 指定封面文件（否则默认渲染主视频 index.html）。渲染后取帧为 PNG：
+构图规则见 style-system.md 封面系统，标题与信息块为封面单独设计，不复用视频画面；印章（右上角）为保护区，主标题与信息卡片不得与其重叠或贴近。封面 HTML 必须为独立构图（standalone composition，不可用 `<template>` 包裹）。渲染时用 `--composition` 指定封面文件（否则默认渲染主视频 index.html）。渲染后取帧为 PNG：
 
 ```powershell
 npx hyperframes render --composition covers/horizontal.html --output covers/h.mp4
@@ -174,7 +174,7 @@ npx hyperframes render --composition covers/vertical.html --output covers/v.mp4
 ffmpeg -y -i covers/v.mp4 -frames:v 1 outputs/cover_3x4.png
 ```
 
-封面必须含：主标题、2-4 个信息块、品牌条、水印、印章。
+封面必须含：主标题、2-4 个信息块、品牌条、右上角印章。
 
 ## 10. 标题
 
