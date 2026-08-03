@@ -1,4 +1,4 @@
-# 试界TryWorld · 纸上算法视频
+# 试界-纸上算法 TryWorld-Paper Algorithm
 
 > 一页会动的算法笔记 —— 把 AI 知识口播稿变成风格统一的横屏视频、横竖封面与平台标题。
 
@@ -9,7 +9,7 @@
 
 ## 这是什么
 
-`paper-algorithm`（纸上算法 Paper Algorithm）是试界TryWorld 的视频生产 Skill：输入一篇中文 AI 口播稿（可附图片），自动产出：
+`tryworld-paper-algorithm`（试界-纸上算法 TryWorld-Paper Algorithm）是试界TryWorld 的视频生产 Skill：输入一篇中文 AI 口播稿（可附图片），自动产出：
 
 - **横屏主视频**（16:9，时长不限）—— 纸上算法风格，真云希配音，句级字幕同步
 - **横版封面 + 竖版封面**（1920x1440 横 4:3 / 1080x1440 竖 3:4）—— 深墨海报风（与视频浅纸面两套视觉语言），标题 + 信息块，适配 B站/抖音/小红书
@@ -65,7 +65,7 @@
 在 Codex 会话中给出口播稿（纯文字或 .txt/.md，可附图片）：
 
 ```text
-用 $paper-algorithm 把这篇口播稿做成视频，加上横竖封面和标题。
+用 $tryworld-paper-algorithm 把这篇口播稿做成视频，加上横竖封面和标题。
 ```
 
 可选输入：图片目录（AI 概念图 / 截图 / 图表，会自动"纸面化"处理）。
@@ -73,7 +73,7 @@
 ## 目录结构
 
 ```text
-paper-algorithm/
+tryworld-paper-algorithm/
 ├── SKILL.md                    # 主说明：品牌契约、工作流、质量门禁
 ├── agents/
 │   └── openai.yaml             # UI 元数据

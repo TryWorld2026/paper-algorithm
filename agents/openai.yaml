@@ -1,4 +1,4 @@
 interface:
-  display_name: "纸上算法 Paper Algorithm"
+  display_name: "试界-纸上算法 TryWorld-Paper Algorithm"
   short_description: "纸上算法风格+云希配音，产出试界TryWorld AI科普视频、横竖封面与标题"
-  default_prompt: "Use $paper-algorithm to turn this AI voiceover script into a 试界TryWorld branded horizontal video with covers and titles."
+  default_prompt: "Use $tryworld-paper-algorithm to turn this AI voiceover script into a 试界TryWorld branded horizontal video with covers and titles."
