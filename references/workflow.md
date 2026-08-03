@@ -164,12 +164,12 @@ npx hyperframes render --fps 30 --quality high --output outputs/tryworld_<slug>.
 - `covers/horizontal.html`：1920x1440（4:3）
 - `covers/vertical.html`：1080x1440（3:4）
 
-构图规则见 style-system.md 封面系统，标题与信息块为封面单独设计，不复用视频画面；水印（右下）与印章（右上）为保护区，主标题与信息卡片不得与其重叠或贴近。渲染后取帧为 PNG：
+构图规则见 style-system.md 封面系统，标题与信息块为封面单独设计，不复用视频画面；水印（右下）与印章（右上）为保护区，主标题与信息卡片不得与其重叠或贴近。封面 HTML 必须为独立构图（standalone composition，不可用 `<template>` 包裹）。渲染时用 `--composition` 指定封面文件（否则默认渲染主视频 index.html）。渲染后取帧为 PNG：
 
 ```powershell
-npx hyperframes render --output covers/h.mp4
+npx hyperframes render --composition covers/horizontal.html --output covers/h.mp4
 ffmpeg -y -i covers/h.mp4 -frames:v 1 outputs/cover_4x3.png
-npx hyperframes render --output covers/v.mp4
+npx hyperframes render --composition covers/vertical.html --output covers/v.mp4
 ffmpeg -y -i covers/v.mp4 -frames:v 1 outputs/cover_3x4.png
 ```
 
