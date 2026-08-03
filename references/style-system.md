@@ -19,13 +19,14 @@
 
 ## 字体（双系统）
 
-- 主标题/大字：思源宋体（Google Fonts 上的 Noto Serif SC），900 或 700 字重。
-- 批注/引用/小标签：霞鹜文楷（LXGW WenKai）或手写感字体，模拟笔注。
+- 主标题/大字：思源宋体（Noto Serif SC，900/700 字重）——编译器原生支持，已实测。
+- 批注/引用/小标签：ZCOOL XiaoWei（小薇宋体）或手写感字体，模拟笔注——编译器原生支持，已实测。
 - 数据/坐标/来源：等宽字体（JetBrains Mono 等），用于 `Fig.1`、数据来源、编号。
 - 字号：标题 60px+，正文 20px+，数据标签 16px+；display 字号 tracking -0.03~-0.05em。
 - 数字一律 `font-variant-numeric: tabular-nums`。
 - 禁止：Inter、Roboto、Open Sans、Noto Sans（含 SC）、Syne、Poppins、Playfair 等被 hyperframes 禁止的字体；禁止黑体默认感。
-- 字体嵌入验证：首次渲染时若编译器警告某字体不支持，按 思源宋体 → 霞鹜文楷 → ZCOOL XiaoWei 的顺序回退，并保持气质（衬线/楷体，不用黑体）。
+- 字体嵌入（实测结论 2026-08-03）：Noto Serif SC ✅、ZCOOL XiaoWei ✅ 由编译器自动嵌入；LXGW WenKai（霞鹜文楷）❌ 无编译器映射，如确需使用必须自带 woff2 并以 `@font-face` 声明（可选，非默认）。
+- 回退链：思源宋体 → ZCOOL XiaoWei（均原生可用），保持气质（衬线/楷体，不用黑体）。
 
 ## 动效语法（全局三种签名，全片一致）
 
