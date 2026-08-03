@@ -47,6 +47,8 @@ python scripts/tts_yunxi.py script.txt --out work/audio
 
 可选：如需词级时间轴（更细的高亮），安装 whisper 后运行 `npx hyperframes transcribe work/audio/narration.mp3`。
 
+**强制要求**：字幕必须烧录进最终视频画面（硬字幕），不是仅提供字幕文件；全片不允许有无字幕的段落。
+
 ## 4. 场景规划
 
 在写 HTML 前声明节奏，例如：
@@ -61,7 +63,7 @@ python scripts/tts_yunxi.py script.txt --out work/audio
 - 把 `assets/` 的纸纹、印章、水印复制进项目。
 - 主构图 `index.html`：1920x1080；多章节用子构图（sub-composition）组织。
 - 先按 style-system.md 写静态布局（hero frame），再加 GSAP 入场；遵守 hyperframes 全部规则（时间轴注册、data-track-index、无 repeat:-1、无随机、场景转场等）。
-- 字幕与配音同步：逐词时间轴驱动关键词高亮；不逐词闪动普通句子。
+- 字幕为强制元素：全片逐句烧录在画面内并与配音同步；逐词时间轴驱动关键词高亮，不逐词闪动普通句子。
 - 防伪：水印元素常驻；印章元素按 45-60s 间隔或章节起始时间点出现（用精确时间位置，不用随机）。
 
 ## 6. 检查
