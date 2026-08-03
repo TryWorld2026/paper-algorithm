@@ -33,7 +33,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 5. **配音**：`python scripts/tts_yunxi.py <净化后的脚本> --out work/audio` 生成云希配音、分段时间与合并音轨。
 6. **时间轴**：字幕时间轴来自 `work/audio/sentences.json`（edge-tts 句级时间戳，已带绝对时间）；如需词级时间轴可用 `npx hyperframes transcribe`（依赖 whisper，可选）。
 7. **场景规划**：按章节规划场景与节奏（开场-讲解-数据-小结），数据/对比/流程优先规划为动态图表场景，避免大段静态文字；先声明节奏模式再写 HTML。
-8. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
+8. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画；动效按"动效系统"执行——每 3-5 秒可见动效、ambient 常驻、动态字幕、音频响应。
 9. **检查**：`npx hyperframes lint`、`npx hyperframes validate`、`npx hyperframes inspect --strict` 全部通过——错误与警告清零，禁止元素重叠、文字溢出/出画布/截断等排版错误；封面构图同样核验。
 10. **渲染前核验**：渲染前必须按 workflow.md 的"渲染前核验清单"逐项对照本文件与 style-system.md 的全部要求，确认无误后才允许渲染；任一项不满足先修改再渲染，避免返工。
 11. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频（先 `--quality draft` 预览确认，再 high 出片）。
@@ -47,6 +47,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 排版：禁止元素重叠、文字溢出/出画布/截断等低级错误；`inspect --strict` 错误与警告清零才可交付，封面同样核验。
 - 防伪间距：右上角印章与文字/内容/动画保持安全距离，禁止重叠或贴近；视频与封面均适用。
 - 场景间必须转场，禁止硬切；每个场景元素必须有入场动画（hyperframes 硬性规则）。
+- 动效丰富度：禁止连续 3 秒静止；每场景 ≥3 层视觉、≥2 焦点、≥1 环境动效；入场同场不重复；字幕用动态 karaoke + 关键词强调；数据/结论处有音频响应。
 - 对比度：正文 4.5:1，大字（24px+ 或 19px+ 粗体）3:1，只能在本风格色板内调整。
 - 确定性：禁止 `Math.random()` / `Date.now()`；动画 repeat 必须有限值。
 - 配音：句子只允许在句号/问号/感叹号处停顿；`tts_yunxi.py` 会自动规整文本并按句切分，禁止句子中间产生停顿或卡顿。
