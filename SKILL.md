@@ -33,10 +33,11 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 6. **场景规划**：按章节规划场景与节奏（开场-讲解-数据-小结），先声明节奏模式再写 HTML。
 7. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
 8. **检查**：`npx hyperframes lint`、`npx hyperframes validate`（含对比度）、`npx hyperframes inspect` 全部通过。
-9. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频。
-10. **封面**：按 style-system.md 封面系统独立设计 4:3 与 3:4 静态构图（深墨海报，与视频浅纸面两套视觉语言；禁止截取主视频画面），渲染后取帧为 PNG。
-11. **标题**：按 titles.md 生成 3-5 个候选并标注平台推荐。
-12. **交付**：主视频（烧录字幕）、横竖封面、标题、字幕文件统一放入 `outputs/`。
+9. **渲染前核验**：渲染前必须按 workflow.md 的"渲染前核验清单"逐项对照本文件与 style-system.md 的全部要求，确认无误后才允许渲染；任一项不满足先修改再渲染，避免返工。
+10. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频（先 `--quality draft` 预览确认，再 high 出片）。
+11. **封面**：按 style-system.md 封面系统独立设计 4:3 与 3:4 静态构图（深墨海报，与视频浅纸面两套视觉语言；禁止截取主视频画面），渲染后取帧为 PNG。
+12. **标题**：按 titles.md 生成 3-5 个候选并标注平台推荐。
+13. **交付**：主视频（烧录字幕）、横竖封面、标题、字幕文件统一放入 `outputs/`。
 
 ## 质量门禁（不通过不交付）
 
@@ -47,6 +48,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 配音：句子只允许在句号/问号/感叹号处停顿；`tts_yunxi.py` 会自动规整文本并按句切分，禁止句子中间产生停顿或卡顿。
 - 脚本净化：写作标记/结构标签（如"一、开场钩子"）不得以原文出现在视频中——不朗读、不上字幕、不显示为画面文字，必须转化为实际表达。
 - 字幕：主视频必须烧录字幕（画面内逐句显示，与配音同步），全片不允许无字幕段落；字幕文件同步交付。
+- 渲染前核验：渲染前必须逐项对照本文件与 style-system.md/workflow.md 的全部规则并确认通过，未通过禁止渲染。
 - 封面：必须独立构图设计，禁止从主视频截帧或裁切充当封面；封面采用深墨海报视觉，与视频浅纸面画面保持两套语言，避免被平台判定为截图。
 - 防 AI 味：禁止紫蓝霓虹、黑底光效、通用科技字体、机械匀速动画、空荡背景、每句整屏大字。
 
