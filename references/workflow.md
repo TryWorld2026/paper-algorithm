@@ -82,6 +82,7 @@ python scripts/tts_yunxi.py script.txt --out work/audio
 - 把 `assets/` 的纸纹、印章、水印复制进项目。
 - 主构图 `index.html`：1920x1080；多章节用子构图（sub-composition）组织。
 - 先按 style-system.md 写静态布局（hero frame），再加 GSAP 入场；遵守 hyperframes 全部规则（时间轴注册、data-track-index、无 repeat:-1、无随机、场景转场等）。
+- 布局以 hero frame（元素完全就位的那一帧）为准：禁止元素重叠、文字溢出/出画布/截断；入场动画的临时溢出需标 `data-layout-allow-overflow`，最终帧必须干净。
 - 字幕为强制元素：全片逐句烧录在画面内并与配音同步；逐词时间轴驱动关键词高亮，不逐词闪动普通句子。
 - 防伪：水印元素常驻；印章元素按 45-60s 间隔或章节起始时间点出现（用精确时间位置，不用随机）。
 
@@ -90,10 +91,10 @@ python scripts/tts_yunxi.py script.txt --out work/audio
 ```powershell
 npx hyperframes lint
 npx hyperframes validate
-npx hyperframes inspect --samples 15
+npx hyperframes inspect --strict --samples 15
 ```
 
-对比度警告在色板内调整（正文 4.5:1，大字 3:1）。溢出问题优先用 max-width/字号/换行解决；装饰性元素用 `data-layout-ignore`。长视频建议跑 animation-map 检查节奏与死区。
+规则：**错误与警告全部清零**才允许进入下一步；禁止元素重叠、文字溢出/出画布/截断等排版错误。对比度警告在色板内调整（正文 4.5:1，大字 3:1）。溢出问题优先用 max-width/字号/换行解决；装饰性元素用 `data-layout-ignore`。封面构图同样跑 lint/validate/inspect，取帧前用 `inspect --at <封面hero帧>` 复核版式。长视频建议跑 animation-map 检查节奏与死区。
 
 ## 7. 渲染前核验（Render Gate）
 
@@ -106,7 +107,7 @@ npx hyperframes inspect --samples 15
 5. **防伪**：右下角单行"试界TryWorld 纸上算法"水印 + 每 45-60 秒朱红"试界原创"印章。
 6. **图片**：所有外部图片已纸面化处理，无原图直出。
 7. **封面**：独立深墨海报构图、横 4:3 / 竖 3:4、素材与视频完全独立、不截取视频画面。
-8. **工程**：`lint` / `validate` / `inspect` 全部通过；视频时长与口播 + 头尾留白对齐。
+8. **工程**：`lint` / `validate` / `inspect --strict` 全部通过（错误与警告清零，无排版错误/元素重叠/文字溢出）；封面构图同样核验；视频时长与口播 + 头尾留白对齐。
 
 渲染策略：先 `--quality draft` 预览确认整体效果，再 `--quality high` 出片；draft 阶段发现问题直接修改，避免 high 渲染返工。
 

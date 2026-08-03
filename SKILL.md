@@ -32,7 +32,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 5. **时间轴**：字幕时间轴来自 `work/audio/sentences.json`（edge-tts 句级时间戳，已带绝对时间）；如需词级时间轴可用 `npx hyperframes transcribe`（依赖 whisper，可选）。
 6. **场景规划**：按章节规划场景与节奏（开场-讲解-数据-小结），先声明节奏模式再写 HTML。
 7. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
-8. **检查**：`npx hyperframes lint`、`npx hyperframes validate`（含对比度）、`npx hyperframes inspect` 全部通过。
+8. **检查**：`npx hyperframes lint`、`npx hyperframes validate`、`npx hyperframes inspect --strict` 全部通过——错误与警告清零，禁止元素重叠、文字溢出/出画布/截断等排版错误；封面构图同样核验。
 9. **渲染前核验**：渲染前必须按 workflow.md 的"渲染前核验清单"逐项对照本文件与 style-system.md 的全部要求，确认无误后才允许渲染；任一项不满足先修改再渲染，避免返工。
 10. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频（先 `--quality draft` 预览确认，再 high 出片）。
 11. **封面**：按 style-system.md 封面系统独立设计 4:3 与 3:4 静态构图（深墨海报，与视频浅纸面两套视觉语言；禁止截取主视频画面），渲染后取帧为 PNG。
@@ -42,6 +42,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 ## 质量门禁（不通过不交付）
 
 - `lint` / `validate` / `inspect` 全部通过。
+- 排版：禁止元素重叠、文字溢出/出画布/截断等低级错误；`inspect --strict` 错误与警告清零才可交付，封面同样核验。
 - 场景间必须转场，禁止硬切；每个场景元素必须有入场动画（hyperframes 硬性规则）。
 - 对比度：正文 4.5:1，大字（24px+ 或 19px+ 粗体）3:1，只能在本风格色板内调整。
 - 确定性：禁止 `Math.random()` / `Date.now()`；动画 repeat 必须有限值。
