@@ -13,7 +13,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 画幅：横屏 1920x1080，时长不限（短到抖音 30 秒，长到 B 站深度视频均可）
 - 配音：**Azure YunxiNeural（真·云希）**，用 `scripts/tts_yunxi.py` 合成
 - 风格：**纸上算法 Paper Algorithm**（科学手稿 + 中文印刷传统）
-- 防伪：常驻水印 + 每 45-60 秒盖朱红"试界原创"印章（`assets/seal.svg`）
+- 防伪：右下角常驻水印 + 右上角每 45-60 秒盖朱红"试界原创"印章（`assets/seal.svg`）；水印/印章为保护区，与文字、内容、动画保持距离，不重叠、不贴近
 - 交付物：主视频（画面内烧录字幕）、横版封面（1920x1440，4:3）、竖版封面（1080x1440，3:4）、3-5 个平台标题、字幕/时间轴
 
 ## 启动前必读
@@ -43,6 +43,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 
 - `lint` / `validate` / `inspect` 全部通过。
 - 排版：禁止元素重叠、文字溢出/出画布/截断等低级错误；`inspect --strict` 错误与警告清零才可交付，封面同样核验。
+- 防伪间距：右下角水印、右上角印章与文字/内容/动画保持安全距离，禁止重叠或贴近；字幕不得压住或靠近水印。
 - 场景间必须转场，禁止硬切；每个场景元素必须有入场动画（hyperframes 硬性规则）。
 - 对比度：正文 4.5:1，大字（24px+ 或 19px+ 粗体）3:1，只能在本风格色板内调整。
 - 确定性：禁止 `Math.random()` / `Date.now()`；动画 repeat 必须有限值。
