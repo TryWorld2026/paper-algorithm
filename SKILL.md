@@ -43,7 +43,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 
 - `lint` / `validate` / `inspect` 全部通过。
 - 排版：禁止元素重叠、文字溢出/出画布/截断等低级错误；`inspect --strict` 错误与警告清零才可交付，封面同样核验。
-- 防伪间距：右下角水印、右上角印章与文字/内容/动画保持安全距离，禁止重叠或贴近；字幕不得压住或靠近水印。
+- 防伪间距：右下角水印、右上角印章与文字/内容/动画保持安全距离，禁止重叠或贴近；字幕不得压住或靠近水印；视频与封面均适用。
 - 场景间必须转场，禁止硬切；每个场景元素必须有入场动画（hyperframes 硬性规则）。
 - 对比度：正文 4.5:1，大字（24px+ 或 19px+ 粗体）3:1，只能在本风格色板内调整。
 - 确定性：禁止 `Math.random()` / `Date.now()`；动画 repeat 必须有限值。
