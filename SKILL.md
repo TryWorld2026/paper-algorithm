@@ -25,17 +25,18 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 
 ## 工作流
 
-1. **输入**：口播稿（文本或 .txt/.md 文件）与可选图片。图片缺失时跳过图片场景，不允许降级风格。
-2. **分段**：按口播时长分段，每章 40-90 秒；不足 1 分钟不分章，10 分钟以上按章递增；标记章节标题、关键词、数据点、图片提示。规则见 workflow.md。
-3. **配音**：`python scripts/tts_yunxi.py <脚本文件> --out work/audio` 生成云希配音、分段时间与合并音轨。
-4. **时间轴**：字幕时间轴来自 `work/audio/sentences.json`（edge-tts 句级时间戳，已带绝对时间）；如需词级时间轴可用 `npx hyperframes transcribe`（依赖 whisper，可选）。
-5. **场景规划**：按章节规划场景与节奏（开场-讲解-数据-小结），先声明节奏模式再写 HTML。
-6. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
-7. **检查**：`npx hyperframes lint`、`npx hyperframes validate`（含对比度）、`npx hyperframes inspect` 全部通过。
-8. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频。
-9. **封面**：按 style-system.md 封面系统独立设计 4:3 与 3:4 静态构图（深墨海报，与视频浅纸面两套视觉语言；禁止截取主视频画面），渲染后取帧为 PNG。
-10. **标题**：按 titles.md 生成 3-5 个候选并标注平台推荐。
-11. **交付**：主视频、横竖封面、标题、字幕文件统一放入 `outputs/`。
+1. **输入并通读理解**：口播稿（文本或 .txt/.md 文件）与可选图片。先通读全文，理解主题、受众、核心结论与章节结构；图片缺失时跳过图片场景，不允许降级风格。
+2. **净化脚本**：识别写作标记/结构标签（如"一、开场钩子"、"（插入截图）"），这类内容不得以原文出现在视频中——不朗读、不上字幕、不显示为画面文字；按意图转化为实际表达（标签删除、内容保留或按主题补写）。规则见 workflow.md。
+3. **分段**：按净化后口播时长分段，每章 40-90 秒；不足 1 分钟不分章，10 分钟以上按章递增；标记章节标题、关键词、数据点、图片提示。
+4. **配音**：`python scripts/tts_yunxi.py <净化后的脚本> --out work/audio` 生成云希配音、分段时间与合并音轨。
+5. **时间轴**：字幕时间轴来自 `work/audio/sentences.json`（edge-tts 句级时间戳，已带绝对时间）；如需词级时间轴可用 `npx hyperframes transcribe`（依赖 whisper，可选）。
+6. **场景规划**：按章节规划场景与节奏（开场-讲解-数据-小结），先声明节奏模式再写 HTML。
+7. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
+8. **检查**：`npx hyperframes lint`、`npx hyperframes validate`（含对比度）、`npx hyperframes inspect` 全部通过。
+9. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频。
+10. **封面**：按 style-system.md 封面系统独立设计 4:3 与 3:4 静态构图（深墨海报，与视频浅纸面两套视觉语言；禁止截取主视频画面），渲染后取帧为 PNG。
+11. **标题**：按 titles.md 生成 3-5 个候选并标注平台推荐。
+12. **交付**：主视频（烧录字幕）、横竖封面、标题、字幕文件统一放入 `outputs/`。
 
 ## 质量门禁（不通过不交付）
 
@@ -44,6 +45,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 对比度：正文 4.5:1，大字（24px+ 或 19px+ 粗体）3:1，只能在本风格色板内调整。
 - 确定性：禁止 `Math.random()` / `Date.now()`；动画 repeat 必须有限值。
 - 配音：句子只允许在句号/问号/感叹号处停顿；`tts_yunxi.py` 会自动规整文本并按句切分，禁止句子中间产生停顿或卡顿。
+- 脚本净化：写作标记/结构标签（如"一、开场钩子"）不得以原文出现在视频中——不朗读、不上字幕、不显示为画面文字，必须转化为实际表达。
 - 字幕：主视频必须烧录字幕（画面内逐句显示，与配音同步），全片不允许无字幕段落；字幕文件同步交付。
 - 封面：必须独立构图设计，禁止从主视频截帧或裁切充当封面；封面采用深墨海报视觉，与视频浅纸面画面保持两套语言，避免被平台判定为截图。
 - 防 AI 味：禁止紫蓝霓虹、黑底光效、通用科技字体、机械匀速动画、空荡背景、每句整屏大字。
