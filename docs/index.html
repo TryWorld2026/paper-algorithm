@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>试界 TryWorld · Codex Skills 合集</title>
+<style>
+  :root {
+    --paper: #F4EFE4;
+    --ink: #1C1916;
+    --verm: #C0452F;
+    --blue: #2E5E8C;
+    --ink-soft: rgba(28,25,22,0.62);
+    --ink-faint: rgba(28,25,22,0.4);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, "Noto Serif SC", "Songti SC", "SimSun", serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1080px; margin: 0 auto; padding: 56px 32px 72px; }
+  .masthead { text-align: center; margin-bottom: 56px; }
+  .masthead img { width: 100%; height: auto; border-radius: 6px; }
+  .archival {
+    font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-faint); text-align: center; margin-top: 22px;
+  }
+  .archival a { color: var(--ink-faint); }
+  hr.rule { border: 0; height: 1px; background: var(--ink); opacity: 0.18; margin: 44px 0; }
+  .lede { text-align: center; max-width: 680px; margin: 0 auto 8px; }
+  .lede h1 { font-size: 34px; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 14px; }
+  .lede p { color: var(--ink-soft); font-size: 16px; }
+  h2 {
+    font-size: 20px; font-weight: 700; letter-spacing: 0.12em;
+    margin: 56px 0 22px; padding-bottom: 10px;
+    border-bottom: 1px solid rgba(28,25,22,0.18);
+  }
+  h2 em { font-style: normal; color: var(--verm); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .card {
+    background: #fffdf7; border: 1px solid rgba(28,25,22,0.22);
+    border-radius: 10px; padding: 22px 22px 18px; position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(28,25,22,0.10); }
+  .card .no {
+    position: absolute; top: 14px; right: 18px;
+    font-size: 13px; letter-spacing: 0.2em; color: var(--verm);
+  }
+  .card h3 { font-size: 17px; margin-bottom: 4px; }
+  .card .role { font-size: 13px; color: var(--blue); letter-spacing: 0.08em; margin-bottom: 10px; }
+  .card p { font-size: 14px; color: var(--ink-soft); }
+  .card .meta { margin-top: 12px; font-size: 12.5px; color: var(--ink-faint); }
+  .card .meta b { color: var(--ink); font-weight: 600; }
+  .flow { border: 1px solid rgba(28,25,22,0.22); border-radius: 10px; padding: 8px; background: #fffdf7; }
+  table.palette { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  table.palette th, table.palette td {
+    text-align: left; padding: 10px 12px; font-size: 14px;
+    border-bottom: 1px solid rgba(28,25,22,0.14);
+  }
+  table.palette th { font-weight: 600; letter-spacing: 0.1em; color: var(--ink-faint); font-size: 12px; }
+  .swatch { display: inline-block; width: 18px; height: 18px; border-radius: 4px; vertical-align: -3px; margin-right: 8px; border: 1px solid rgba(28,25,22,0.25); }
+  .type-note { color: var(--ink-soft); font-size: 14px; margin-top: 12px; }
+  pre {
+    background: #fffdf7; border: 1px solid rgba(28,25,22,0.22);
+    border-radius: 10px; padding: 16px 18px; overflow-x: auto;
+    font-family: "Cascadia Mono", Consolas, monospace; font-size: 13.5px; line-height: 1.7;
+  }
+  .license { text-align: center; margin: 56px 0 0; }
+  .license img { max-width: 300px; height: auto; }
+  .license p { color: var(--ink-soft); font-size: 14px; margin-top: 14px; }
+  footer { text-align: center; margin-top: 56px; color: var(--ink-faint); font-size: 12.5px; letter-spacing: 0.1em; }
+  a { color: var(--verm); }
+  @media (max-width: 640px) {
+    .page { padding: 28px 18px 48px; }
+    .lede h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <img src="../assets/hero.svg" alt="试界 TryWorld">
+    <div class="archival">TryWorld · Codex Skills · MMXXVI &nbsp;·&nbsp; <a href="../README.md">README</a> · <a href="../README.zh-CN.md">中文</a></div>
+  </div>
+
+  <div class="lede">
+    <h1>试界 TryWorld · Codex Skills 合集</h1>
+    <p>五个技能，一条内容生产线：选题、写稿、出片、深度研究、公众号写作。<br>每个技能独立可用，合在一起便是一套完整的口播工作流。</p>
+  </div>
+
+  <hr class="rule">
+
+  <h2>技能 <em>Skills</em></h2>
+  <div class="cards">
+    <div class="card"><span class="no">01</span>
+      <h3>tryworld-koubo-pipeline</h3>
+      <div class="role">口播统一入口 · 自动路由</div>
+      <p>一句人话，自动走选题或直接出片；子命令；去重；成片交付后自动邮件通知。</p>
+      <div class="meta"><b>产出</b> 全流程交付 · 邮件通知 &nbsp;·&nbsp; <b>依赖</b> 其余技能 · qq-email</div>
+    </div>
+    <div class="card"><span class="no">02</span>
+      <h3>tryworld-paper-algorithm</h3>
+      <div class="role">纸上算法视频制作</div>
+      <p>口播稿 → 云希配音 → HyperFrames 构图渲染 → 封面、标题、字幕；印章全程常驻。</p>
+      <div class="meta"><b>产出</b> 主视频 · 封面 · 标题 &nbsp;·&nbsp; <b>依赖</b> HyperFrames · edge-tts · FFmpeg</div>
+    </div>
+    <div class="card"><span class="no">03</span>
+      <h3>tryworld-koubo-selection</h3>
+      <div class="role">AI 资讯选题</div>
+      <p>从 AIHOT 最新动态筛值得做的选题，带角度、素材链接与优先级；自动避开已做选题。</p>
+      <div class="meta"><b>产出</b> 3-8 个候选选题 &nbsp;·&nbsp; <b>依赖</b> AIHOT API</div>
+    </div>
+    <div class="card"><span class="no">04</span>
+      <h3>tryworld-hv-analysis</h3>
+      <div class="role">横纵分析法深度研究</div>
+      <p>纵轴追生命历程，横轴比竞品格局，交叉出独到洞察，产出精美 PDF 报告。</p>
+      <div class="meta"><b>产出</b> PDF 研究报告 &nbsp;·&nbsp; <b>依赖</b> Python · WeasyPrint</div>
+    </div>
+    <div class="card"><span class="no">05</span>
+      <h3>tryworld-writer</h3>
+      <div class="role">公众号长文写作</div>
+      <p>把 PDF、链接、语音转写、简报等素材，写成试界风格的公众号长文。</p>
+      <div class="meta"><b>产出</b> 长文成品 &nbsp;·&nbsp; <b>依赖</b> —</div>
+    </div>
+  </div>
+
+  <h2>工作流 <em>Workflow</em></h2>
+  <div class="flow">
+    <pre class="mermaid">
+flowchart LR
+    U(["一句话"]) --> P["tryworld-koubo-pipeline"]
+    P -- "模式 A · 直接给稿" --> A["tryworld-paper-algorithm<br/>优化 → 确认 → 出片"]
+    P -- "模式 B · 帮我选题" --> S["tryworld-koubo-selection<br/>AIHOT 资讯 → 选题清单"]
+    S -- "你挑选" --> A
+    A --> O["成片交付<br/>视频 · 封面 · 标题 · 发布计划"]
+    O -. "自动" .-> M["邮件通知<br/>产物 + 四平台发布时间"]
+    </pre>
+  </div>
+
+  <h2>设计系统 <em>Paper Algorithm</em></h2>
+  <table class="palette">
+    <tr><th></th><th>色</th><th>值</th><th>用途</th></tr>
+    <tr><td><span class="swatch" style="background:#F4EFE4"></span></td><td>纸面</td><td>#F4EFE4</td><td>背景主色</td></tr>
+    <tr><td><span class="swatch" style="background:#1C1916"></span></td><td>墨黑</td><td>#1C1916</td><td>主文字、线条</td></tr>
+    <tr><td><span class="swatch" style="background:#C0452F"></span></td><td>朱红</td><td>#C0452F</td><td>唯一强调色</td></tr>
+    <tr><td><span class="swatch" style="background:#2E5E8C"></span></td><td>墨水蓝</td><td>#2E5E8C</td><td>次级批注</td></tr>
+  </table>
+  <p class="type-note">字体：思源宋体 · 霞鹜文楷 · 等宽。动效：墨落纸、笔写入、盖章。</p>
+
+  <h2>安装 <em>Install</em></h2>
+  <pre>Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.codex\skills" -Recurse</pre>
+
+  <div class="license">
+    <a href="https://creativecommons.org/licenses/by-nc/4.0/"><img src="../assets/license-badge.svg" alt="CC BY-NC 4.0"></a>
+    <p>知识共享 署名-非商业性使用 4.0 国际 · 允许署名与非商业分享，禁止商业用途</p>
+  </div>
+
+  <footer>试界 TryWorld · 持续把 AI 讲清楚 — 排版：纸上算法 · MMXXVI</footer>
+
+</div>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral', themeVariables: { fontFamily: 'Georgia, serif' } });
+</script>
+</body>
+</html>

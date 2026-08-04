@@ -2,23 +2,61 @@
   <img src="assets/hero.svg" alt="TryWorld" width="100%">
 </p>
 
-<p align="right"><sub>English · <a href="README.zh-CN.md">简体中文</a></sub></p>
+<p align="right"><sub>English · <a href="README.zh-CN.md">简体中文</a> · <a href="docs/index.html">HTML edition</a></sub></p>
 
 ---
 
-**TryWorld · A Collection of Codex Skills.**
-
-Five skills, one content pipeline: topic selection, scriptwriting, video production, deep research, and long-form writing. Each works on its own; together they form a complete voiceover workflow — from "what should I make this week" to delivered videos, automatic email notices, and a four-platform publishing schedule.
+<p align="center">
+  <b>TryWorld · A Collection of Codex Skills</b><br>
+  <sub>Five skills, one content pipeline: topic · script · video · research · writing</sub>
+</p>
 
 ## Skills
 
-| No. | Skill | Role | Deliverables |
-|---|---|---|---|
-| 01 | [tryworld-koubo-pipeline](skills/tryworld-koubo-pipeline/) | Voiceover entry point, auto-routing | Full delivery · email notice |
-| 02 | [tryworld-paper-algorithm](skills/tryworld-paper-algorithm/) | Paper Algorithm video production | Video · covers · titles |
-| 03 | [tryworld-koubo-selection](skills/tryworld-koubo-selection/) | AI-news topic selection | 3–8 candidate topics |
-| 04 | [tryworld-hv-analysis](skills/tryworld-hv-analysis/) | Horizontal–Vertical deep research | PDF research report |
-| 05 | [tryworld-writer](skills/tryworld-writer/) | WeChat long-form writing | Finished article |
+<details open>
+<summary><b>01 · tryworld-koubo-pipeline</b> — voiceover entry point, auto-routing</summary>
+
+- Detects Mode A (script given) and Mode B (pick a topic); sub-commands; dedup by finished deliverables; automatic email notice after delivery.
+- Deliverables: full delivery · email notice
+- Depends on: other skills · `qq-email`
+
+</details>
+
+<details>
+<summary><b>02 · tryworld-paper-algorithm</b> — Paper Algorithm video production</summary>
+
+- Script → Azure YunxiNeural voiceover → HyperFrames composition & render → covers, titles, captions; the vermillion「试界原创」seal stays throughout.
+- Deliverables: video · covers · titles
+- Depends on: HyperFrames · edge-tts · FFmpeg
+
+</details>
+
+<details>
+<summary><b>03 · tryworld-koubo-selection</b> — AI-news topic selection</summary>
+
+- Pulls curated AIHOT items, scores them against growth principles; each candidate ships with an angle, source links, and priority; auto-skips produced topics.
+- Deliverables: 3–8 candidate topics
+- Depends on: AIHOT API · PowerShell / curl
+
+</details>
+
+<details>
+<summary><b>04 · tryworld-hv-analysis</b> — Horizontal–Vertical deep research</summary>
+
+- Trace the life arc vertically, compare the landscape horizontally, cross the two axes for insight; outputs a polished PDF report.
+- Deliverables: PDF research report
+- Depends on: Python · WeasyPrint · Markdown
+
+</details>
+
+<details>
+<summary><b>05 · tryworld-writer</b> — WeChat long-form writing</summary>
+
+- Turns source material (PDF / links / transcripts / briefs) into a TryWorld-style WeChat article.
+- Deliverables: finished long-form article
+- Depends on: —
+
+</details>
 
 ## Workflow
 
@@ -45,7 +83,7 @@ Paper is the stage, ink is the text, vermillion is the accent, the seal is the s
 | Vermillion | `#C0452F` | The only accent |
 | Ink Blue | `#2E5E8C` | Secondary notes |
 
-Type: Noto Serif SC · LXGW WenKai · monospace. Motion: ink drop, brush stroke, seal stamp. A vermillion「试界原创」seal stays in the top-right corner throughout.
+Type: Noto Serif SC · LXGW WenKai · monospace. Motion: ink drop, brush stroke, seal stamp.
 
 ## Install
 
@@ -62,15 +100,11 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.codex\skills" -Recurs
 ```text
 tryworld-skills/
 ├── assets/                  # hero, license badge
+├── docs/index.html          # full HTML design edition
 ├── README.md                # English
 ├── README.zh-CN.md          # 简体中文
 ├── LICENSE                  # CC BY-NC 4.0
-└── skills/
-    ├── tryworld-koubo-pipeline/
-    ├── tryworld-paper-algorithm/
-    ├── tryworld-koubo-selection/
-    ├── tryworld-hv-analysis/
-    └── tryworld-writer/
+└── skills/                  # five skills
 ```
 
 ## License

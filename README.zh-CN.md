@@ -2,23 +2,61 @@
   <img src="assets/hero.svg" alt="试界 TryWorld" width="100%">
 </p>
 
-<p align="right"><sub><a href="README.md">English</a> · 简体中文</sub></p>
+<p align="right"><sub><a href="README.md">English</a> · 简体中文 · <a href="docs/index.html">HTML 版</a></sub></p>
 
 ---
 
-**试界 TryWorld · Codex Skills 合集。**
-
-五个技能，一条内容生产线：选题、写稿、出片、深度研究、公众号写作。每个技能独立可用，合在一起便是一套完整的口播工作流——从「这周做什么」到成片交付、自动邮件通知、四平台发布计划。
+<p align="center">
+  <b>试界 TryWorld · Codex Skills 合集</b><br>
+  <sub>五个技能，一条内容生产线：选题 · 写稿 · 出片 · 深度研究 · 公众号写作</sub>
+</p>
 
 ## 技能
 
-| 编号 | 技能 | 定位 | 产出 |
-|---|---|---|---|
-| 01 | [tryworld-koubo-pipeline](skills/tryworld-koubo-pipeline/) | 口播统一入口，自动路由 | 全流程交付 · 邮件通知 |
-| 02 | [tryworld-paper-algorithm](skills/tryworld-paper-algorithm/) | 纸上算法视频制作 | 主视频 · 封面 · 标题 |
-| 03 | [tryworld-koubo-selection](skills/tryworld-koubo-selection/) | AI 资讯选题 | 3-8 个候选选题 |
-| 04 | [tryworld-hv-analysis](skills/tryworld-hv-analysis/) | 横纵分析法深度研究 | PDF 研究报告 |
-| 05 | [tryworld-writer](skills/tryworld-writer/) | 公众号长文写作 | 长文成品 |
+<details open>
+<summary><b>01 · tryworld-koubo-pipeline</b> — 口播统一入口，自动路由</summary>
+
+- 自动识别「直接给稿」（模式 A）与「要选题」（模式 B）；支持子命令「只要选题 / 只要写稿 / 只优化」；去重判定；成片交付后自动发邮件通知。
+- 产出：全流程交付 · 邮件通知
+- 依赖：调度其余技能 · `qq-email`
+
+</details>
+
+<details>
+<summary><b>02 · tryworld-paper-algorithm</b> — 纸上算法视频制作</summary>
+
+- 口播稿优化净化 → 云希配音 → HyperFrames 构图渲染 → 横竖封面 + 平台标题 + 字幕时间轴；右上角「试界原创」印章全程常驻。
+- 产出：主视频 · 横竖封面 · 平台标题
+- 依赖：HyperFrames · edge-tts · FFmpeg
+
+</details>
+
+<details>
+<summary><b>03 · tryworld-koubo-selection</b> — AI 资讯选题</summary>
+
+- 拉取 AIHOT 最新精选，按频道增长原理筛选题；每个选题带角度、素材原文链接与优先级；自动避开已做选题。
+- 产出：3-8 个候选选题清单
+- 依赖：AIHOT API · PowerShell / curl
+
+</details>
+
+<details>
+<summary><b>04 · tryworld-hv-analysis</b> — 横纵分析法深度研究</summary>
+
+- 纵轴追生命历程，横轴比竞品格局，交叉出独到洞察；产出排版精美的 PDF 研究报告。
+- 产出：PDF 研究报告
+- 依赖：Python · WeasyPrint · Markdown
+
+</details>
+
+<details>
+<summary><b>05 · tryworld-writer</b> — 公众号长文写作</summary>
+
+- 根据素材（PDF / 链接 / 语音转写 / 简报）写成试界风格公众号长文。
+- 产出：公众号长文成品
+- 依赖：—
+
+</details>
 
 ## 工作流
 
@@ -32,7 +70,7 @@ flowchart LR
     O -. "自动" .-> M["邮件通知<br/>产物 + 四平台发布时间"]
 ```
 
-口播链路只需记住一个入口：`$tryworld-koubo-pipeline`。给稿走模式 A，要选题走模式 B；`tryworld-hv-analysis` 与 `tryworld-writer` 独立使用。
+口播链路只需记住一个入口：`$tryworld-koubo-pipeline`。`tryworld-hv-analysis` 与 `tryworld-writer` 独立使用。
 
 ## 设计系统 · 纸上算法
 
@@ -45,7 +83,7 @@ flowchart LR
 | 朱红 | `#C0452F` | 唯一强调色 |
 | 墨水蓝 | `#2E5E8C` | 次级批注 |
 
-字体：思源宋体 · 霞鹜文楷 · 等宽。动效：墨落纸、笔写入、盖章。防伪：右上角朱红「试界原创」印章全程常驻。
+字体：思源宋体 · 霞鹜文楷 · 等宽。动效：墨落纸、笔写入、盖章。
 
 ## 安装
 
@@ -62,15 +100,11 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.codex\skills" -Recurs
 ```text
 tryworld-skills/
 ├── assets/                  # hero、许可徽章
+├── docs/index.html          # 完整 HTML 设计版
 ├── README.md                # English
 ├── README.zh-CN.md          # 简体中文
 ├── LICENSE                  # CC BY-NC 4.0
-└── skills/
-    ├── tryworld-koubo-pipeline/
-    ├── tryworld-paper-algorithm/
-    ├── tryworld-koubo-selection/
-    ├── tryworld-hv-analysis/
-    └── tryworld-writer/
+└── skills/                  # 五个技能
 ```
 
 ## 许可
