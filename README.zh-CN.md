@@ -41,7 +41,7 @@
 <summary><b>03 · tryworld-koubo-selection</b> — AI 资讯选题</summary>
 
 - 拉取 AIHOT 最新精选，按频道增长原理筛选题；每个选题带角度、素材原文链接与优先级；自动避开已做选题。
-- 产出：3–8 个候选选题清单
+- 产出：3–8 个候选选题
 - 依赖：AIHOT API · PowerShell / curl
 
 </details>
