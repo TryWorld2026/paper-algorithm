@@ -1,70 +1,69 @@
-<h1 align="center">TryWorld Skills</h1>
+<p align="center">
+  <img src="assets/hero.svg" alt="TryWorld Skills" width="100%">
+</p>
 
 <p align="center">
-  <b>A collection of Codex Skills by 试界 TryWorld</b><br/>
+  <b>TryWorld · A Collection of Codex Skills</b><br/>
   topic selection · scriptwriting · video production · deep research · long-form writing
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-active-8FAF8C?style=for-the-badge&logo=github&logoColor=white" alt="status">
-  <img src="https://img.shields.io/badge/skills-5-1C1916?style=for-the-badge&logo=markdown&logoColor=white" alt="skills">
-  <img src="https://img.shields.io/badge/platform-Codex%20%2F%20Claude-2E5E8C?style=for-the-badge&logo=openai&logoColor=white" alt="platform">
-  <img src="https://img.shields.io/badge/Made%20with-%E2%9D%A4%EF%B8%8F-C0452F?style=for-the-badge" alt="made with love">
+  <b>English</b> · <a href="README.zh-CN.md">简体中文</a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js">
-  <img src="https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell">
-  <img src="https://img.shields.io/badge/FFmpeg-007808?style=for-the-badge&logo=ffmpeg&logoColor=white" alt="FFmpeg">
-  <img src="https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" alt="Azure">
-  <img src="https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white" alt="Markdown">
-</p>
-
-<p align="center">
-  <b><a href="README.md">English</a></b> · <a href="README.zh-CN.md">简体中文</a>
+  <img src="https://img.shields.io/badge/status-active-8FAF8C?style=flat-square" alt="status">
+  <img src="https://img.shields.io/badge/skills-5-1C1916?style=flat-square" alt="skills">
+  <img src="https://img.shields.io/badge/platform-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="platform">
+  <img src="https://img.shields.io/badge/By-TryWorld-C0452F?style=flat-square" alt="by">
 </p>
 
 ---
 
-## Skills at a glance
+> **A skill set built for content creation.** From "what should I make this week" to a finished video with covers, platform titles, a publishing plan, and an automatic email notification — plus deep research and long-form writing, all wrapped into skills you can invoke with plain language.
 
-| Icon | Skill | What it does | Key deliverables |
-|---|---|---|---|
-| 🎬 | [tryworld-koubo-pipeline](skills/tryworld-koubo-pipeline/) | **Single entry point** for the voiceover video workflow; auto-routes to the right skill | End-to-end delivery: topic → script → video → publishing plan |
-| 📜 | [tryworld-paper-algorithm](skills/tryworld-paper-algorithm/) | Produces branded “Paper Algorithm” style AI knowledge videos | Main video, horizontal & vertical covers, platform titles |
-| 🎯 | [tryworld-koubo-selection](skills/tryworld-koubo-selection/) | Picks video topics from the latest AIHOT AI news | 3–8 candidate topics with angles & source links |
-| 🔬 | [tryworld-hv-analysis](skills/tryworld-hv-analysis/) | Deep research with Horizontal-Vertical Analysis | Polished PDF research report |
-| ✍️ | [tryworld-writer](skills/tryworld-writer/) | Long-form WeChat article writing in TryWorld's style | Long-form article |
+## ✨ Skills at a Glance
 
-## How the skills fit together
+| | Skill | Role | Key Deliverables | Depends on |
+|---|---|---|---|---|
+| 🎬 | [tryworld-koubo-pipeline](skills/tryworld-koubo-pipeline/) | **Single entry** for the voiceover video workflow | Auto-routes: topic → script → optimize → video → email notice | Other skills · `qq-email` |
+| 📜 | [tryworld-paper-algorithm](skills/tryworld-paper-algorithm/) | "Paper Algorithm" AI knowledge videos | Main video · covers · platform titles · captions | HyperFrames · edge-tts · FFmpeg |
+| 🎯 | [tryworld-koubo-selection](skills/tryworld-koubo-selection/) | Topic selection from AI news | 3–8 candidates with angles & source links | AIHOT API |
+| 🔬 | [tryworld-hv-analysis](skills/tryworld-hv-analysis/) | Horizontal–Vertical deep research | Polished PDF research report | Python · WeasyPrint |
+| ✍️ | [tryworld-writer](skills/tryworld-writer/) | WeChat long-form writing | Long-form article in TryWorld style | — |
+
+## 🎬 The Voiceover Workflow
 
 ```mermaid
 flowchart LR
-    U(["User request"]) --> P["🎬 tryworld-koubo-pipeline<br/>Single entry point"]
-    P -- "Mode A: script given" --> A["📜 tryworld-paper-algorithm<br/>Optimize → produce"]
-    P -- "Mode B: need topics" --> S["🎯 tryworld-koubo-selection<br/>AIHOT topic picks"]
-    S --> A
-    A --> O["✅ Deliverables<br/>Video / covers / titles / schedule"]
-    H["🔬 tryworld-hv-analysis<br/>Deep research"] -. "Standalone" .-> R["📄 PDF report"]
-    W["✍️ tryworld-writer<br/>Long-form writing"] -. "Standalone" .-> C["📝 WeChat article"]
+    U(["One sentence from you"]) --> P["🎬 tryworld-koubo-pipeline<br/>Single entry · auto-route"]
+    P -- "Mode A · script given" --> A["📜 tryworld-paper-algorithm<br/>Optimize → confirm → produce"]
+    P -- "Mode B · pick a topic" --> S["🎯 tryworld-koubo-selection<br/>AIHOT news → topic list"]
+    S -- "you choose" --> A
+    A --> O["✅ Deliverables<br/>Video · covers · titles · schedule"]
+    O -. "automatic" .-> M["📧 Email notice<br/>Attachments + publish times"]
 ```
 
-For video work, just remember `$tryworld-koubo-pipeline`: give it a script (Mode A) or ask for topics (Mode B), and it routes to the other skills for you. `tryworld-hv-analysis` and `tryworld-writer` are standalone — call them directly when needed.
+For the video pipeline, remember one entry point: **`$tryworld-koubo-pipeline`**. Hand it a script (Mode A) or ask for topics (Mode B) — it routes the rest. `tryworld-hv-analysis` and `tryworld-writer` are standalone.
 
-## Tech stack
+## 🎨 The Paper Algorithm Design System
 
-| Skill | Built with |
-|---|---|
-| tryworld-paper-algorithm | HyperFrames, edge-tts (Azure YunxiNeural), FFmpeg, Node.js ≥ 22, Python 3.10+ |
-| tryworld-koubo-selection | PowerShell script / curl, AIHOT API |
-| tryworld-hv-analysis | Python, WeasyPrint, Markdown |
-| tryworld-writer | — |
-| tryworld-koubo-pipeline | Router on top of the skills above |
+TryWorld videos follow one visual contract — **scientific manuscript + Chinese print tradition**: paper is the stage, ink is the text, vermillion is the accent, and the seal is the signature.
 
-## Quick start
+| Swatch | Value | Role |
+|---|---|---|
+| Paper | `#F4EFE4` | Background |
+| Ink | `#1C1916` | Text & lines |
+| Vermillion | `#C0452F` | The only accent: keywords, numbers, seal |
+| Ink Blue | `#2E5E8C` | Secondary notes & chart guides |
 
-Every skill folder is a self-contained Skill. Copy it into your local skills directory (Windows example):
+- **Type**: Noto Serif SC (headings) · LXGW WenKai / ZCOOL XiaoWei (notes) · monospace (data)
+- **Motion**: ink drop · brush stroke · seal stamp — three signature moves throughout
+- **Authenticity**: a vermillion "试界原创" seal stays in the top-right corner for the whole video
+
+## 🚀 Quick Start
+
+Each skill folder is self-contained. Copy it into your local skills directory:
 
 ```powershell
 # Install all skills
@@ -74,26 +73,41 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.codex\skills" -Recurs
 Copy-Item -Path .\skills\tryworld-paper-algorithm -Destination "$env:USERPROFILE\.codex\skills" -Recurse
 ```
 
-`~/.agents/skills` works on other hosts as well. Then call the skill by name:
+`~/.agents/skills` works on other hosts too. Then just say it in Codex:
 
 ```text
-Use $tryworld-koubo-pipeline to make a video from this voiceover script.
+Make me a TryWorld voiceover video
+Use $tryworld-koubo-pipeline to produce this
 ```
 
-## Repository layout
+## 🗂 Repository Layout
 
 ```text
 tryworld-skills/
-├── README.md                 # Index (English)
-├── README.zh-CN.md           # Index (简体中文)
+├── assets/hero.svg                 # Brand banner
+├── README.md                       # Index (English)
+├── README.zh-CN.md                 # Index (简体中文)
 └── skills/
-    ├── tryworld-koubo-pipeline/     # Voiceover workflow entry (router)
-    ├── tryworld-paper-algorithm/    # Paper Algorithm video production
-    ├── tryworld-koubo-selection/    # AIHOT topic selection
-    ├── tryworld-hv-analysis/        # Horizontal-Vertical deep research
-    └── tryworld-writer/             # WeChat long-form writing
+    ├── tryworld-koubo-pipeline/         # Voiceover entry (router + email notice)
+    ├── tryworld-paper-algorithm/        # Paper Algorithm video production
+    ├── tryworld-koubo-selection/        # AIHOT topic selection
+    ├── tryworld-hv-analysis/            # Horizontal–Vertical deep research
+    └── tryworld-writer/                 # WeChat long-form writing
 ```
 
-## License
+## 🛠 Tech Stack
 
-All rights reserved. No license is attached to this repository yet.
+| Skill | Built with |
+|---|---|
+| tryworld-paper-algorithm | HyperFrames · edge-tts (Azure YunxiNeural) · FFmpeg · Node.js ≥ 22 · Python 3.10+ |
+| tryworld-koubo-selection | PowerShell / curl · AIHOT API |
+| tryworld-hv-analysis | Python · WeasyPrint · Markdown |
+| tryworld-koubo-pipeline | Orchestrates the above · `qq-email` (SMTP / IMAP) |
+
+## ⚖️ License
+
+All rights reserved. Please do not redistribute until an open-source license is attached.
+
+---
+
+<p align="center"><sub>TryWorld · Making AI clear for everyone</sub></p>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="560" viewBox="0 0 1920 560">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 0.95  0 0 0 0 0.89  0 0 0 0.05 0"/>
+    </filter>
+    <radialGradient id="glow" cx="0.72" cy="0.5" r="0.62">
+      <stop offset="0%" stop-color="#C0452F" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#C0452F" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#C0452F"/>
+      <stop offset="100%" stop-color="#C0452F" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="560" fill="#12100D"/>
+  <rect width="1920" height="560" fill="url(#glow)"/>
+  <rect width="1920" height="560" filter="url(#grain)"/>
+  <g font-family="Georgia, 'Noto Serif SC', 'Songti SC', 'SimSun', serif">
+    <text x="120" y="216" font-size="100" font-weight="700" fill="#F4EFE4" letter-spacing="4">试界 TryWorld</text>
+    <text x="123" y="282" font-size="32" fill="#C0452F" letter-spacing="12">SKILLS · 纸上算法</text>
+    <text x="120" y="352" font-size="30" fill="rgba(244,239,228,0.82)">把 AI 讲清楚，让每个普通人都看得懂、用得上。</text>
+    <g font-size="22" font-family="'Noto Serif SC','Songti SC','SimSun',serif">
+      <rect x="120" y="404" width="206" height="50" rx="25" fill="#F4EFE4"/>
+      <text x="223" y="436" text-anchor="middle" fill="#1C1916">口播视频</text>
+      <rect x="346" y="404" width="206" height="50" rx="25" fill="#F4EFE4"/>
+      <text x="449" y="436" text-anchor="middle" fill="#1C1916">深度研究</text>
+      <rect x="572" y="404" width="236" height="50" rx="25" fill="#F4EFE4"/>
+      <text x="690" y="436" text-anchor="middle" fill="#1C1916">公众号写作</text>
+    </g>
+  </g>
+  <g transform="translate(1668, 180)">
+    <rect x="0" y="0" width="156" height="156" rx="14" fill="none" stroke="#C0452F" stroke-width="3"/>
+    <rect x="11" y="11" width="134" height="134" rx="9" fill="none" stroke="#C0452F" stroke-width="1.5"/>
+    <text x="78" y="102" font-size="42" fill="#C0452F" text-anchor="middle" font-family="'Noto Serif SC','Songti SC','SimSun',serif">试界原创</text>
+  </g>
+  <rect x="120" y="492" width="520" height="4" rx="2" fill="url(#rule)"/>
+  <text x="120" y="530" font-size="20" fill="rgba(244,239,228,0.45)" letter-spacing="2" font-family="'Noto Serif SC','Songti SC','SimSun',serif">Codex Skills Collection · 2026</text>
+</svg>
