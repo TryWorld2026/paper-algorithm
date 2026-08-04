@@ -11,6 +11,12 @@
   <sub>Five skills, one content pipeline: topic · script · video · research · writing</sub>
 </p>
 
+## What this repo is
+
+TryWorld is a compact production system for AI-first content. It turns one short prompt into a complete delivery stack: a validated topic, a polished script, a rendered video package, a research report, and a long-form article.
+
+The interface is plain language. You speak in one sentence. The system decides whether to route into topic selection or direct production, then assembles deliverables with minimal back-and-forth.
+
 ## Skills
 
 <details open>

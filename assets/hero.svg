@@ -1,24 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="620" viewBox="0 0 1920 620">
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="720" viewBox="0 0 1920 720">
   <defs>
     <filter id="grain" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.96  0 0 0 0 0.94  0 0 0 0 0.89  0 0 0 0.06 0"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.92" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.96  0 0 0 0 0.94  0 0 0 0 0.89  0 0 0 0.07 0"/>
     </filter>
+    <linearGradient id="ruleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#C0452F" stop-opacity="0"/>
+      <stop offset="0.18" stop-color="#C0452F" stop-opacity="1"/>
+      <stop offset="0.82" stop-color="#C0452F" stop-opacity="1"/>
+      <stop offset="1" stop-color="#C0452F" stop-opacity="0"/>
+    </linearGradient>
   </defs>
-  <rect width="1920" height="620" fill="#F4EFE4"/>
-  <rect width="1920" height="620" filter="url(#grain)"/>
+  <rect width="1920" height="720" fill="#F4EFE4"/>
+  <rect width="1920" height="720" filter="url(#grain)"/>
   <g font-family="'Noto Serif SC','Songti SC','SimSun',Georgia, serif">
-    <text x="140" y="118" font-size="18" fill="#1C1916" opacity="0.55" letter-spacing="6">TRYWORLD · CODEX SKILLS · 2026</text>
-    <text x="138" y="296" font-size="150" font-weight="700" fill="#1C1916" letter-spacing="6">试界</text>
-    <text x="140" y="384" font-size="96" font-weight="600" fill="#1C1916" letter-spacing="2">TryWorld</text>
-    <text x="140" y="448" font-size="24" fill="#2E5E8C" letter-spacing="8">纸上算法 · PAPER ALGORITHM</text>
-    <rect x="140" y="476" width="120" height="3" fill="#C0452F"/>
-    <text x="140" y="538" font-size="22" fill="#1C1916" opacity="0.74">把 AI 讲清楚，让每个普通人都看得懂、用得上。</text>
-    <text x="140" y="590" font-size="16" fill="#1C1916" opacity="0.4" letter-spacing="2">A COLLECTION OF FIVE CODEX SKILLS · TOPIC · VIDEO · RESEARCH · WRITING</text>
+    <text x="140" y="118" font-size="18" fill="#1C1916" opacity="0.6" letter-spacing="6">TRYWORLD · CODEX SKILLS · 2026</text>
+    <text x="138" y="316" font-size="170" font-weight="700" fill="#1C1916" letter-spacing="6">试界</text>
+    <text x="140" y="404" font-size="102" font-weight="600" fill="#1C1916" letter-spacing="2">TryWorld</text>
+    <text x="140" y="468" font-size="24" fill="#2E5E8C" letter-spacing="8">纸上算法 · PAPER ALGORITHM</text>
+    <rect x="140" y="496" width="420" height="3" fill="url(#ruleGrad)"/>
+    <text x="140" y="558" font-size="22" fill="#1C1916" opacity="0.78">把 AI 讲清楚，让每个普通人都看得懂、用得上。</text>
+    <text x="140" y="610" font-size="16" fill="#1C1916" opacity="0.42" letter-spacing="2">A COLLECTION OF FIVE CODEX SKILLS · TOPIC · VIDEO · RESEARCH · WRITING</text>
   </g>
-  <g transform="translate(1640, 420)">
-    <rect x="0" y="0" width="140" height="140" rx="12" fill="none" stroke="#C0452F" stroke-width="2.5"/>
-    <rect x="9" y="9" width="122" height="122" rx="8" fill="none" stroke="#C0452F" stroke-width="1.2"/>
-    <text x="70" y="92" font-size="36" fill="#C0452F" text-anchor="middle" font-family="'Noto Serif SC','Songti SC','SimSun',serif">试界原创</text>
+  <g transform="translate(1720, 540)">
+    <rect x="0" y="0" width="160" height="160" rx="16" fill="none" stroke="#C0452F" stroke-width="2.5"/>
+    <rect x="10" y="10" width="140" height="140" rx="10" fill="none" stroke="#C0452F" stroke-width="1.2"/>
+    <text x="80" y="102" font-size="38" fill="#C0452F" text-anchor="middle" font-family="'Noto Serif SC','Songti SC','SimSun',serif">试界原创</text>
+  </g>
+  <g transform="translate(140, 132)">
+    <rect x="0" y="0" width="260" height="44" rx="12" fill="#C0452F"/>
+    <text x="130" y="29" font-size="18" fill="#F4EFE4" text-anchor="middle" font-family="Georgia, serif" letter-spacing="1">MMXXVI</text>
   </g>
 </svg>
