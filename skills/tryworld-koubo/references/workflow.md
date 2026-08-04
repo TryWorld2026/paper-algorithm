@@ -108,7 +108,7 @@ B站：晚上 20:30
 成片交付后自动运行（不阻塞交付）：
 
 ```powershell
-powershell -File "C:\Users\18225\.codex\skills\tryworld-koubo\scripts\notify_delivery.ps1" -ProjectDir "E:\Codex口播视频\<项目slug>"
+powershell -File "$env:USERPROFILE\.agents\skills\tryworld-koubo\scripts\notify_delivery.ps1" -ProjectDir "E:\Codex口播视频\<项目slug>"
 ```
 
 - 邮件内容：主题 `✅ TryWorld 口播成片已交付 · <项目> · <日期>`；正文 = 完成提示 + 【平台标题】文字（读取 titles.txt 直接写入正文，不作为附件）+ 【四平台发布计划】。

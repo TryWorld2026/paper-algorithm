@@ -1,4 +1,4 @@
-# tryworld-koubo · 成片交付邮件通知（Windows PowerShell）
+﻿# tryworld-koubo · 成片交付邮件通知（Windows PowerShell）
 # 用法: powershell -File scripts/notify_delivery.ps1 -ProjectDir <项目目录> [-DryRun]
 param(
   [string]$ProjectDir = (Get-Location).Path,
@@ -7,7 +7,15 @@ param(
 )
 $ErrorActionPreference = "Stop"
 
-$qqEmailSkill = "C:\Users\18225\.codex\skills\qq-email"
+$qqCandidates = @(
+  (Join-Path $env:USERPROFILE ".agents\skills\qq-email"),
+  (Join-Path $env:USERPROFILE ".codex\skills\qq-email")
+)
+$qqEmailSkill = $qqCandidates | Where-Object { Test-Path -LiteralPath (Join-Path $_ "scripts\send.js") } | Select-Object -First 1
+if (-not $qqEmailSkill) {
+  Write-Warning "未找到 qq-email 技能(请安装到 ~/.agents/skills 或 ~/.codex/skills),跳过邮件通知(不阻塞交付)。"
+  exit 0
+}
 $sendJs = Join-Path $qqEmailSkill "scripts\send.js"
 $VideoAttachLimitMB = 35   # QQ 邮箱附件上限约 50MB,含 base64 开销,单文件安全阈值 35MB
 
