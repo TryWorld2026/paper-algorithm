@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="430" height="76" viewBox="0 0 430 76">
-  <rect width="430" height="76" rx="14" fill="#12100D"/>
+  <rect width="430" height="76" rx="14" fill="#F4EFE4"/>
+  <rect width="430" height="76" rx="14" fill="none" stroke="#1C1916" stroke-width="1.5"/>
   <rect x="12" y="12" width="52" height="52" rx="10" fill="none" stroke="#C0452F" stroke-width="2.5"/>
-  <text x="38" y="47" font-size="25" fill="#C0452F" text-anchor="middle" font-family="Georgia, 'Noto Serif SC', serif" font-weight="bold">CC</text>
-  <text x="82" y="35" font-size="23" fill="#F4EFE4" font-family="Georgia, 'Noto Serif SC', serif" font-weight="bold">CC BY-NC 4.0</text>
-  <text x="82" y="58" font-size="16" fill="rgba(244,239,228,0.72)" font-family="'Noto Serif SC','Songti SC','SimSun',serif">署名-非商业性使用 4.0 国际</text>
+  <text x="38" y="47" font-size="25" fill="#C0452F" text-anchor="middle" font-family="Georgia, serif" font-weight="bold">CC</text>
+  <text x="82" y="35" font-size="23" fill="#1C1916" font-family="Georgia, serif" font-weight="bold">CC BY-NC 4.0</text>
+  <text x="82" y="58" font-size="16" fill="#1C1916" opacity="0.62" font-family="'Noto Serif SC','Songti SC','SimSun',serif">署名-非商业性使用 4.0 国际</text>
 </svg>
