@@ -1,11 +1,11 @@
 ---
-name: tryworld-koubo-pipeline
-description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播全流程（选题/写稿/优化/出片）。任何涉及口播的请求都应触发本技能，触发词包括但不限于："我要做口播""帮我做口播""做口播""想做口播""做一期口播""口播视频""口播稿""写口播稿""帮我写口播稿""帮我选题""我要选题""口播选题""给我几个选题""这周做什么口播""最近有什么值得做的 AI 选题""本周 AI 圈有什么可讲的""做个 AI 资讯盘点""AI 资讯盘点"，以及直接粘贴口播稿正文或给出 .md/.txt 稿子文件要求优化出片。自动识别两种模式：①直接给口播稿 → 用 $tryworld-paper-algorithm 优化并出片；②要选题 → 用 $tryworld-koubo-selection 拉取 AIHOT 最新 AI 资讯产出选题清单 → 用户挑选 → 自动写口播稿初稿 → 优化 → 出片。支持子命令：只要选题 / 只要写稿 / 只优化不出片。成片交付除主视频、口播稿、横竖封面、平台标题外，附各平台推荐发布时间（小红书 中午 12:30、抖音 晚上 19:30、B站 晚上 20:30、微信视频号 晚上 20:30）。使用本技能时无需同时引用其他技能。
+name: tryworld-koubo
+description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播全流程（选题/写稿/优化/出片）。任何涉及口播的请求都应触发本技能，触发词包括但不限于："我要做口播""帮我做口播""做口播""想做口播""做一期口播""口播视频""口播稿""写口播稿""帮我写口播稿""帮我选题""我要选题""口播选题""给我几个选题""这周做什么口播""最近有什么值得做的 AI 选题""本周 AI 圈有什么可讲的""做个 AI 资讯盘点""AI 资讯盘点"，以及直接粘贴口播稿正文或给出 .md/.txt 稿子文件要求优化出片。自动识别两种模式：①直接给口播稿 → 用 $tryworld-paper 优化并出片；②要选题 → 用 $tryworld-topics 拉取 AIHOT 最新 AI 资讯产出选题清单 → 用户挑选 → 自动写口播稿初稿 → 优化 → 出片。支持子命令：只要选题 / 只要写稿 / 只优化不出片。成片交付除主视频、口播稿、横竖封面、平台标题外，附各平台推荐发布时间（小红书 中午 12:30、抖音 晚上 19:30、B站 晚上 20:30、微信视频号 晚上 20:30）。使用本技能时无需同时引用其他技能。
 ---
 
 # TryWorld 口播工作流总入口
 
-统一入口，自动路由。用户无需同时引用 `$tryworld-koubo-selection`、`$tryworld-paper-algorithm` 或 `$hyperframes`。
+统一入口，自动路由。用户无需同时引用 `$tryworld-topics`、`$tryworld-paper` 或 `$hyperframes`。
 
 ## 模式判定
 
@@ -16,17 +16,17 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 ## 模式 A：直接给稿 → 优化 → 出片
 
 1. 通读口播稿，理解主题、受众、核心结论与结构。
-2. 转入 `$tryworld-paper-algorithm` 完整流程：优化并净化 → **闸门：展示优化稿等用户确认** → 配音/构图/渲染/封面/标题 → 交付。
+2. 转入 `$tryworld-paper` 完整流程：优化并净化 → **闸门：展示优化稿等用户确认** → 配音/构图/渲染/封面/标题 → 交付。
 3. 交付时按"交付物"补发布计划。
 
 ## 模式 B：选题 → 写稿 → 优化 → 出片
 
-1. 调 `$tryworld-koubo-selection`：运行其 `scripts/fetch_aihot.ps1` 拉数据，读 `references/selection-rules.md`，产出 3-8 个候选选题。
+1. 调 `$tryworld-topics`：运行其 `scripts/fetch_aihot.ps1` 拉数据，读 `references/selection-rules.md`，产出 3-8 个候选选题。
 2. **去重（以工作区实际成片为准）**：扫描 `E:\Codex口播视频` 各一级子文件夹，候选选题按关键词与该文件夹名/口播稿标题匹配；若对应文件夹 `outputs/` 同时存在成片视频（*.mp4）与横竖封面（cover_4x3.png / cover_3x4.png 或等价命名）→ 判定已做，从清单排除；反之保留。命令见 `references/workflow.md`。
 3. **闸门 1：展示选题清单，停，等用户挑选**（用户可要求换一批或给自定义主题）。
 4. 按选中选题 + 素材链接写初稿（规范见"写稿规范"）。
-5. 转入 `$tryworld-paper-algorithm` 优化净化 → **闸门 2：展示优化稿等确认** → 出片。
-6. 用户确认开做后，同步更新 `tryworld-koubo-selection/references/done-topics.md`（仅作缓存，不作判定依据）。
+5. 转入 `$tryworld-paper` 优化净化 → **闸门 2：展示优化稿等确认** → 出片。
+6. 用户确认开做后，同步更新 `tryworld-topics/references/done-topics.md`（仅作缓存，不作判定依据）。
 
 ## 写稿规范（模式 B 初稿）
 
@@ -50,7 +50,7 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 ## 工程约定
 
 - 每个新项目在 `E:\Codex口播视频` 建独立子文件夹（`<slug>`，如 `zhongmei-ai`），产物进 `work/` 与 `outputs/`。
-- 出片阶段完全复用 `$tryworld-paper-algorithm`，不复制其内容。
+- 出片阶段完全复用 `$tryworld-paper`，不复制其内容。
 
 ## 资源
 

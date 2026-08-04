@@ -1,4 +1,4 @@
- 工作流明细（tryworld-koubo-pipeline）
+ 工作流明细（tryworld-koubo）
 
 ## 模式判定规则
 
@@ -12,7 +12,7 @@
 ## 模式 A：直接给稿 → 优化 → 出片
 
 1. 通读稿子，理解主题、受众、核心结论、章节结构。
-2. 进入 `$tryworld-paper-algorithm`：
+2. 进入 `$tryworld-paper`：
    - 优化并净化（流量第一性原理；清除章节标签等写作标记）；
    - 展示优化稿 + 优化说明 + 元素落点 + 数据来源清单；
    - **闸门：等用户确认**；未确认禁止配音/构图/渲染。
@@ -23,7 +23,7 @@
 
 ### B1 拉数据与产出选题
 
-1. 进入 `$tryworld-koubo-selection`：
+1. 进入 `$tryworld-topics`：
    - 运行 `scripts/fetch_aihot.ps1`（默认 7 天、100 条，落盘 `work/aihot/`）；
    - 读 `references/selection-rules.md`；
    - 产出 3-8 个候选选题（选题名、为什么选、核心素材+原文链接、切入角度、优先级、命中原理）。
@@ -49,7 +49,7 @@ Get-ChildItem -LiteralPath "E:\Codex口播视频" -Directory | ForEach-Object {
 判定规则：
 
 - 候选选题按关键词与该文件夹名/文件夹内口播稿标题做包含匹配（如"中美 AI"命中 `zhongmei-ai`）。
-- 命中且该 outputs 目录同时存在 ≥1 个 *.mp4 与 ≥2 个封面 png（横竖两张）→ **已做，排除**，并同步记录到 `tryworld-koubo-selection/references/done-topics.md`（缓存）。
+- 命中且该 outputs 目录同时存在 ≥1 个 *.mp4 与 ≥2 个封面 png（横竖两张）→ **已做，排除**，并同步记录到 `tryworld-topics/references/done-topics.md`（缓存）。
 - 未命中，或命中的 outputs 缺视频/缺封面 → **未做，可推荐**。
 
 ### B3 闸门 1：选题清单
@@ -69,12 +69,12 @@ Get-ChildItem -LiteralPath "E:\Codex口播视频" -Directory | ForEach-Object {
 
 ### B5 优化与闸门 2
 
-- 进入 `$tryworld-paper-algorithm` 优化净化，展示优化稿 + 说明 + 数据来源。
+- 进入 `$tryworld-paper` 优化净化，展示优化稿 + 说明 + 数据来源。
 - **闸门 2：等用户确认**；确认后出片，未确认禁止继续。
 
 ### B6 去重记录
 
-- 用户确认开做后，向 `tryworld-koubo-selection/references/done-topics.md` 追加一行（日期、选题、形式）。
+- 用户确认开做后，向 `tryworld-topics/references/done-topics.md` 追加一行（日期、选题、形式）。
 
 ## 子命令
 
@@ -108,7 +108,7 @@ B站：晚上 20:30
 成片交付后自动运行（不阻塞交付）：
 
 ```powershell
-powershell -File "C:\Users\18225\.codex\skills\tryworld-koubo-pipeline\scripts\notify_delivery.ps1" -ProjectDir "E:\Codex口播视频\<项目slug>"
+powershell -File "C:\Users\18225\.codex\skills\tryworld-koubo\scripts\notify_delivery.ps1" -ProjectDir "E:\Codex口播视频\<项目slug>"
 ```
 
 - 邮件内容：主题 `✅ TryWorld 口播成片已交付 · <项目> · <日期>`；正文 = 完成提示 + 【平台标题】文字（读取 titles.txt 直接写入正文，不作为附件）+ 【四平台发布计划】。

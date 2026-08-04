@@ -1,4 +1,4 @@
-﻿# tryworld-koubo-pipeline · 成片交付邮件通知（Windows PowerShell）
+# tryworld-koubo · 成片交付邮件通知（Windows PowerShell）
 # 用法: powershell -File scripts/notify_delivery.ps1 -ProjectDir <项目目录> [-DryRun]
 param(
   [string]$ProjectDir = (Get-Location).Path,
@@ -60,7 +60,7 @@ $titlesText
 B站：晚上 20:30
 微信视频号：晚上 20:30
 
-—— tryworld-koubo-pipeline 自动通知
+—— tryworld-koubo 自动通知
 "@
 
 if ($DryRun) {

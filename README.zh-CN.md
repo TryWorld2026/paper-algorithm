@@ -26,47 +26,47 @@
 
 | | 技能 | 角色 | 一句话 | 核心产出 |
 |---|---|---|---|---|
-| 🎬 | [tryworld-koubo-pipeline](skills/tryworld-koubo-pipeline/) | 口播**统一入口** | 一句人话，自动路由选题/写稿/优化/出片 | 全流程交付 + 邮件通知 |
-| 📜 | [tryworld-paper-algorithm](skills/tryworld-paper-algorithm/) | 纸上算法视频制作 | 口播稿 → 品牌化横屏视频 | 主视频 · 横竖封面 · 标题 · 字幕 |
-| 🎯 | [tryworld-koubo-selection](skills/tryworld-koubo-selection/) | AI 资讯选题 | 从 AIHOT 最新动态里筛值得做的选题 | 3-8 个候选选题清单 |
-| 🔬 | [tryworld-hv-analysis](skills/tryworld-hv-analysis/) | 横纵分析法深度研究 | 纵向历程 × 横向竞品，双轴交叉出洞察 | 精美 PDF 研究报告 |
-| ✍️ | [tryworld-writer](skills/tryworld-writer/) | 公众号长文写作 | 按试界风格把素材写成公众号长文 | 长文成品 |
+| 🎬 | [tryworld-koubo](skills/tryworld-koubo/) | 口播**统一入口** | 一句人话，自动路由选题/写稿/优化/出片 | 全流程交付 + 邮件通知 |
+| 📜 | [tryworld-paper](skills/tryworld-paper/) | 纸上算法视频制作 | 口播稿 → 品牌化横屏视频 | 主视频 · 横竖封面 · 标题 · 字幕 |
+| 🎯 | [tryworld-topics](skills/tryworld-topics/) | AI 资讯选题 | 从 AIHOT 最新动态里筛值得做的选题 | 3-8 个候选选题清单 |
+| 🔬 | [tryworld-research](skills/tryworld-research/) | 横纵分析法深度研究 | 纵向历程 × 横向竞品，双轴交叉出洞察 | 精美 PDF 研究报告 |
+| ✍️ | [tryworld-write](skills/tryworld-write/) | 公众号长文写作 | 按试界风格把素材写成公众号长文 | 长文成品 |
 
 ## 🎬 口播工作流
 
 ```mermaid
 flowchart LR
-    U(["你的一句话"]) --> P["🎬 tryworld-koubo-pipeline<br/>统一入口 · 自动路由"]
-    P -- "模式 A · 直接给稿" --> A["📜 tryworld-paper-algorithm<br/>优化 → 确认 → 出片"]
-    P -- "模式 B · 帮我选题" --> S["🎯 tryworld-koubo-selection<br/>AIHOT 资讯 → 选题清单"]
+    U(["你的一句话"]) --> P["🎬 tryworld-koubo<br/>统一入口 · 自动路由"]
+    P -- "模式 A · 直接给稿" --> A["📜 tryworld-paper<br/>优化 → 确认 → 出片"]
+    P -- "模式 B · 帮我选题" --> S["🎯 tryworld-topics<br/>AIHOT 资讯 → 选题清单"]
     S -- "你挑选" --> A
     A --> O["✅ 成片交付<br/>视频 · 封面 · 标题 · 发布计划"]
     O -. "自动" .-> M["📧 邮件通知<br/>产物 + 四平台发布时间"]
-    H["🔬 tryworld-hv-analysis"] -. "独立" .-> R["📄 PDF 报告"]
-    W["✍️ tryworld-writer"] -. "独立" .-> C["📝 公众号长文"]
+    H["🔬 tryworld-research"] -. "独立" .-> R["📄 PDF 报告"]
+    W["✍️ tryworld-write"] -. "独立" .-> C["📝 公众号长文"]
 ```
 
-口播链路只记一个入口：**`$tryworld-koubo-pipeline`**。给稿走模式 A，要选题走模式 B；`tryworld-hv-analysis` 与 `tryworld-writer` 独立使用。
+口播链路只记一个入口：**`$tryworld-koubo`**。给稿走模式 A，要选题走模式 B；`tryworld-research` 与 `tryworld-write` 独立使用。
 
 ## 🧩 技能详解
 
-### 🎬 tryworld-koubo-pipeline — 口播总入口
+### 🎬 tryworld-koubo — 口播总入口
 
 > 整个口播流程的调度中枢。
 
 - **能力**：自动识别"直接给稿"（模式 A）与"要选题"（模式 B）；子命令「只要选题 / 只要写稿 / 只优化不出片」；去重判定（扫描工作区成片）；成片交付后自动发邮件通知。
-- **典型用法**：`帮我做一期口播` / `用 $tryworld-koubo-pipeline 出片`
+- **典型用法**：`帮我做一期口播` / `用 $tryworld-koubo 出片`
 - **依赖**：调度其余技能 · `qq-email`
 
-### 📜 tryworld-paper-algorithm — 纸上算法视频制作
+### 📜 tryworld-paper — 纸上算法视频制作
 
 > 一页会动的算法笔记：纸面是舞台，墨迹是文字，朱红是重点，印章是签名。
 
 - **能力**：口播稿优化净化 → 云希配音（Azure YunxiNeural）→ HyperFrames 构图渲染 → 横竖封面 + 平台标题 + 字幕时间轴；右上角「试界原创」印章全程常驻。
-- **典型用法**：`$tryworld-paper-algorithm` 把这篇口播稿做成视频
+- **典型用法**：`$tryworld-paper` 把这篇口播稿做成视频
 - **依赖**：HyperFrames · edge-tts · FFmpeg · Node.js ≥ 22 · Python 3.10+
 
-### 🎯 tryworld-koubo-selection — AI 口播选题
+### 🎯 tryworld-topics — AI 口播选题
 
 > 每天几百条 AI 新闻，压缩成 3-8 个"能做、能火、不重复"的选题。
 
@@ -74,7 +74,7 @@ flowchart LR
 - **典型用法**：`帮我选题` / `这周做什么口播`
 - **依赖**：AIHOT API · PowerShell / curl
 
-### 🔬 tryworld-hv-analysis — 横纵分析法深度研究
+### 🔬 tryworld-research — 横纵分析法深度研究
 
 > 纵轴追生命历程，横轴比竞品格局，交叉出独到洞察。
 
@@ -82,7 +82,7 @@ flowchart LR
 - **典型用法**：`用横纵分析法研究一下 XX`
 - **依赖**：Python · WeasyPrint · Markdown
 
-### ✍️ tryworld-writer — 公众号长文写作
+### ✍️ tryworld-write — 公众号长文写作
 
 > 试界风格的公众号长文生产器。
 
@@ -114,14 +114,14 @@ flowchart LR
 Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.codex\skills" -Recurse
 
 # 或只安装单个技能
-Copy-Item -Path .\skills\tryworld-paper-algorithm -Destination "$env:USERPROFILE\.codex\skills" -Recurse
+Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.codex\skills" -Recurse
 ```
 
 其他宿主也可放到 `~/.agents/skills`。安装后在 Codex 会话中直接说：
 
 ```text
 帮我做一期口播
-用 $tryworld-koubo-pipeline 出片
+用 $tryworld-koubo 出片
 ```
 
 ## 🗂 目录结构
@@ -135,22 +135,22 @@ tryworld-skills/
 ├── README.zh-CN.md              # 索引（简体中文）
 ├── LICENSE                      # CC BY-NC 4.0
 └── skills/
-    ├── tryworld-koubo-pipeline/      # 口播总入口（路由 + 邮件通知）
-    ├── tryworld-paper-algorithm/     # 纸上算法视频制作
-    ├── tryworld-koubo-selection/     # AIHOT 口播选题
-    ├── tryworld-hv-analysis/         # 横纵分析法深度研究
-    └── tryworld-writer/              # 公众号长文写作
+    ├── tryworld-koubo/      # 口播总入口（路由 + 邮件通知）
+    ├── tryworld-paper/     # 纸上算法视频制作
+    ├── tryworld-topics/     # AIHOT 口播选题
+    ├── tryworld-research/         # 横纵分析法深度研究
+    └── tryworld-write/              # 公众号长文写作
 ```
 
 ## 🛠 技术栈
 
 | 技能 | 依赖 |
 |---|---|
-| tryworld-paper-algorithm | HyperFrames · edge-tts（Azure YunxiNeural）· FFmpeg · Node.js ≥ 22 · Python 3.10+ |
-| tryworld-koubo-selection | PowerShell / curl · AIHOT API |
-| tryworld-hv-analysis | Python · WeasyPrint · Markdown |
-| tryworld-koubo-pipeline | 调度上述技能 · `qq-email`（SMTP / IMAP） |
-| tryworld-writer | — |
+| tryworld-paper | HyperFrames · edge-tts（Azure YunxiNeural）· FFmpeg · Node.js ≥ 22 · Python 3.10+ |
+| tryworld-topics | PowerShell / curl · AIHOT API |
+| tryworld-research | Python · WeasyPrint · Markdown |
+| tryworld-koubo | 调度上述技能 · `qq-email`（SMTP / IMAP） |
+| tryworld-write | — |
 
 ## ⚖️ 许可
 
