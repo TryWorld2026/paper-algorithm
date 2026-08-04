@@ -103,6 +103,28 @@ B站：晚上 20:30
 微信视频号：晚上 20:30
 ```
 
+### 成片交付邮件通知（自动执行）
+
+成片交付后自动运行（不阻塞交付）：
+
+```powershell
+powershell -File "C:\Users\18225\.codex\skills\tryworld-koubo-pipeline\scripts\notify_delivery.ps1" -ProjectDir "E:\Codex口播视频\<项目slug>"
+```
+
+- 邮件内容：主题 `✅ TryWorld 口播成片已交付 · <项目> · <日期>`；正文 = 完成提示 + 【平台标题】文字（读取 titles.txt 直接写入正文，不作为附件）+ 【四平台发布计划】。
+- 附件规则（QQ 邮箱附件上限约 50MB，含 base64 开销，单文件安全阈值 35MB）：
+  - 横版封面 / 竖版封面：总是作为附件；
+  - 平台标题：不附文件，文字写入正文；
+  - 主视频：≤35MB 作为附件；超过则跳过并在正文注明文件名与大小。
+- 编码处理：脚本用 .NET Process 直连 node（参数 UTF-16、正文 UTF-8 字节写 stdin、附件 `--attach` 传路径），避免 PowerShell 5.1 中文乱码；`qq-email` 的 `send.js` 已支持 `--attach <文件>`（可重复）。
+- 如需把大视频随邮件发送：先将视频压到 35MB 内（如降低码率/分辨率），或改用网盘/仓库链接。
+- 前置：调用 `$qq-email` 的 `send.js`，需要环境变量 `QQ_EMAIL_ACCOUNT`（收件人=自己）与 `QQ_EMAIL_AUTH_CODE`（IMAP/SMTP 授权码）。
+- 凭证未配置或 send.js 缺失：脚本警告并跳过，不影响交付。
+- 凭证读取顺序：进程环境变量 → 注册表用户环境变量（HKCU:\Environment）→ 缺失则跳过；setx 配置后无需重启即生效。
+- 预览不发送：加 `-DryRun` 参数。
+- 配置方式（用户自行执行，勿在对话中粘贴授权码）：
+  `setx QQ_EMAIL_ACCOUNT "你的QQ邮箱"` 与 `setx QQ_EMAIL_AUTH_CODE "授权码"`，重开终端生效。
+
 ## 异常处理
 
 - AIHOT 请求 403/失败：检查 User-Agent；重试一次；仍失败则说明并暂停。

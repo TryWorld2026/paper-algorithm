@@ -45,6 +45,7 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 
 - 主视频（烧录字幕）、口播稿/文案、横竖封面、平台标题、字幕时间轴
 - **发布计划.txt**（固定内容）：小红书 中午 12:30 / 抖音 晚上 19:30 / B站 晚上 20:30 / 微信视频号 晚上 20:30
+- **成片交付后自动发通知邮件**：运行 `scripts/notify_delivery.ps1 -ProjectDir <项目目录>`，邮件含产物路径（视频/横竖封面/平台标题）+ 四平台发布时间提醒；凭证未配置时跳过，不阻塞交付。详见 `references/workflow.md`。
 
 ## 工程约定
 
@@ -54,3 +55,4 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 ## 资源
 
 - `references/workflow.md`：两种模式详细步骤、去重扫描命令、写稿细节、异常处理
+- `scripts/notify_delivery.ps1`：成片交付邮件通知（调用 `$qq-email` 发信）
