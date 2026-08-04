@@ -17,23 +17,27 @@
   <rect width="1920" height="560" fill="url(#glow)"/>
   <rect width="1920" height="560" filter="url(#grain)"/>
   <g font-family="Georgia, 'Noto Serif SC', 'Songti SC', 'SimSun', serif">
-    <text x="120" y="216" font-size="100" font-weight="700" fill="#F4EFE4" letter-spacing="4">试界 TryWorld</text>
-    <text x="123" y="282" font-size="32" fill="#C0452F" letter-spacing="12">SKILLS · 纸上算法</text>
-    <text x="120" y="352" font-size="30" fill="rgba(244,239,228,0.82)">把 AI 讲清楚，让每个普通人都看得懂、用得上。</text>
-    <g font-size="22" font-family="'Noto Serif SC','Songti SC','SimSun',serif">
-      <rect x="120" y="404" width="206" height="50" rx="25" fill="#F4EFE4"/>
-      <text x="223" y="436" text-anchor="middle" fill="#1C1916">口播视频</text>
-      <rect x="346" y="404" width="206" height="50" rx="25" fill="#F4EFE4"/>
-      <text x="449" y="436" text-anchor="middle" fill="#1C1916">深度研究</text>
-      <rect x="572" y="404" width="236" height="50" rx="25" fill="#F4EFE4"/>
-      <text x="690" y="436" text-anchor="middle" fill="#1C1916">公众号写作</text>
+    <text x="120" y="206" font-size="100" font-weight="700" fill="#F4EFE4" letter-spacing="4">试界 TryWorld</text>
+    <text x="123" y="272" font-size="32" fill="#C0452F" letter-spacing="12">SKILLS · 纸上算法</text>
+    <text x="120" y="342" font-size="30" fill="rgba(244,239,228,0.82)">把 AI 讲清楚，让每个普通人都看得懂、用得上。</text>
+    <g font-size="20" font-family="'Noto Serif SC','Songti SC','SimSun',serif">
+      <rect x="120" y="400" width="206" height="48" rx="24" fill="#F4EFE4"/>
+      <text x="223" y="431" text-anchor="middle" fill="#1C1916">口播总入口</text>
+      <rect x="344" y="400" width="190" height="48" rx="24" fill="#F4EFE4"/>
+      <text x="439" y="431" text-anchor="middle" fill="#1C1916">视频制作</text>
+      <rect x="552" y="400" width="176" height="48" rx="24" fill="#F4EFE4"/>
+      <text x="640" y="431" text-anchor="middle" fill="#1C1916">AI 选题</text>
+      <rect x="746" y="400" width="196" height="48" rx="24" fill="#F4EFE4"/>
+      <text x="844" y="431" text-anchor="middle" fill="#1C1916">深度研究</text>
+      <rect x="960" y="400" width="222" height="48" rx="24" fill="#F4EFE4"/>
+      <text x="1071" y="431" text-anchor="middle" fill="#1C1916">公众号写作</text>
     </g>
   </g>
-  <g transform="translate(1668, 180)">
+  <g transform="translate(1668, 170)">
     <rect x="0" y="0" width="156" height="156" rx="14" fill="none" stroke="#C0452F" stroke-width="3"/>
     <rect x="11" y="11" width="134" height="134" rx="9" fill="none" stroke="#C0452F" stroke-width="1.5"/>
     <text x="78" y="102" font-size="42" fill="#C0452F" text-anchor="middle" font-family="'Noto Serif SC','Songti SC','SimSun',serif">试界原创</text>
   </g>
-  <rect x="120" y="492" width="520" height="4" rx="2" fill="url(#rule)"/>
-  <text x="120" y="530" font-size="20" fill="rgba(244,239,228,0.45)" letter-spacing="2" font-family="'Noto Serif SC','Songti SC','SimSun',serif">Codex Skills Collection · 2026</text>
+  <rect x="120" y="488" width="520" height="4" rx="2" fill="url(#rule)"/>
+  <text x="120" y="528" font-size="20" fill="rgba(244,239,228,0.45)" letter-spacing="2" font-family="'Noto Serif SC','Songti SC','SimSun',serif">Codex Skills Collection · 2026</text>
 </svg>
