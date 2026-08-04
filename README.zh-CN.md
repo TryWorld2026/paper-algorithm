@@ -106,7 +106,9 @@ tryworld-skills/
 
 ## ⚖️ 许可
 
-保留所有权利；在添加开源许可证之前，请勿直接分发。
+本仓库采用 [知识共享 署名-非商业性使用 4.0 国际（CC BY-NC 4.0）](https://creativecommons.org/licenses/by-nc/4.0/)：允许署名、非商业用途的自由分享与演绎，**禁止商业用途**。
+
+[![CC BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc/4.0/)
 
 ---
 

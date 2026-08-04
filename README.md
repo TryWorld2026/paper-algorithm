@@ -106,7 +106,9 @@ tryworld-skills/
 
 ## ⚖️ License
 
-All rights reserved. Please do not redistribute until an open-source license is attached.
+This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/). You may share and adapt the material for **non-commercial** purposes, with attribution. Commercial use is not permitted.
+
+[![CC BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc/4.0/)
 
 ---
 
