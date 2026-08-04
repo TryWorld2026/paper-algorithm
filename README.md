@@ -1,41 +1,88 @@
-TryWorld Skills
+﻿<div align="center">
 
-A content production system.
+# TryWorld Skills
 
-System
-五个 skill。固定顺序。从选题到交付。
-不是工具集合。是生产链路。
-每个 skill 有明确的输入、输出和质量门禁。skill 之间不重叠，但可以独立调用。
+**一套为真实工作流设计的 AI Skills 合集**
 
-Skills
-S01 · tryworld-koubo-selection — 从 AIHOT 最新资讯中筛出值得做的选题。3 到 8 个候选。每个都带角度、素材链接、流量原理、优先级。
-[查看 skill →](skills/tryworld-koubo-selection/README.md)
+[![License: MIT](assets/license-badge.svg)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-index.html-green)](docs/index.html)
+[![GitHub](https://img.shields.io/badge/GitHub-TryWorld2026%2Ftryworld--skills-blue)](https://github.com/TryWorld2026/tryworld-skills)
 
-S02 · tryworld-koubo-pipeline — 口播视频总入口。模式 A：已有口播稿，直接优化、出片。模式 B：从选题开始，完整执行到交付。
-[查看 skill →](skills/tryworld-koubo-pipeline/README.md)
+</div>
 
-S03 · tryworld-paper-algorithm — 纸上算法视频。纸张质感。墨水蓝。朱红印章。Azure YunxiNeural 配音。交付：主视频、横竖封面、平台标题、字幕时间轴。
-[查看 skill →](skills/tryworld-paper-algorithm/README.md)
+---
 
-S04 · tryworld-writer — 公众号长文写作。不是文风生成器。是把自己的素材、观察、产品体验，转成一篇有节奏、有判断、有真人感的文章。四层自检。固定风格契约。
-[查看 skill →](skills/tryworld-writer/README.md)
+## 设计理念
 
-S05 · tryworld-hv-analysis — 横纵分析深度研究。把一个产品、公司、概念或人物的研究，压成一篇可以直接交付的 PDF。纵向：从诞生到当下。横向：与竞品对比。交汇：给出新判断。
-[查看 skill →](skills/tryworld-hv-analysis/README.md)
+大多数人不需要又一个“万能提示词”。  
+你需要的是**可复用、可检查、可交接**的工作流。
 
-Workflow
-S01 → S02 → S03 → S04 → S05
+这套 Skills 的定位很明确：
+- 按任务组织，而不是按模型组织；
+- 每个 skill 都是完整工作流，不是零散话术；
+- 输出结果可直接交付，或交给下一个人继续使用。
 
-主链路。不是每个项目都需要跑完全程。
-每个 skill 都可以独立调用。只选题、只写稿、只优化不出片，都可以。
+---
 
-Principles
-链路完整，不是单点工具。风格锁死，不是每次都随机生成。真实优先，不编造数据、不虚构经历。交付可验收，不是给半成品。
+## 核心技能
 
-Usage
+| Skill | 一句话定位 | 典型输出 |
+|---|---|---|
+| `tryworld-hv-analysis` | 纵横分析 | 结构化研究报告 / PDF |
+| `tryworld-koubo-selection` | 投放选题 | 选题卡片池 / 对比结论 |
+| `tryworld-koubo-pipeline` | 内容生产流程 | 选题到成品的 pipeline |
+| `tryworld-paper-algorithm` | 论文与算法拆解 | 论文解读 / 算法讲解稿 |
+| `tryworld-writer` | 深度写作 | 公众号长文 / 专栏稿 |
+
+---
+
+## 快速开始
+
+```bash
 git clone https://github.com/TryWorld2026/tryworld-skills.git
-cd tryworld-skills
+cd tryworld-skills/skills/<skill-name>
+```
 
-进入对应 skill 目录，阅读 README。每个 skill 都有独立的使用说明和触发条件。
+每个 skill 目录内都有独立的 `SKILL.md`，可直接按文档执行。
 
-CC BY-NC 4.0 · 非商业使用可自由转载和修改，请注明出处
+---
+
+## 推荐用法
+
+- 复杂研究类任务：先用 `tryworld-hv-analysis` 建立信息结构
+- 内容投放类任务：再进入 `tryworld-koubo-selection` 与 `tryworld-koubo-pipeline`
+- 技术传播类任务：使用 `tryworld-paper-algorithm` 拆解论文
+- 高质量长文：使用 `tryworld-writer` 完成深度写作
+
+建议把多个 skill 串成流水线，而不是指望一个 skill 解决所有问题。
+
+---
+
+## 仓库结构
+
+```
+tryworld-skills/
+├── assets/
+├── docs/
+├── skills/
+│   ├── tryworld-hv-analysis/
+│   ├── tryworld-koubo-pipeline/
+│   ├── tryworld-koubo-selection/
+│   ├── tryworld-paper-algorithm/
+│   └── tryworld-writer/
+├── LICENSE
+└── README.md
+```
+
+---
+
+## 贡献
+
+欢迎补充新的 skill，或优化现有工作流。  
+PR / Issue 皆可。
+
+---
+
+## License
+
+MIT
