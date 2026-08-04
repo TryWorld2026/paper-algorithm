@@ -1,154 +1,163 @@
-﻿<div align="center">
+<p align="center">
+  <img src="assets/hero.svg" alt="TryWorld Skills" width="100%">
+</p>
 
-![TryWorld Skills Hero](assets/hero.svg)
+<p align="center">
+  <b>TryWorld · A Codex Skills Collection</b><br/>
+  one complete content pipeline — from topic selection to video delivery, deep research, and long-form writing
+</p>
 
-# TryWorld Skills
+<p align="center">
+  <b>English</b> · <a href="README.zh-CN.md">简体中文</a>
+</p>
 
-### 一套面向交付的 AI 技能系统
-
-> 这里的目标不是提供“万能提示词”，而是提供可以研究、选题、写作、生产的工作流系统。  
-> 目标不是更会写 prompt，而是减少无效修改、加速交付，并把人的判断保留到最后。
-
-<br/>
-
-[![GitHub stars](https://img.shields.io/github/stars/TryWorld2026/tryworld-skills?style=social)](https://github.com/TryWorld2026/tryworld-skills)
-[![License](https://img.shields.io/badge/license-MIT-success?style=for-the-badge)](LICENSE)
-[![Docs](https://img.shields.io/badge/docs-index.html-0a0a0a?style=for-the-badge&logo=readthedocs&logoColor=white)](docs/index.html)
-[![GitHub](https://img.shields.io/badge/GitHub-TryWorld2026%2Ftryworld--skills-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/TryWorld2026/tryworld-skills)
-
-</div>
-
----
-
-## 中文说明
-
-这个仓库不是在堆 skill 数量。  
-精炼的方向只有一条：把 AI 能力收束到真实任务里，而不是散成零散话术。
-
-- 研究类任务先做结构化结论
-- 选题类任务再落到可执行的选题卡
-- 技术内容继续进入论文/算法拆解
-- 文章交付进入深度写作与成稿
-
-它适合想要减少返工、提升交付质量的人。
+<p align="center">
+  <img src="https://img.shields.io/badge/status-active-8FAF8C?style=flat-square" alt="status">
+  <img src="https://img.shields.io/badge/skills-5-1C1916?style=flat-square" alt="skills">
+  <img src="https://img.shields.io/badge/platform-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="platform">
+  <img src="https://img.shields.io/badge/license-CC%20BY--NC%204.0-C0452F?style=flat-square" alt="license">
+</p>
 
 ---
 
-## English Intro
+> **Making AI clear for everyone.** Five skills, each solving one link of the content chain — together they form an end-to-end voiceover pipeline: from "what should I make" to delivered videos, automatic email notices, and a four-platform publishing schedule.
 
-This repo is not a prompt dump.  
-It is a structured set of skills focused on research, selection, writing, and content production.
+## ✨ Skills at a Glance
 
-Use it when you want:
-- cleaner research outputs,
-- more executable topic choices,
-- repeatable writing and production workflows,
-- and a system that can be handed off instead of rebuilt each time.
+| | Skill | Role | One-liner | Key Deliverables |
+|---|---|---|---|---|
+| 🎬 | [tryworld-koubo-pipeline](skills/tryworld-koubo-pipeline/) | **Voiceover entry point** | One sentence in, auto-routed end to end | Full delivery + email notice |
+| 📜 | [tryworld-paper-algorithm](skills/tryworld-paper-algorithm/) | Paper Algorithm video production | Script → branded horizontal video | Video · covers · titles · captions |
+| 🎯 | [tryworld-koubo-selection](skills/tryworld-koubo-selection/) | AI-news topic selection | Pick worth-making topics from AIHOT | 3–8 candidate topics |
+| 🔬 | [tryworld-hv-analysis](skills/tryworld-hv-analysis/) | Horizontal–Vertical deep research | Life arc × competitive landscape | Polished PDF report |
+| ✍️ | [tryworld-writer](skills/tryworld-writer/) | WeChat long-form writing | Material → TryWorld-style article | Finished long-form article |
 
----
+## 🎬 The Voiceover Workflow
 
-## 核心能力总览
+```mermaid
+flowchart LR
+    U(["One sentence from you"]) --> P["🎬 tryworld-koubo-pipeline<br/>Single entry · auto-route"]
+    P -- "Mode A · script given" --> A["📜 tryworld-paper-algorithm<br/>Optimize → confirm → produce"]
+    P -- "Mode B · pick a topic" --> S["🎯 tryworld-koubo-selection<br/>AIHOT news → topic list"]
+    S -- "you choose" --> A
+    A --> O["✅ Deliverables<br/>Video · covers · titles · schedule"]
+    O -. "automatic" .-> M["📧 Email notice<br/>Deliverables + publish times"]
+    H["🔬 tryworld-hv-analysis"] -. "standalone" .-> R["📄 PDF report"]
+    W["✍️ tryworld-writer"] -. "standalone" .-> C["📝 WeChat article"]
+```
 
-| Skill | 定位 | 典型交付物 |
+For the video pipeline, remember one entry: **`$tryworld-koubo-pipeline`**. Hand it a script (Mode A) or ask for topics (Mode B). `tryworld-hv-analysis` and `tryworld-writer` are standalone.
+
+## 🧩 Inside Each Skill
+
+### 🎬 tryworld-koubo-pipeline — The Voiceover Router
+
+> The brain of the whole pipeline.
+
+- **What it does**：Detects "script given" (Mode A) vs "pick a topic" (Mode B)；sub-commands（topics only / draft only / optimize only）；dedup by scanning finished deliverables；sends an automatic email notice after delivery.
+- **Try it**：`Make me a TryWorld voiceover video` / `Use $tryworld-koubo-pipeline to produce this`
+- **Depends on**：the other skills · `qq-email`
+
+### 📜 tryworld-paper-algorithm — Paper Algorithm Video Production
+
+> A page of moving algorithm notes: paper is the stage, ink is the text, vermillion is the accent, the seal is the signature.
+
+- **What it does**：Optimizes the script → Azure YunxiNeural voiceover → HyperFrames composition & render → covers, platform titles, caption timeline；a vermillion「试界原创」seal stays visible throughout.
+- **Try it**：`Use $tryworld-paper-algorithm to make a video from this script`
+- **Depends on**：HyperFrames · edge-tts · FFmpeg · Node.js ≥ 22 · Python 3.10+
+
+### 🎯 tryworld-koubo-selection — AI-News Topic Selection
+
+> Compress hundreds of daily AI headlines into 3–8 topics worth making — fresh, catchy, and not repeated.
+
+- **What it does**：Pulls curated AIHOT items（models / products / industry / papers / tips），scores them against growth principles，each candidate ships with an angle, source links, and priority；auto-skips topics already produced.
+- **Try it**：`Help me pick topics` / `What should I cover this week`
+- **Depends on**：AIHOT API · PowerShell / curl
+
+### 🔬 tryworld-hv-analysis — Horizontal–Vertical Deep Research
+
+> Trace the life arc vertically, compare the landscape horizontally, cross the two axes for insight.
+
+- **What it does**：Deep research on a product, company, concept, or person；outputs a beautifully formatted PDF report.
+- **Try it**：`Research XX with Horizontal–Vertical Analysis`
+- **Depends on**：Python · WeasyPrint · Markdown
+
+### ✍️ tryworld-writer — WeChat Long-Form Writing
+
+> A TryWorld-style long-form article generator.
+
+- **What it does**：Turns source material（PDF / links / transcripts / briefs）into a finished WeChat article with the brand's voice and a submission email footer.
+- **Try it**：`Turn this into a WeChat article`
+- **Depends on**：—
+
+## 🎨 The Paper Algorithm Design System
+
+TryWorld videos follow one visual contract — **scientific manuscript + Chinese print tradition**.
+
+| Swatch | Value | Role |
 |---|---|---|
-| `tryworld-hv-analysis` | 纵横分析 | 研究报告 / PDF |
-| `tryworld-koubo-selection` | 投放选题 | 选题卡 / 对比结论 |
-| `tryworld-koubo-pipeline` | 内容生产流程 | 脚本、标题、发布说明 |
-| `tryworld-paper-algorithm` | 论文与算法拆解 | 视频脚本、标题、封面 |
-| `tryworld-writer` | 深度写作 | 公众号长文 / 专栏稿 |
+| Paper | `#F4EFE4` | Background |
+| Ink | `#1C1916` | Text & lines |
+| Vermillion | `#C0452F` | The only accent: keywords, numbers, seal |
+| Ink Blue | `#2E5E8C` | Secondary notes & chart guides |
 
----
+- **Type**：Noto Serif SC (headings) · LXGW WenKai / ZCOOL XiaoWei (notes) · monospace (data)
+- **Motion**：ink drop · brush stroke · seal stamp — three signature moves throughout
+- **Authenticity**：a vermillion「试界原创」seal stays in the top-right corner
 
-## Core Skills Summary
+## 🚀 Quick Start
 
-| Skill | Purpose | Output |
-|---|---|---|
-| `tryworld-hv-analysis` | Horizontal and vertical analysis | Research briefs / PDF |
-| `tryworld-koubo-selection` | Topic selection | Topic cards / priority ranking |
-| `tryworld-koubo-pipeline` | Production pipeline | Content checklists / platform metadata |
-| `tryworld-paper-algorithm` | Paper/algorithm storytelling | Script, titles, and covers |
-| `tryworld-writer` | Long-form writing | Columns, essays, drafts for publication |
+Each skill folder is self-contained. Copy it into your local skills directory:
 
----
+```powershell
+# Install all skills
+Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.codex\skills" -Recurse
 
-## 推荐链路
+# Or install a single skill
+Copy-Item -Path .\skills\tryworld-paper-algorithm -Destination "$env:USERPROFILE\.codex\skills" -Recurse
+```
 
-**研究 → 选题 → 结构化创作**
+`~/.agents/skills` works on other hosts too. Then just say it in Codex:
 
 ```text
-复杂研究
-  -> tryworld-hv-analysis
-
-内容投放
-  -> tryworld-koubo-selection
-  -> tryworld-koubo-pipeline
-
-技术内容
-  -> tryworld-paper-algorithm
-
-深度写作
-  -> tryworld-writer
+Make me a TryWorld voiceover video
+Use $tryworld-koubo-pipeline to produce this
 ```
 
-可以单点使用，也可以按这个顺序串联成系统。
+## 🗂 Repository Layout
 
----
-
-## Why This Repo Exists
-
-大多数 AI 技能仓库的问题不是太短，而是太散。  
-这个仓库的价值是把“研究、判断、表达、生产”做成一条更短、更可检查的链路。
-
-它适合：
-- 独立创作者
-- 内容策略者
-- 研究型写作者
-- 想把 AI 用得更系统，而不是更零散的人
-
----
-
-## How To Use
-
-```bash
-git clone https://github.com/TryWorld2026/tryworld-skills.git
-cd tryworld-skills/skills/<skill-name>
+```text
+tryworld-skills/
+├── assets/
+│   ├── hero.svg                 # Brand banner
+│   └── license-badge.svg        # License badge
+├── README.md                    # Index (English)
+├── README.zh-CN.md              # Index (简体中文)
+├── LICENSE                      # CC BY-NC 4.0
+└── skills/
+    ├── tryworld-koubo-pipeline/      # Voiceover entry (router + email notice)
+    ├── tryworld-paper-algorithm/     # Paper Algorithm video production
+    ├── tryworld-koubo-selection/     # AIHOT topic selection
+    ├── tryworld-hv-analysis/         # Horizontal–Vertical deep research
+    └── tryworld-writer/              # WeChat long-form writing
 ```
 
-直接进入对应 skill，查看 `SKILL.md` 开始使用。
+## 🛠 Tech Stack
+
+| Skill | Built with |
+|---|---|
+| tryworld-paper-algorithm | HyperFrames · edge-tts (Azure YunxiNeural) · FFmpeg · Node.js ≥ 22 · Python 3.10+ |
+| tryworld-koubo-selection | PowerShell / curl · AIHOT API |
+| tryworld-hv-analysis | Python · WeasyPrint · Markdown |
+| tryworld-koubo-pipeline | Orchestrates the above · `qq-email` (SMTP / IMAP) |
+| tryworld-writer | — |
+
+## ⚖️ License
+
+This work is licensed under a **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** license: share and adapt freely for **non-commercial** purposes, with attribution. Commercial use is not permitted. Full terms: [LICENSE](LICENSE).
+
+[![CC BY-NC 4.0](assets/license-badge.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
 ---
 
-## 特色
-
-- 按任务组织，而不是按模型组织
-- 每个 skill 都有输入合同、执行逻辑、输出格式和交接规则
-- 支持单点使用，也支持串成流水线
-- 目标不是看起来完整，而是能交付
-
----
-
-## License
-
-本项目采用 **MIT License**。
-
-### 许可证说明
-
-- **允许**：商用、修改、分发、私人使用
-- **条件**：保留原始版权与许可声明
-- **限制**：按原样提供，作者不承担后续责任或担保
-
-如果你要在项目内长期引用本仓库的方法论或脚本，请保留原始作者声明。
-
----
-
-# License
-
-This project is released under the **MIT License**.
-
-### License Notes
-
-- **Permitted**: commercial use, modification, distribution, private use
-- **Condition**: retain original copyright and license notice
-- **Limitation**: provided as-is without warranty; authors are not liable for downstream use
-
-If you reuse the methodology or scripts publicly, keep the original attribution visible.
+<p align="center"><sub>TryWorld · Making AI clear for everyone</sub></p>
