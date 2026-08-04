@@ -1,0 +1,4 @@
+interface:
+  display_name: "AIHOT 口播选题"
+  short_description: "基于 AIHOT 最新 AI 资讯，按试界TryWorld 定位产出口播选题清单与角度建议"
+  default_prompt: "Use $tryworld-koubo-selection to generate AI 口播选题 from the latest AIHOT news."
