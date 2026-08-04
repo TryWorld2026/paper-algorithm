@@ -17,6 +17,8 @@ TryWorld is a compact production system for AI-first content. It turns one short
 
 The interface is plain language. You speak in one sentence. The system decides whether to route into topic selection or direct production, then assembles deliverables with minimal back-and-forth.
 
+The value is not "another prompt collection." It is a repeatable content factory that binds topic selection, scripting, video production, research, and long-form writing into one coherent workflow.
+
 ## Skills
 
 <details open>
@@ -31,8 +33,8 @@ The interface is plain language. You speak in one sentence. The system decides w
 <details>
 <summary><b>02 · tryworld-paper-algorithm</b> — Paper Algorithm video production</summary>
 
-- Script → Azure YunxiNeural voiceover → HyperFrames composition & render → covers, titles, captions; the vermillion「试界原创」seal stays throughout.
-- Deliverables: video · covers · titles
+- Script optimization and cleanup → Azure YunxiNeural voiceover → HyperFrames composition and render → horizontal and vertical covers, platform titles, captions; the vermillion「试界原创」seal stays throughout.
+- Deliverables: main video · covers · titles
 - Depends on: HyperFrames · edge-tts · FFmpeg
 
 </details>
