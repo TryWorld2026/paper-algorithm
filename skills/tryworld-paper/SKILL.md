@@ -27,8 +27,8 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 ## 工作流
 
 1. **输入并通读理解**：口播稿（文本或 .txt/.md 文件）与可选图片。先通读全文，理解主题、受众、核心结论与章节结构；图片缺失时跳过图片场景，不允许降级风格。
-2. **优化并净化脚本**：按流量第一性原理优化口播稿（共鸣选题带流量、认可攒赞、槽点引评论、嘴替促转发、价值认同涨粉），再清除写作标记/结构标签（如"一、开场钩子"、"（插入截图）"）——标记不得以原文出现在视频中（不朗读、不上字幕、不显示），按意图转化为实际表达。规则见 workflow.md。
-3. **交付优化稿并等待确认**：把优化后的口播稿完整展示给用户审阅，附简明优化说明（改了什么、为什么）、元素落点清单（钩子/干货/槽点/嘴替/价值收尾）与数据来源清单；**未获用户确认前，禁止进入配音/构图/渲染**。
+2. **优化并净化脚本**：按流量第一性原理优化口播稿（共鸣选题带流量、认可攒赞、槽点引评论、嘴替促转发、价值认同涨粉），再按"活人感改稿七遍"清模型腔与注水（看谁在说 → 检查推进/删注水 → 拆表演性中文 → 听中文节奏 → 清硬禁项 → 核现实 → 查结尾，固定签名保留），随后清除写作标记/结构标签（如"一、开场钩子"、"（插入截图）"）——标记不得以原文出现在视频中（不朗读、不上字幕、不显示），按意图转化为实际表达。净化后正文与平台标题必须运行 `scripts/check_prose.py` 清零硬禁项。规则见 workflow.md。
+3. **交付优化稿并等待确认**：净化后正文先通过 `scripts/check_prose.py`（硬禁项清零），再把优化后的口播稿完整展示给用户审阅，附简明优化说明（改了什么、为什么）、元素落点清单（钩子/干货/槽点/嘴替/价值收尾）与数据来源清单；**未获用户确认前，禁止进入配音/构图/渲染**。
 4. **分段**：按净化后口播时长分段，每章 40-90 秒；不足 1 分钟不分章；口播目标不超过约 10 分钟，超长稿先提炼核心精华压缩再分段；标记章节标题、关键词、数据点、图片提示。
 5. **配音**：`python scripts/tts_yunxi.py <净化后的脚本> --out work/audio` 生成云希配音、分段时间与合并音轨。
 6. **时间轴**：字幕时间轴来自 `work/audio/sentences.json`（edge-tts 句级时间戳，已带绝对时间）；如需词级时间轴可用 `npx hyperframes transcribe`（依赖 whisper，可选）。
@@ -38,7 +38,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 10. **渲染前核验**：渲染前必须按 workflow.md 的"渲染前核验清单"逐项对照本文件与 style-system.md 的全部要求，确认无误后才允许渲染；任一项不满足先修改再渲染，避免返工。
 11. **渲染**：`npx hyperframes render --fps 30 --quality high` 输出主视频（先 `--quality draft` 预览确认，再 high 出片）。
 12. **封面**：按 style-system.md 封面系统独立设计 4:3 与 3:4 静态构图（深墨海报，与视频浅纸面两套视觉语言；禁止截取主视频画面），渲染后取帧为 PNG。
-13. **标题**：按 titles.md 生成 3-5 个候选，标注平台推荐与命中的增长原则（共鸣/认可/槽点/嘴替/价值认同）。
+13. **标题**：按 titles.md 生成 3-5 个候选，标注平台推荐与命中的增长原则（共鸣/认可/槽点/嘴替/价值认同）；候选标题同守硬禁词（禁冒号/破折号/翻案句/黑话/模型路标），生成后自检或跑 `scripts/check_prose.py` 清零。
 14. **交付**：主视频（烧录字幕）、横竖封面、标题、字幕文件统一放入 `outputs/`。
 
 ## 质量门禁（不通过不交付）
@@ -62,6 +62,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 渲染前核验：渲染前必须逐项对照本文件与 style-system.md/workflow.md 的全部规则并确认通过，未通过禁止渲染。
 - 封面：必须独立构图设计，禁止从主视频截帧或裁切充当封面；封面采用深墨海报视觉，与视频浅纸面画面保持两套语言，避免被平台判定为截图。
 - 防 AI 味：禁止紫蓝霓虹、黑底光效、通用科技字体、机械匀速动画、空荡背景、每句整屏大字。
+- 活人感：净化后口播稿正文与 `titles.txt` 硬禁项清零——冒号（中文/英文）、破折号、"不是……而是……"类翻案句、"不丢/说白了/说穿了/先说结论"、模型洞察路标、商业与模型黑话（清单见 `scripts/check_prose.py`）；`check_prose.py` 失败不交付。
 
 ## 语音回退（按序）
 
@@ -75,5 +76,6 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - `references/workflow.md`：详细生产流程与命令
 - `references/titles.md`：平台标题规则
 - `scripts/tts_yunxi.py`：云希配音管线
+- `scripts/check_prose.py`：活人感硬禁项检查脚本（TryWorld 改造版，源自 KKKKhazix/human-writing v1.0.0，MIT）
 - `assets/paper-grain.svg`：纸纹叠加层
 - `assets/seal.svg`：朱红"试界原创"印章

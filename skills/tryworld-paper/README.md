@@ -60,7 +60,7 @@
 ## 工作流
 
 ```text
-口播稿 → 读稿理解 → 第一性原理优化 → 净化写作标记 → 用户确认优化稿 → 句级切分 → 云希配音 → 句级时间轴
+口播稿 → 读稿理解 → 第一性原理优化 → 活人感改稿七遍 → 净化写作标记 → 硬禁项检查（check_prose.py 清零） → 用户确认优化稿 → 句级切分 → 云希配音 → 句级时间轴
    → 章节/场景规划 → HyperFrames 构图 → lint/validate/inspect --strict
    → 渲染前核验 → 渲染 16:9 主视频 → 横竖封面 → 平台标题 → outputs/ 交付
 ```
@@ -87,7 +87,8 @@ tryworld-paper/
 │   ├── workflow.md             # 生产流程与命令
 │   └── titles.md               # 平台标题规则
 ├── scripts/
-│   └── tts_yunxi.py            # 云希配音管线（句级切分 + 拼接 + 时间轴）
+│   ├── tts_yunxi.py            # 云希配音管线（句级切分 + 拼接 + 时间轴）
+│   └── check_prose.py          # 活人感硬禁项检查（源自 human-writing v1.0.0，MIT）
 └── assets/
     ├── paper-grain.svg         # 纸纹叠加层
     └── seal.svg                # 朱红"试界原创"印章
@@ -110,4 +111,4 @@ tryworld-paper/
 
 ## 许可
 
-本仓库暂未附带开源许可证；在添加许可证之前，默认保留所有权利。
+本仓库暂未附带开源许可证；在添加许可证之前，默认保留所有权利。其中 `scripts/check_prose.py` 源自 [KKKKhazix/human-writing](https://github.com/KKKKhazix/human-writing) v1.0.0，按 MIT License 使用与改造，版权归原作者所有。
