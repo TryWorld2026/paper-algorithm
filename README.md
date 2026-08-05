@@ -2,10 +2,10 @@
   <img src="assets/hero.svg" alt="TryWorld Skills" width="100%">
 </p>
 
-<p align="center">
-  <b>TryWorld · A Codex Skills Collection</b><br/>
-  one complete content pipeline — from topic selection to video delivery, deep research, and long-form writing
-</p>
+<div align="center">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC','SimSun',serif; font-size:18px; color:#1C1916; letter-spacing:8px;">PAPER ALGORITHM · 纸上算法</b><br/>
+  <span style="color:#5C5445; font-size:14px;">From one sentence to a full production line — making AI clear for everyone.</span>
+</div>
 
 <p align="center">
   <b>English</b> · <a href="README.zh-CN.md">简体中文</a>
@@ -20,19 +20,78 @@
 
 ---
 
-> **Making AI clear for everyone.** Five skills, each solving one link of the content chain — together they form an end-to-end voiceover pipeline: from "what should I make" to delivered videos, automatic email notices, and a four-platform publishing schedule.
+<div align="center">
+<table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
+<tr><td style="border-left:4px solid #C0452F; padding:14px 18px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:16px;">Paper is the stage, ink is the text, vermillion is the accent, the seal is the signature.</b><br/>
+  <span style="color:#5C5445; font-size:13px;">Five skills, each guarding one page — together they form a single moving page of algorithm notes: from "what should I make this week" to delivered videos, automatic email notices, and a four-platform publishing schedule.</span>
+</td></tr>
+</table>
+</div>
 
-## ✨ Skills at a Glance
+## 📑 Contents
 
-| | Skill | Role | One-liner | Key Deliverables |
-|---|---|---|---|---|
-| 🎬 | [tryworld-koubo](skills/tryworld-koubo/) | **Voiceover entry point** | One sentence in, auto-routed end to end | Full delivery + email notice |
-| 📜 | [tryworld-paper](skills/tryworld-paper/) | Paper Algorithm video production | Script → branded horizontal video | Video · covers · titles · captions |
-| 🎯 | [tryworld-topics](skills/tryworld-topics/) | AI-news topic selection | Pick worth-making topics from AIHOT | 3–8 candidate topics |
-| 🔬 | [tryworld-research](skills/tryworld-research/) | Horizontal–Vertical deep research | Life arc × competitive landscape | Polished PDF report |
-| ✍️ | [tryworld-write](skills/tryworld-write/) | WeChat long-form writing | Material → TryWorld-style article | Finished long-form article |
+- [Five Pages · Skill Overview](#-five-pages--skill-overview)
+- [The Voiceover Workflow](#-the-voiceover-workflow)
+- [Paper Algorithm · Design System](#-paper-algorithm--design-system)
+- [Quick Start](#-quick-start)
+- [Repository Layout](#-repository-layout)
+- [License](#-license)
+
+---
+
+## 🧩 Five Pages · Skill Overview
+
+<div align="center">
+<table>
+<tr>
+<td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">🎬 Voiceover Router</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-koubo</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">One sentence in, auto-routed through topics, script, polish, and video production.</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">Delivers: full pipeline + email notice</span><br/>
+  <code style="font-size:12px;">$tryworld-koubo</code>
+</td>
+<td width="34%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">📜 Paper Algorithm Video</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-paper</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">Script → branded horizontal video, a page of moving algorithm notes.</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">Delivers: video · covers · titles · captions</span><br/>
+  <code style="font-size:12px;">$tryworld-paper</code>
+</td>
+<td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">🎯 AI Topic Selection</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-topics</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">Hundreds of daily AI headlines, distilled into 3-8 topics worth making — fresh, catchy, not repeated.</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">Delivers: topic list (angle · source · priority)</span><br/>
+  <code style="font-size:12px;">$tryworld-topics</code>
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">🔬 Horizontal–Vertical Research</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-research</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">Trace the life arc vertically, compare the landscape horizontally, cross the axes for insight.</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">Delivers: 10k–30k-word PDF report</span><br/>
+  <code style="font-size:12px;">$tryworld-research</code>
+</td>
+<td width="34%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">✍️ WeChat Long-Form Writing</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-write</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">Turns raw material into a finished long-form article in TryWorld's voice.</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">Delivers: finished article</span><br/>
+  <code style="font-size:12px;">$tryworld-write</code>
+</td>
+<td width="33%" valign="top"></td>
+</tr>
+</table>
+</div>
+
+---
 
 ## 🎬 The Voiceover Workflow
+
+Remember one entry: **`$tryworld-koubo`**. Hand it a script (Mode A) or ask for topics (Mode B). `tryworld-research` and `tryworld-write` are standalone.
 
 ```mermaid
 flowchart LR
@@ -46,83 +105,67 @@ flowchart LR
     W["✍️ tryworld-write"] -. "standalone" .-> C["📝 WeChat article"]
 ```
 
-For the video pipeline, remember one entry: **`$tryworld-koubo`**. Hand it a script (Mode A) or ask for topics (Mode B). `tryworld-research` and `tryworld-write` are standalone.
+---
 
-## 🧩 Inside Each Skill
+## 🎨 Paper Algorithm · Design System
 
-### 🎬 tryworld-koubo — The Voiceover Router
+The visual contract behind every TryWorld video — **scientific manuscript + Chinese print tradition**, a locked contract with no shortcuts.
 
-> The brain of the whole pipeline.
+<div align="center">
+<table>
+<tr>
+<td align="center" style="background:#F4EFE4; color:#1C1916; padding:10px 14px; border:1px solid #E4DCC8;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif;">Paper</b><br/>
+  <code>#F4EFE4</code><br/>
+  <small>Background</small>
+</td>
+<td align="center" style="background:#1C1916; color:#F4EFE4; padding:10px 14px; border:1px solid #E4DCC8;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif;">Ink</b><br/>
+  <code>#1C1916</code><br/>
+  <small>Text & lines</small>
+</td>
+<td align="center" style="background:#C0452F; color:#F4EFE4; padding:10px 14px; border:1px solid #E4DCC8;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif;">Vermillion</b><br/>
+  <code>#C0452F</code><br/>
+  <small>The only accent</small>
+</td>
+<td align="center" style="background:#2E5E8C; color:#F4EFE4; padding:10px 14px; border:1px solid #E4DCC8;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif;">Ink Blue</b><br/>
+  <code>#2E5E8C</code><br/>
+  <small>Notes & charts</small>
+</td>
+</tr>
+</table>
+</div>
 
-- **What it does**：Detects "script given" (Mode A) vs "pick a topic" (Mode B)；sub-commands（topics only / draft only / optimize only）；dedup by scanning finished deliverables；sends an automatic email notice after delivery.
-- **Try it**：`Make me a TryWorld voiceover video` / `Use $tryworld-koubo to produce this`
-- **Depends on**：the other skills · `qq-email`
+| Dimension | Convention |
+|---|---|
+| **Type** | Noto Serif SC (headings) · LXGW WenKai / ZCOOL XiaoWei (notes) · monospace (data) |
+| **Motion** | ink drop · brush stroke · seal stamp — three signature moves throughout |
+| **Authenticity** | vermillion「试界原创」seal, always visible top-right — the only watermark |
 
-### 📜 tryworld-paper — Paper Algorithm Video Production
-
-> A page of moving algorithm notes: paper is the stage, ink is the text, vermillion is the accent, the seal is the signature.
-
-- **What it does**：Optimizes the script → Azure YunxiNeural voiceover → HyperFrames composition & render → covers, platform titles, caption timeline；a vermillion「试界原创」seal stays visible throughout.
-- **Try it**：`Use $tryworld-paper to make a video from this script`
-- **Depends on**：HyperFrames · edge-tts · FFmpeg · Node.js ≥ 22 · Python 3.10+
-
-### 🎯 tryworld-topics — AI-News Topic Selection
-
-> Compress hundreds of daily AI headlines into 3–8 topics worth making — fresh, catchy, and not repeated.
-
-- **What it does**：Pulls curated AIHOT items（models / products / industry / papers / tips），scores them against growth principles，each candidate ships with an angle, source links, and priority；auto-skips topics already produced.
-- **Try it**：`Help me pick topics` / `What should I cover this week`
-- **Depends on**：AIHOT API · PowerShell / curl
-
-### 🔬 tryworld-research — Horizontal–Vertical Deep Research
-
-> Trace the life arc vertically, compare the landscape horizontally, cross the two axes for insight.
-
-- **What it does**：Deep research on a product, company, concept, or person；outputs a beautifully formatted PDF report.
-- **Try it**：`Research XX with Horizontal–Vertical Analysis`
-- **Depends on**：Python · WeasyPrint · Markdown
-
-### ✍️ tryworld-write — WeChat Long-Form Writing
-
-> A TryWorld-style long-form article generator.
-
-- **What it does**：Turns source material（PDF / links / transcripts / briefs）into a finished WeChat article with the brand's voice and a submission email footer.
-- **Try it**：`Turn this into a WeChat article`
-- **Depends on**：—
-
-## 🎨 The Paper Algorithm Design System
-
-TryWorld videos follow one visual contract — **scientific manuscript + Chinese print tradition**.
-
-| Swatch | Value | Role |
-|---|---|---|
-| Paper | `#F4EFE4` | Background |
-| Ink | `#1C1916` | Text & lines |
-| Vermillion | `#C0452F` | The only accent: keywords, numbers, seal |
-| Ink Blue | `#2E5E8C` | Secondary notes & chart guides |
-
-- **Type**：Noto Serif SC (headings) · LXGW WenKai / ZCOOL XiaoWei (notes) · monospace (data)
-- **Motion**：ink drop · brush stroke · seal stamp — three signature moves throughout
-- **Authenticity**：a vermillion「试界原创」seal stays in the top-right corner
+---
 
 ## 🚀 Quick Start
 
-Each skill folder is self-contained. Copy it into your local skills directory:
+Each skill folder is a self-contained Skill. Copy it into your local skills directory:
 
 ```powershell
 # Install all skills
-Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.codex\skills" -Recurse
+Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 
 # Or install a single skill
-Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.codex\skills" -Recurse
+Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
-`~/.agents/skills` works on other hosts too. Then just say it in Codex:
+> Other hosts (Codex / Claude Code / Cursor, etc.) read `~/.agents/skills` too. Then just say it in a session:
 
 ```text
 Make me a TryWorld voiceover video
 Use $tryworld-koubo to produce this
 ```
+
+---
 
 ## 🗂 Repository Layout
 
@@ -135,22 +178,14 @@ tryworld-skills/
 ├── README.zh-CN.md              # Index (简体中文)
 ├── LICENSE                      # CC BY-NC 4.0
 └── skills/
-    ├── tryworld-koubo/      # Voiceover entry (router + email notice)
-    ├── tryworld-paper/     # Paper Algorithm video production
-    ├── tryworld-topics/     # AIHOT topic selection
-    ├── tryworld-research/         # Horizontal–Vertical deep research
-    └── tryworld-write/              # WeChat long-form writing
+    ├── tryworld-koubo/          # Voiceover router (routing + email notice)
+    ├── tryworld-paper/          # Paper Algorithm video production
+    ├── tryworld-topics/         # AIHOT topic selection
+    ├── tryworld-research/       # Horizontal–Vertical deep research
+    └── tryworld-write/          # WeChat long-form writing
 ```
 
-## 🛠 Tech Stack
-
-| Skill | Built with |
-|---|---|
-| tryworld-paper | HyperFrames · edge-tts (Azure YunxiNeural) · FFmpeg · Node.js ≥ 22 · Python 3.10+ |
-| tryworld-topics | PowerShell / curl · AIHOT API |
-| tryworld-research | Python · WeasyPrint · Markdown |
-| tryworld-koubo | Orchestrates the above · `qq-email` (SMTP / IMAP) |
-| tryworld-write | — |
+---
 
 ## ⚖️ License
 

@@ -2,37 +2,96 @@
   <img src="assets/hero.svg" alt="试界 TryWorld Skills" width="100%">
 </p>
 
-<p align="center">
-  <b>试界 TryWorld · Codex Skills 合集</b><br/>
-  一套从选题到成片、再到深度研究的长文写作的完整创作工具链
-</p>
+<div align="center">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC','SimSun',serif; font-size:18px; color:#1C1916; letter-spacing:8px;">纸上算法 · PAPER ALGORITHM</b><br/>
+  <span style="color:#5C5445; font-size:14px;">从一句话到一条生产线——把 AI 讲清楚，让每个普通人都看得懂、用得上。</span>
+</div>
 
 <p align="center">
   <a href="README.md">English</a> · <b>简体中文</b>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/状态-已启用-8FAF8C?style=flat-square" alt="状态">
-  <img src="https://img.shields.io/badge/技能-5-1C1916?style=flat-square" alt="技能数">
-  <img src="https://img.shields.io/badge/平台-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="平台">
-  <img src="https://img.shields.io/badge/许可-CC%20BY--NC%204.0-C0452F?style=flat-square" alt="许可">
+  <img src="https://img.shields.io/badge/状态-已启用-8FAF8C?style=flat-square" alt="status">
+  <img src="https://img.shields.io/badge/技能-5-1C1916?style=flat-square" alt="skills">
+  <img src="https://img.shields.io/badge/平台-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="platform">
+  <img src="https://img.shields.io/badge/许可-CC%20BY--NC%204.0-C0452F?style=flat-square" alt="license">
 </p>
 
 ---
 
-> **把 AI 讲清楚，让每个普通人都看得懂、用得上。** 五个技能各自解决创作链路中的一环，合在一起就是一条完整的口播内容生产线——从「这周做什么」到成片交付、自动邮件通知、四平台发布计划。
+<div align="center">
+<table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
+<tr><td style="border-left:4px solid #C0452F; padding:14px 18px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:16px;">纸面是舞台，墨迹是文字，朱红是重点，印章是签名。</b><br/>
+  <span style="color:#5C5445; font-size:13px;">五个技能各守一页，合起来就是一页会动的算法笔记——从「这周做什么」到成片交付、自动邮件通知、四平台发布计划。</span>
+</td></tr>
+</table>
+</div>
 
-## ✨ 技能总览
+## 📑 目录
 
-| | 技能 | 角色 | 一句话 | 核心产出 |
-|---|---|---|---|---|
-| 🎬 | [tryworld-koubo](skills/tryworld-koubo/) | 口播**统一入口** | 一句人话，自动路由选题/写稿/优化/出片 | 全流程交付 + 邮件通知 |
-| 📜 | [tryworld-paper](skills/tryworld-paper/) | 纸上算法视频制作 | 口播稿 → 品牌化横屏视频 | 主视频 · 横竖封面 · 标题 · 字幕 |
-| 🎯 | [tryworld-topics](skills/tryworld-topics/) | AI 资讯选题 | 从 AIHOT 最新动态里筛值得做的选题 | 3-8 个候选选题清单 |
-| 🔬 | [tryworld-research](skills/tryworld-research/) | 横纵分析法深度研究 | 纵向历程 × 横向竞品，双轴交叉出洞察 | 精美 PDF 研究报告 |
-| ✍️ | [tryworld-write](skills/tryworld-write/) | 公众号长文写作 | 按试界风格把素材写成公众号长文 | 长文成品 |
+- [五张纸页 · 技能总览](#-五张纸页--技能总览)
+- [一条口播工作流](#-一条口播工作流)
+- [纸上算法 · 设计系统](#-纸上算法--设计系统)
+- [快速开始](#-快速开始)
+- [仓库结构](#-仓库结构)
+- [许可](#-许可)
 
-## 🎬 口播工作流
+---
+
+## 🧩 五张纸页 · 技能总览
+
+<div align="center">
+<table>
+<tr>
+<td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">🎬 口播总入口</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-koubo</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">一句人话，自动路由选题、写稿、优化、出片。</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">产出：全流程交付 + 邮件通知</span><br/>
+  <code style="font-size:12px;">$tryworld-koubo</code>
+</td>
+<td width="34%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">📜 纸上算法视频</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-paper</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">口播稿 → 品牌化横屏视频，一页会动的算法笔记。</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">产出：主视频 · 横竖封面 · 标题 · 字幕</span><br/>
+  <code style="font-size:12px;">$tryworld-paper</code>
+</td>
+<td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">🎯 AI 口播选题</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-topics</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">每天几百条 AI 新闻，压成 3-8 个能做、能火、不重复的选题。</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">产出：选题清单（角度 · 来源 · 优先级）</span><br/>
+  <code style="font-size:12px;">$tryworld-topics</code>
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">🔬 横纵分析法</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-research</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">纵轴追生命历程，横轴比竞品格局，交叉出独到洞察。</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">产出：万字 PDF 研究报告</span><br/>
+  <code style="font-size:12px;">$tryworld-research</code>
+</td>
+<td width="34%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">✍️ 公众号长文</b><br/>
+  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-write</span>
+  <br/><br/><span style="font-size:13px; color:#1C1916;">按试界风格，把素材写成读得下去的公众号长文。</span>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">产出：长文成品</span><br/>
+  <code style="font-size:12px;">$tryworld-write</code>
+</td>
+<td width="33%" valign="top"></td>
+</tr>
+</table>
+</div>
+
+---
+
+## 🎬 一条口播工作流
+
+只记一个入口：**`$tryworld-koubo`**。给稿走模式 A，要选题走模式 B；`tryworld-research` 与 `tryworld-write` 独立使用。
 
 ```mermaid
 flowchart LR
@@ -46,85 +105,69 @@ flowchart LR
     W["✍️ tryworld-write"] -. "独立" .-> C["📝 公众号长文"]
 ```
 
-口播链路只记一个入口：**`$tryworld-koubo`**。给稿走模式 A，要选题走模式 B；`tryworld-research` 与 `tryworld-write` 独立使用。
-
-## 🧩 技能详解
-
-### 🎬 tryworld-koubo — 口播总入口
-
-> 整个口播流程的调度中枢。
-
-- **能力**：自动识别"直接给稿"（模式 A）与"要选题"（模式 B）；子命令「只要选题 / 只要写稿 / 只优化不出片」；去重判定（扫描工作区成片）；成片交付后自动发邮件通知。
-- **典型用法**：`帮我做一期口播` / `用 $tryworld-koubo 出片`
-- **依赖**：调度其余技能 · `qq-email`
-
-### 📜 tryworld-paper — 纸上算法视频制作
-
-> 一页会动的算法笔记：纸面是舞台，墨迹是文字，朱红是重点，印章是签名。
-
-- **能力**：口播稿优化净化 → 云希配音（Azure YunxiNeural）→ HyperFrames 构图渲染 → 横竖封面 + 平台标题 + 字幕时间轴；右上角「试界原创」印章全程常驻。
-- **典型用法**：`$tryworld-paper` 把这篇口播稿做成视频
-- **依赖**：HyperFrames · edge-tts · FFmpeg · Node.js ≥ 22 · Python 3.10+
-
-### 🎯 tryworld-topics — AI 口播选题
-
-> 每天几百条 AI 新闻，压缩成 3-8 个"能做、能火、不重复"的选题。
-
-- **能力**：拉取 AIHOT 最新精选（模型/产品/行业/论文/技巧），按频道增长原理筛选题，每个选题带角度、素材原文链接与优先级；自动避开已做选题。
-- **典型用法**：`帮我选题` / `这周做什么口播`
-- **依赖**：AIHOT API · PowerShell / curl
-
-### 🔬 tryworld-research — 横纵分析法深度研究
-
-> 纵轴追生命历程，横轴比竞品格局，交叉出独到洞察。
-
-- **能力**：系统研究产品/公司/概念/人物，产出排版精美的 PDF 研究报告。
-- **典型用法**：`用横纵分析法研究一下 XX`
-- **依赖**：Python · WeasyPrint · Markdown
-
-### ✍️ tryworld-write — 公众号长文写作
-
-> 试界风格的公众号长文生产器。
-
-- **能力**：根据素材（PDF / 链接 / 语音转写 / 简报）写成试界风格长文，含投稿邮箱引导。
-- **典型用法**：`帮我把这个写成公众号文章`
-- **依赖**：—
+---
 
 ## 🎨 纸上算法 · 设计系统
 
-试界视频的视觉契约——**科学手稿 + 中文印刷传统**。
+试界视频的视觉契约——**科学手稿 + 中文印刷传统**，一条不允许为省事让步的锁定契约。
 
-| 色板 | 值 | 用途 |
-|---|---|---|
-| 纸面 | `#F4EFE4` | 背景主色 |
-| 墨黑 | `#1C1916` | 主文字、线条 |
-| 朱红 | `#C0452F` | 唯一强调色：关键词、数字、印章 |
-| 墨水蓝 | `#2E5E8C` | 次级批注、图表辅助线 |
+<div align="center">
+<table>
+<tr>
+<td align="center" style="background:#F4EFE4; color:#1C1916; padding:10px 14px; border:1px solid #E4DCC8;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif;">纸面</b><br/>
+  <code>#F4EFE4</code><br/>
+  <small>背景主色</small>
+</td>
+<td align="center" style="background:#1C1916; color:#F4EFE4; padding:10px 14px; border:1px solid #E4DCC8;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif;">墨黑</b><br/>
+  <code>#1C1916</code><br/>
+  <small>主文字 · 线条</small>
+</td>
+<td align="center" style="background:#C0452F; color:#F4EFE4; padding:10px 14px; border:1px solid #E4DCC8;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif;">朱红</b><br/>
+  <code>#C0452F</code><br/>
+  <small>唯一强调色</small>
+</td>
+<td align="center" style="background:#2E5E8C; color:#F4EFE4; padding:10px 14px; border:1px solid #E4DCC8;">
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif;">墨水蓝</b><br/>
+  <code>#2E5E8C</code><br/>
+  <small>次级批注 · 图表</small>
+</td>
+</tr>
+</table>
+</div>
 
-- **字体**：思源宋体（主标题）· 霞鹜文楷 / ZCOOL 小薇（批注）· 等宽字体（数据）
-- **动效**：墨落纸 · 笔写入 · 盖章——全片三种签名动效
-- **防伪**：右上角朱红「试界原创」印章全程常驻
+| 维度 | 约定 |
+|---|---|
+| **字体** | 思源宋体（主标题）· 霞鹜文楷 / ZCOOL 小薇（批注）· 等宽字体（数据） |
+| **动效** | 墨落纸 · 笔写入 · 盖章——全片三种签名动效 |
+| **防伪** | 朱红「试界原创」印章右上角全程常驻，是视频唯一水印 |
+
+---
 
 ## 🚀 快速开始
 
-每个技能文件夹都是独立 Skill，复制到本机技能目录即可：
+每个技能文件夹都是独立的 Skill，复制到本机技能目录即可：
 
 ```powershell
 # 安装全部技能
-Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.codex\skills" -Recurse
+Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 
 # 或只安装单个技能
-Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.codex\skills" -Recurse
+Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
-其他宿主也可放到 `~/.agents/skills`。安装后在 Codex 会话中直接说：
+> 其他宿主（Codex / Claude Code / Cursor 等）同样读取 `~/.agents/skills`。安装后在会话中直接说：
 
 ```text
 帮我做一期口播
 用 $tryworld-koubo 出片
 ```
 
-## 🗂 目录结构
+---
+
+## 🗂 仓库结构
 
 ```text
 tryworld-skills/
@@ -135,22 +178,14 @@ tryworld-skills/
 ├── README.zh-CN.md              # 索引（简体中文）
 ├── LICENSE                      # CC BY-NC 4.0
 └── skills/
-    ├── tryworld-koubo/      # 口播总入口（路由 + 邮件通知）
-    ├── tryworld-paper/     # 纸上算法视频制作
-    ├── tryworld-topics/     # AIHOT 口播选题
-    ├── tryworld-research/         # 横纵分析法深度研究
-    └── tryworld-write/              # 公众号长文写作
+    ├── tryworld-koubo/          # 口播总入口（路由 + 邮件通知）
+    ├── tryworld-paper/          # 纸上算法视频制作
+    ├── tryworld-topics/         # AIHOT 口播选题
+    ├── tryworld-research/       # 横纵分析法深度研究
+    └── tryworld-write/          # 公众号长文写作
 ```
 
-## 🛠 技术栈
-
-| 技能 | 依赖 |
-|---|---|
-| tryworld-paper | HyperFrames · edge-tts（Azure YunxiNeural）· FFmpeg · Node.js ≥ 22 · Python 3.10+ |
-| tryworld-topics | PowerShell / curl · AIHOT API |
-| tryworld-research | Python · WeasyPrint · Markdown |
-| tryworld-koubo | 调度上述技能 · `qq-email`（SMTP / IMAP） |
-| tryworld-write | — |
+---
 
 ## ⚖️ 许可
 
