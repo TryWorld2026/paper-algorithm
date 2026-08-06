@@ -1,4 +1,4 @@
-nterface:
+interface:
   display_name: "TryWorld 口播总入口"
   short_description: "TryWorld koubo entry: topic or script to video"
   default_prompt: "Use $tryworld-koubo as the single entry for TryWorld koubo videos"
