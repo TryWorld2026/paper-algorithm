@@ -65,7 +65,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 渲染前核验：渲染前必须逐项对照本文件与 style-system.md/workflow.md 的全部规则并确认通过，未通过禁止渲染。
 - 封面：必须独立构图设计，禁止从主视频截帧或裁切充当封面；封面采用深墨海报视觉，与视频浅纸面画面保持两套语言，避免被平台判定为截图。
 - 防 AI 味：禁止紫蓝霓虹、黑底光效、通用科技字体、机械匀速动画、空荡背景、每句整屏大字。
-- 活人感：净化后口播稿正文与 `titles.txt` 硬禁项清零——冒号（中文/英文）、破折号、"不是……而是……"类翻案句、"不丢/说白了/说穿了/先说结论"、模型洞察路标、商业与模型黑话（清单见 `scripts/check_prose.py`）；`check_prose.py` 失败不交付。
+- 活人感：净化后口播稿正文与 `titles.txt` 硬禁项清零——动作级禁令：翻案腔（先立误解再推翻抬价，含 9+ 变形）、三项以上同构排比、抒情借喻（抽象名词配具体动词）、动词名词化；标点：破折号全禁、冒号仅引出直接原话可用；硬停词"说白了/说穿了/先说结论"；模型洞察路标；商业与模型黑话（绝对禁词 + 语境判断词两档，清单见 `scripts/check_prose.py`）；`check_prose.py` 失败不交付。
 
 ## 语音回退（按序）
 
@@ -79,6 +79,6 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - `references/workflow.md`：详细生产流程与命令
 - `references/titles.md`：平台标题规则
 - `scripts/tts_yunxi.py`：云希配音管线
-- `scripts/check_prose.py`：活人感硬禁项检查脚本（TryWorld 改造版，源自 KKKKhazix/human-writing v1.0.0，MIT）
+- `scripts/check_prose.py`：活人感硬禁项检查脚本（TryWorld 改造版，源自 KKKKhazix/human-writing v1.1.0，MIT；禁令上移到修辞动作级）
 - `assets/paper-grain.svg`：纸纹叠加层
 - `assets/seal.svg`：朱红"试界原创"印章
