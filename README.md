@@ -34,6 +34,7 @@
 - [Five Pages · Skill Overview](#-five-pages--skill-overview)
 - [The Voiceover Workflow](#-the-voiceover-workflow)
 - [Paper Algorithm · Design System](#-paper-algorithm--design-system)
+- [The Aliveness Gate](#-the-aliveness-gate)
 - [Quick Start](#-quick-start)
 - [Repository Layout](#-repository-layout)
 - [License](#-license)
@@ -143,6 +144,21 @@ The visual contract behind every TryWorld video — **scientific manuscript + Ch
 | **Type** | Noto Serif SC (headings) · LXGW WenKai / ZCOOL XiaoWei (notes) · monospace (data) |
 | **Motion** | ink drop · brush stroke · seal stamp — three signature moves throughout |
 | **Authenticity** | vermillion「试界原创」seal, always visible top-right — the only watermark |
+
+---
+
+## 🔒 The Aliveness Gate
+
+Before delivery, every polished script and platform title passes a machine gate — **the ban targets rhetorical moves, not literal strings**. Repeating the same move with different words still counts.
+
+- **Flip-flop rhetoric**: sets up a misunderstanding the reader never had, then overturns it for dramatic lift. Known guises include 不是……而是……, 并非……而是……, 表面……实际……, 看似……实则……, 你以为……其实……, 回头才发现, 说到底, 答案恰恰相反 — state judgments directly, judgment first, evidence after.
+- **Triple+ parallel structure**: three or more identical constructions; keep at most two.
+- **Lyric metaphor**: no concrete verbs bolted onto abstract nouns ("time keeps the details" type); unaffected when writing about concrete things.
+- **Nominalization**: "实现了效率的提升" → say how much faster, how many people saved.
+- **Punctuation tiers**: all dashes banned; colons only to introduce direct speech.
+- **Jargon tiers**: absolute bans + context-sensitive words, maintained by the checker.
+
+`tryworld-paper/scripts/check_prose.py` (from [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0, MIT) runs these checks automatically and adds statistical signals — sentence-length variance, conjunction density, model-favorite lyric words, 「」-quote density. **Zero hard violations required before the user-confirmation gate; failing means no delivery.**
 
 ---
 
