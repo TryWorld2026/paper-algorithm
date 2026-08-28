@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/hero.svg" alt="试界 TryWorld Skills" width="100%">
+  <img src="assets/hero.svg" alt="试界TryWorld Skills" width="100%">
 </p>
 
 <div align="center">
@@ -22,13 +22,13 @@
 
 ## 🧭 这是什么
 
-**试界 TryWorld 官方 AI 技能合集**——一条完整的中文口播视频生产线：从一句话到成片。选题、写稿、优化、出片、发布计划、邮件通知，全部打包成三个相互独立、即装即用的 Skill：
+**试界TryWorld 官方 AI 技能合集**——一条完整的中文口播视频生产线：从一句话到成片。选题、写稿、优化、出片、发布计划、邮件通知，全部打包成三个 Skill：
 
 - **🎬 `tryworld-koubo`**——统一入口。一句人话，自动路由选题 → 写稿 → 优化 → 出片。
 - **🎯 `tryworld-topics`**——AIHOT 选题。每天几百条 AI 资讯，压成 3–8 个能做、能火、不重复的选题。
 - **📜 `tryworld-paper`**——纸上算法出片。口播稿 → 品牌化 16:9 横屏视频，含封面、标题、字幕。
 
-装进 `~/.agents/skills` 后，在任何读取该目录的 AI 工具（Codex / Claude Code / Cursor / ZCode 等）的会话里说一句中文，整条链路就从选题清单、口播稿、渲染成片、封面标题，一直到自动邮件通知自动走完，不需要你记任何命令。
+装进 `~/.agents/skills` 后，在任何支持该目录约定的 AI 工具（如 Agent SDK / ZCode）的会话里说一句中文，整条链路就从选题清单、口播稿、渲染成片、封面标题，一直到自动邮件通知自动走完，不需要你记任何命令。
 
 <div align="center">
 <table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
@@ -41,9 +41,21 @@
 
 ## ⏱ 30 秒上手
 
-**第 1 步 · 安装**——把技能文件夹复制到你的技能目录：
+**第 1 步 · 安装**——克隆仓库，再把技能文件夹复制到你的技能目录：
+
+```bash
+git clone https://github.com/TryWorld2026/tryworld-skills.git
+cd tryworld-skills
+mkdir -p ~/.agents/skills
+cp -r skills/* ~/.agents/skills/
+```
+
+Windows PowerShell 等价命令：
 
 ```powershell
+git clone https://github.com/TryWorld2026/tryworld-skills.git
+cd tryworld-skills
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills"
 Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
@@ -155,7 +167,7 @@ flowchart LR
 
 | 维度 | 约定 |
 |---|---|
-| **字体** | 思源宋体（主标题）· 霞鹜文楷 / ZCOOL 小薇（批注）· 等宽字体（数据） |
+| **字体** | 思源宋体（主标题）· ZCOOL 小薇（批注）· 等宽字体（数据） |
 | **动效** | 墨落纸 · 笔写入 · 盖章——全片三种签名动效 |
 | **防伪** | 朱红「试界原创」印章右上角全程常驻，是视频唯一水印 |
 
@@ -190,7 +202,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
-> 其他宿主（Codex / Claude Code / Cursor 等）同样读取 `~/.agents/skills`。
+> 支持 `~/.agents/skills` 目录约定的宿主（如 Agent SDK / ZCode）会自动识别；其他宿主请把各自的技能目录指向这里（见宿主文档）。注意 `tryworld-koubo` 会路由到同级技能，走完整链路请三个一起装——外部依赖见[环境要求](#环境要求)。
 
 ### 怎么触发
 
@@ -202,21 +214,23 @@ Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\s
 
 ### 你说什么，得到什么
 
-| 你说 | 走哪个技能 | 得到 |
+| 你说 | 路由 | 得到 |
 |---|---|---|
-| 帮我做一期口播 / 帮我选题 | tryworld-koubo | 全流程路由 · 发布计划 · 邮件通知 |
-| 这周做什么口播 | tryworld-topics | 3–8 个选题（角度 · 来源 · 优先级） |
-| 把这篇稿子做成视频 | tryworld-paper | 16:9 成片 · 横竖封面 · 标题 · 字幕 |
+| 帮我做一期口播 / 帮我选题 | `$tryworld-koubo`（自动） | 全流程路由 · 发布计划 · 邮件通知 |
+| 这周做什么口播 | 经 koubo → tryworld-topics | 3–8 个选题（角度 · 来源 · 优先级） |
+| 把这篇稿子做成视频 | 经 koubo → tryworld-paper | 16:9 成片 · 横竖封面 · 标题 · 字幕 |
 
 ### 环境要求
 
-这些技能按试界自己的工作流定制，默认假设如下——全部都可以在技能文件里自行调整：
+运行 `npx hyperframes doctor` 可一键检查环境。这些技能按试界自己的工作流定制，默认假设如下——全部都可以在技能文件里自行调整：
 
-- **Windows**——拉取数据与发通知邮件的脚本是 PowerShell（`scripts/*.ps1`）；跨平台替代方案见各技能的 `references/`。
-- **Python 3**——改稿检查（`scripts/check_prose.py`）与云希配音（`scripts/tts_yunxi.py`）。
-- **Node.js + HyperFrames**——渲染（`npx hyperframes render`）。
+- **Windows PowerShell**——拉取数据（tryworld-topics）与发通知邮件（tryworld-koubo）的脚本是 PowerShell（`scripts/*.ps1`）；tryworld-topics 的 `references/` 里提供了非 Windows 的 curl 替代。
+- **Python 3.10+**——`pip install edge-tts` 用于云希配音（`tryworld-paper/scripts/tts_yunxi.py`）；`tryworld-paper/scripts/check_prose.py` 无需第三方包。
+- **Node.js >= 22 + HyperFrames**——渲染（`npx hyperframes render` / `lint` / `validate` / `inspect`）。
+- **FFmpeg**（含 ffprobe，加入 PATH）——音频处理。
+- **外部技能**——`$hyperframes`（渲染，必需）与 `$qq-email`（邮件通知，可选）不在本仓库内，需另行安装。
 - **工作目录**——成片项目默认落在 `E:\Codex口播视频`，可按需在技能文件里改成你自己的目录。
-- **邮件通知**——需要配置发信凭证（经 `$qq-email` 技能）；未配置时自动跳过，不阻塞交付。
+- **邮件通知**——需要配置 `QQ_EMAIL_ACCOUNT` / `QQ_EMAIL_AUTH_CODE` 凭证（经 `$qq-email` 技能）；未配置时自动跳过，不阻塞交付。
 
 每个技能文件夹里的 `SKILL.md` 都有完整工作流，以及在哪里改环境默认值。
 
@@ -249,12 +263,14 @@ tryworld-skills/
 
 ---
 
-## ⚖️ 许可
+## 📄 许可
 
 本仓库采用知识共享 **署名-相同方式共享 4.0 国际（CC BY-SA 4.0）**：允许自由分享与演绎（含商业用途），但必须署名，且任何二创（衍生作品）必须使用同一许可发布。完整条款见 [LICENSE](LICENSE)。
+
+`tryworld-paper/scripts/check_prose.py` 源自 [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0，按 **MIT License** 使用（见 `skills/tryworld-paper/LICENSE-MIT`）；仓库其余内容为 CC BY-SA 4.0。
 
 [![CC BY-SA 4.0](assets/license-badge.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ---
 
-<p align="center"><sub>试界 TryWorld · 持续把 AI 讲清楚 · 让每个普通人都看得懂、用得上</sub></p>
+<p align="center"><sub>试界TryWorld · 持续把 AI 讲清楚 · 让每个普通人都看得懂、用得上</sub></p>

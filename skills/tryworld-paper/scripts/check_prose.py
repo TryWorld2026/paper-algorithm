@@ -2,10 +2,13 @@
 """检查中文成稿的硬禁令与常见模型化形状。只报警，不自动改文。
 
 TryWorld 改造版：源自 KKKKhazix/human-writing v1.1.0
-(https://github.com/KKKKhazix/human-writing, tag v1.1.0)，MIT License。
+(https://github.com/KKKKhazix/human-writing, tag v1.1.0)，
+Copyright (c) 2026 Human Writing Skill contributors，按 MIT License 使用，
+完整许可文本见同目录 LICENSE-MIT。
+
 禁令上移到修辞动作级：翻案腔按动作查（变形族列入警告层），新增同构排比/抒情借喻/
-名词化检查，冒号分级（引出原话放行、提示性冒号仍禁），新增句长变异系数与连词密度统计。
-禁词清单与检查逻辑保持上游原样，仅做品牌与路径改造。
+名词化检查，冒号分级（引出原话放行、提示性冒号仍禁），新增句长变异系数与连词密度统计；
+保留上游禁词清单与基础检查逻辑，检查逻辑在上游基础上扩展（见 LICENSE-MIT）。
 """
 
 from __future__ import annotations

@@ -100,7 +100,10 @@ if ($Recipient -eq "") { $Recipient = $env:QQ_EMAIL_ACCOUNT }
 Write-Output "正在发送成片通知邮件 ..."
 
 # 用 .NET Process 直连 node：参数 UTF-16、正文 UTF-8 字节写 stdin、附件 --attach 传路径，避免 PowerShell 5.1 编码转换乱码
-$node = (Get-Command node).Source
+try { $node = (Get-Command node -ErrorAction Stop).Source } catch {
+  Write-Warning "未找到 node(邮件通知依赖 qq-email 技能的 send.js),跳过邮件通知(不阻塞交付)。"
+  exit 0
+}
 $psi = New-Object System.Diagnostics.ProcessStartInfo
 $psi.FileName = $node
 $psi.UseShellExecute = $false

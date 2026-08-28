@@ -25,7 +25,7 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 ## 模式 A：直接给稿 → 优化 → 出片
 
 1. 通读口播稿，理解主题、受众、核心结论与结构。
-2. 转入 `$tryworld-paper` 完整流程：优化并净化（含活人感改稿七遍）→ 硬禁项检查（`tryworld-paper/scripts/check_prose.py` 清零）→ **闸门：展示优化稿等用户确认** → 配音/构图/渲染/封面/标题 → 交付。
+2. 转入 `$tryworld-paper` 完整流程：优化并净化（含活人感改稿七遍）→ 硬禁项检查（`../tryworld-paper/scripts/check_prose.py` 清零）→ **闸门：展示优化稿等用户确认** → 配音/构图/渲染/封面/标题 → 交付。
 3. 交付时按"交付物"补发布计划。
 
 ## 模式 B：选题 → 写稿 → 优化 → 出片
@@ -59,7 +59,7 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
   - **标点**：破折号（`—`/`——`/`–`）全禁；冒号只允许引出人物直接原话一种用法，"一句话总结：""核心是："等提示性冒号禁（网址/代码/机器字段除外）。
   - **硬停词**："说白了""说穿了""先说结论"。
   - **模型洞察路标**："更微妙的是""还有一层""只说对了一半""值得注意的是""需要指出的是""从某种意义上说"（说楼层、数量等本义时不受影响）。
-  - **商业与模型黑话**：完整清单见 `tryworld-paper/scripts/check_prose.py`（绝对禁词 + 语境判断词两档）。
+  - **商业与模型黑话**：完整清单见 `../tryworld-paper/scripts/check_prose.py`（绝对禁词 + 语境判断词两档）。
   - 原话命中禁令时改成转述或省略，不能靠引号保留。
 
 ## 子命令
@@ -88,4 +88,4 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 
 - `references/workflow.md`：两种模式详细步骤、去重扫描命令、写稿细节、异常处理
 - `scripts/notify_delivery.ps1`：成片交付邮件通知（调用 `$qq-email` 发信）
-- `tryworld-paper/scripts/check_prose.py`：活人感硬禁项检查脚本（TryWorld 改造版，源自 KKKKhazix/human-writing v1.1.0，MIT；禁令上移到修辞动作级）
+- `../tryworld-paper/scripts/check_prose.py`：活人感硬禁项检查脚本（TryWorld 改造版，源自 KKKKhazix/human-writing v1.1.0，MIT；禁令上移到修辞动作级）

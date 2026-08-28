@@ -22,18 +22,18 @@
 
 ## 🧭 What Is This
 
-**TryWorld（试界）official AI-agent skill set** — a complete Chinese voiceover-video production line, from one sentence to a delivered video. Topic selection, scriptwriting, polish, rendering, publish plan, and email notice are all packaged into three self-contained Skills:
+**试界TryWorld official AI-agent skill set** — a complete Chinese voiceover-video production line, from one sentence to a delivered video. Topic selection, scriptwriting, polish, rendering, publish plan, and email notice are all packaged into three Skills:
 
 - **🎬 `tryworld-koubo`** — the single entry. One sentence in, auto-routed through topics → script → polish → video.
 - **🎯 `tryworld-topics`** — AIHOT-based topic selection: hundreds of daily AI headlines distilled into 3–8 fresh picks.
 - **📜 `tryworld-paper`** — the "Paper Algorithm" video pipeline: script → branded 16:9 video with covers, titles, and captions.
 
-Install one or all of them into `~/.agents/skills`, open a session in any agent host that reads that directory (Codex / Claude Code / Cursor / ZCode …), and say one sentence in Chinese. The skills pick up the whole chain from there — topic list, scripts, rendered video, covers, titles, even the automatic email notice.
+Install them into `~/.agents/skills`, open a session in any agent host that reads that directory (e.g. Agent SDK / ZCode), and say one sentence in Chinese. The skills pick up the whole chain from there — topic list, scripts, rendered video, covers, titles, even the automatic email notice.
 
 <div align="center">
 <table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
 <tr><td style="border-left:4px solid #C0452F; padding:14px 18px;">
-  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:16px;">Paper is the stage, ink is the text, vermillion is the accent, the seal is the signature.</b><br/>
+  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:16px;">Paper is the stage, ink is the text, vermilion is the accent, the seal is the signature.</b><br/>
   <span style="color:#5C5445; font-size:13px;">Three skills, each guarding one page — together they form a single moving page of algorithm notes: from "what should I make this week" to delivered videos, automatic email notices, and a four-platform publishing schedule.</span>
 </td></tr>
 </table>
@@ -41,9 +41,21 @@ Install one or all of them into `~/.agents/skills`, open a session in any agent 
 
 ## ⏱ 30-Second Quick Start
 
-**1 · Install** — copy the skill folders into your skills directory:
+**1 · Install** — clone the repo, then copy the skill folders into your skills directory:
+
+```bash
+git clone https://github.com/TryWorld2026/tryworld-skills.git
+cd tryworld-skills
+mkdir -p ~/.agents/skills
+cp -r skills/* ~/.agents/skills/
+```
+
+On Windows PowerShell:
 
 ```powershell
+git clone https://github.com/TryWorld2026/tryworld-skills.git
+cd tryworld-skills
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills"
 Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
@@ -155,9 +167,9 @@ The visual contract behind every TryWorld video — **scientific manuscript + Ch
 
 | Dimension | Convention |
 |---|---|
-| **Type** | Noto Serif SC (headings) · LXGW WenKai / ZCOOL XiaoWei (notes) · monospace (data) |
+| **Type** | Noto Serif SC (headings) · ZCOOL XiaoWei (notes) · monospace (data) |
 | **Motion** | ink drop · brush stroke · seal stamp — three signature moves throughout |
-| **Authenticity** | vermillion「试界原创」seal, always visible top-right — the only watermark |
+| **Authenticity** | vermilion「试界原创」seal, always visible top-right — the only watermark |
 
 ---
 
@@ -190,7 +202,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
-> Other hosts (Codex / Claude Code / Cursor, etc.) read `~/.agents/skills` too.
+> Hosts that support the `~/.agents/skills` convention (e.g. Agent SDK / ZCode) pick these up automatically; for other hosts, point your host's skills directory at this path (see your host's docs). Note that `tryworld-koubo` routes to its sibling skills, so for the full pipeline install all three — see [Environment](#environment) for external dependencies.
 
 ### How to trigger
 
@@ -202,21 +214,23 @@ A skill fires when the request matches its trigger words — no commands to memo
 
 ### What you get
 
-| You say | Skill | You get |
+| You say | Route | You get |
 |---|---|---|
-| 帮我做一期口播 / 帮我选题 | tryworld-koubo | routed pipeline · publish plan · email notice |
-| 这周做什么口播 | tryworld-topics | 3–8 topic picks (angle · source · priority) |
-| 把这篇稿子做成视频 | tryworld-paper | 16:9 video · covers · titles · captions |
+| 帮我做一期口播 / 帮我选题 | `$tryworld-koubo` (auto) | routed pipeline · publish plan · email notice |
+| 这周做什么口播 | via koubo → tryworld-topics | 3–8 topic picks (angle · source · priority) |
+| 把这篇稿子做成视频 | via koubo → tryworld-paper | 16:9 video · covers · titles · captions |
 
-### Environment notes
+### Environment
 
-These skills are built for TryWorld's own production workflow, so a few things are assumed. All of them are adjustable in the skill files:
+Run `npx hyperframes doctor` to check the environment at once. These skills are built for TryWorld's own production workflow, so a few things are assumed — all adjustable in the skill files:
 
-- **Windows** — data-fetching and email-notice scripts are PowerShell (`scripts/*.ps1`); cross-platform alternatives are documented in each skill's `references/`.
-- **Python 3** — the prose gate (`scripts/check_prose.py`) and the Azure-Yunxi voiceover (`scripts/tts_yunxi.py`).
-- **Node.js + HyperFrames** — rendering (`npx hyperframes render`).
+- **Windows PowerShell** — data-fetching (`tryworld-topics`) and email-notice (`tryworld-koubo`) scripts are PowerShell (`scripts/*.ps1`); `tryworld-topics` documents a curl fallback for non-Windows in its `references/`.
+- **Python 3.10+** — `pip install edge-tts` for the Azure-Yunxi voiceover (`tryworld-paper/scripts/tts_yunxi.py`); `tryworld-paper/scripts/check_prose.py` needs no third-party packages.
+- **Node.js >= 22 + HyperFrames** — rendering (`npx hyperframes render` / `lint` / `validate` / `inspect`).
+- **FFmpeg** (with ffprobe, on PATH) — audio processing.
+- **External skills** — `$hyperframes` (rendering, required) and `$qq-email` (email notice, optional) are not in this repo; install them separately.
 - **Working directory** — finished projects land in `E:\Codex口播视频` by convention; change it in the skill files to your own.
-- **Email notice** — requires a sender credential configured (via the `$qq-email` skill); skipped gracefully when absent.
+- **Email notice** — requires `QQ_EMAIL_ACCOUNT` / `QQ_EMAIL_AUTH_CODE` credentials (via the `$qq-email` skill); skipped gracefully when absent.
 
 Each skill folder carries its own `SKILL.md` with the full workflow and where to change environment defaults.
 
@@ -249,9 +263,11 @@ tryworld-skills/
 
 ---
 
-## ⚖️ License
+## 📄 License
 
 This work is licensed under a **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)** license: share and adapt freely — including commercially — as long as you give credit, and any remix is released under the same license. Full terms: [LICENSE](LICENSE).
+
+`tryworld-paper/scripts/check_prose.py` is derived from [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0 and remains under the **MIT License** (see `skills/tryworld-paper/LICENSE-MIT`); everything else in this repository is CC BY-SA 4.0.
 
 [![CC BY-SA 4.0](assets/license-badge.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 

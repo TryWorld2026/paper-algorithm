@@ -104,9 +104,9 @@ Get-ChildItem -LiteralPath "E:\Codex口播视频" -Directory | ForEach-Object {
 
 - 主视频（*.mp4，烧录字幕）
 - 口播稿（含日期，如 `2026-08-04_主题_口播稿.md`）
-- 封面_横版4x3.png / 封面_竖版3x4.png
-- 平台标题文案.txt
-- 配音文本_script.txt、narration.mp3、transcript.json（时间轴）、plan.json
+- cover_4x3.png / cover_3x4.png
+- titles.txt
+- narration.mp3、sentences.json（字幕时间轴）、plan.json
 - 发布计划.txt（固定内容）
 
 发布计划.txt 内容模板：

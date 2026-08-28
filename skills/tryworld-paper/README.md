@@ -33,7 +33,7 @@
 ### 字体
 
 - 主标题：思源宋体（Noto Serif SC）
-- 批注/引用：霞鹜文楷（LXGW WenKai）
+- 批注/引用：ZCOOL XiaoWei（默认）；霞鹜文楷（LXGW WenKai）如需使用须自带 woff2
 - 数据/坐标：等宽字体（JetBrains Mono）
 
 ### 动效签名（全片统一）
@@ -112,4 +112,4 @@ tryworld-paper/
 
 ## 许可
 
-本仓库暂未附带开源许可证；在添加许可证之前，默认保留所有权利。其中 `scripts/check_prose.py` 源自 [KKKKhazix/human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0（禁令上移到修辞动作级，检测器补盲区降误伤），按 MIT License 使用与改造，版权归原作者所有。
+本仓库采用知识共享 **署名-相同方式共享 4.0 国际（CC BY-SA 4.0）**。其中 `scripts/check_prose.py` 源自 [KKKKhazix/human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0（禁令上移到修辞动作级，检测器补盲区降误伤），按 **MIT License** 使用与改造，版权归原作者所有，完整声明见 [LICENSE-MIT](LICENSE-MIT)。

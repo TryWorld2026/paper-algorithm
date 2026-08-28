@@ -106,7 +106,7 @@ python -X utf8 "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\check_pro
 ## 2. 配音（云希）
 
 ```powershell
-python scripts/tts_yunxi.py script.txt --out work/audio
+python "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\tts_yunxi.py" script.txt --out work/audio
 ```
 
 输出：
@@ -209,7 +209,7 @@ ffmpeg -y -i covers/v.mp4 -frames:v 1 outputs/cover_3x4.png
 - `tryworld_<slug>.mp4`（主视频）
 - `cover_4x3.png`、`cover_3x4.png`
 - `titles.txt`（含平台推荐）
-- `narration.mp3` + `transcript.json`（配音与字幕时间轴，便于二次编辑）
+- `narration.mp3` + `sentences.json`（配音与字幕时间轴，便于二次编辑）
 - `plan.json`（场景规划，便于复用章节结构）
 
 ## 常见问题
