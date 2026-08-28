@@ -76,6 +76,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 - [这是什么](#-这是什么)
 - [30 秒上手](#-30-秒上手)
 - [三张纸页 · 技能总览](#-三张纸页--技能总览)
+- [效果展示](#-效果展示)
 - [一条口播工作流](#-一条口播工作流)
 - [纸上算法 · 设计系统](#-纸上算法--设计系统)
 - [活人感门禁](#-活人感门禁)
@@ -115,6 +116,23 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 </tr>
 </table>
 </div>
+
+---
+
+## 🎬 效果展示
+
+以下全部由本流水线端到端产出，无人工后期。视频为 720p 预览（原片 1080p、约 30-45MB）；每个文件夹内含口播稿、平台标题与发布计划。
+
+<p align="center">
+  <img src="examples/cordis-paper/cover_4x3.png" width="45%" alt="Cordis 论文精读 · 横版封面"/>
+  &nbsp;
+  <img src="examples/cursor-spacex/cover_4x3.png" width="45%" alt="Cursor 被 SpaceX 收购 · 横版封面"/>
+</p>
+
+| 示例 | 主题 | 时长 | 视频预览 | 文件夹内容 |
+|---|---|---|---|---|
+| [cordis-paper](examples/cordis-paper/) | DeepSeek 论文精读：把拆插件讲成数学 | 8.8 分钟 | [preview_720p.mp4](examples/cordis-paper/preview_720p.mp4) · 12 MB | [封面](examples/cordis-paper/cover_4x3.png) · [标题](examples/cordis-paper/titles.txt) · [口播稿](examples/cordis-paper/2026-08-23_Cordis论文精读_口播稿.md) · [发布计划](examples/cordis-paper/发布计划.txt) |
+| [cursor-spacex](examples/cursor-spacex/) | SpaceX 买下 Cursor | 6.6 分钟 | [preview_720p.mp4](examples/cursor-spacex/preview_720p.mp4) · 8 MB | [封面](examples/cursor-spacex/cover_4x3.png) · [标题](examples/cursor-spacex/titles.txt) · [口播稿](examples/cursor-spacex/2026-08-16_Cursor被SpaceX收购_口播稿.md) · [发布计划](examples/cursor-spacex/发布计划.txt) |
 
 ---
 
@@ -246,6 +264,9 @@ paper-algorithm/
 ├── README.md                    # 索引（English）
 ├── README.zh-CN.md              # 索引（简体中文）
 ├── LICENSE                      # CC BY-SA 4.0
+├── examples/                    # 真实流水线产出（效果展示）
+│   ├── cordis-paper/            # 示例：720p 预览 · 封面 · 标题 · 口播稿
+│   └── cursor-spacex/           # 示例：720p 预览 · 封面 · 标题 · 口播稿
 └── skills/
     ├── tryworld-koubo/          # 口播总入口（路由 + 邮件通知）
     ├── tryworld-paper/          # 纸上算法视频制作

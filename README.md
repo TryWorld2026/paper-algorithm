@@ -76,6 +76,7 @@ That's it. The request is recognized and routed through the whole pipeline autom
 - [What Is This](#-what-is-this)
 - [30-Second Quick Start](#-30-second-quick-start)
 - [Three Pages · Skill Overview](#-three-pages--skill-overview)
+- [Showcase](#-showcase)
 - [The Voiceover Workflow](#-the-voiceover-workflow)
 - [Paper Algorithm · Design System](#-paper-algorithm--design-system)
 - [The Aliveness Gate](#-the-aliveness-gate)
@@ -115,6 +116,23 @@ That's it. The request is recognized and routed through the whole pipeline autom
 </tr>
 </table>
 </div>
+
+---
+
+## 🎬 Showcase
+
+Real outputs from the pipeline — everything below was produced end-to-end by these skills, with no manual editing. Videos are 720p previews (originals are ~30–45 MB, 1080p); each folder also carries the voiceover script, platform titles, and the publish plan.
+
+<p align="center">
+  <img src="examples/cordis-paper/cover_4x3.png" width="45%" alt="Cordis 论文精读 · 横版封面"/>
+  &nbsp;
+  <img src="examples/cursor-spacex/cover_4x3.png" width="45%" alt="Cursor 被 SpaceX 收购 · 横版封面"/>
+</p>
+
+| Example | Topic | Length | Video preview | In the folder |
+|---|---|---|---|---|
+| [cordis-paper](examples/cordis-paper/) | DeepSeek 论文精读：把拆插件讲成数学 | 8.8 min | [preview_720p.mp4](examples/cordis-paper/preview_720p.mp4) · 12 MB | [covers](examples/cordis-paper/cover_4x3.png) · [titles](examples/cordis-paper/titles.txt) · [script](examples/cordis-paper/2026-08-23_Cordis论文精读_口播稿.md) · [publish plan](examples/cordis-paper/发布计划.txt) |
+| [cursor-spacex](examples/cursor-spacex/) | SpaceX 买下 Cursor | 6.6 min | [preview_720p.mp4](examples/cursor-spacex/preview_720p.mp4) · 8 MB | [covers](examples/cursor-spacex/cover_4x3.png) · [titles](examples/cursor-spacex/titles.txt) · [script](examples/cursor-spacex/2026-08-16_Cursor被SpaceX收购_口播稿.md) · [publish plan](examples/cursor-spacex/发布计划.txt) |
 
 ---
 
@@ -246,6 +264,9 @@ paper-algorithm/
 ├── README.md                    # Index (English)
 ├── README.zh-CN.md              # Index (简体中文)
 ├── LICENSE                      # CC BY-SA 4.0
+├── examples/                    # Real pipeline outputs (showcase)
+│   ├── cordis-paper/            # Sample: 720p preview · covers · titles · script
+│   └── cursor-spacex/           # Sample: 720p preview · covers · titles · script
 └── skills/
     ├── tryworld-koubo/          # Voiceover router (routing + email notice)
     ├── tryworld-paper/          # Paper Algorithm video production
