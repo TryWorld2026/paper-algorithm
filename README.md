@@ -13,7 +13,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/status-active-8FAF8C?style=flat-square" alt="status">
-  <img src="https://img.shields.io/badge/skills-5-1C1916?style=flat-square" alt="skills">
+  <img src="https://img.shields.io/badge/skills-3-1C1916?style=flat-square" alt="skills">
   <img src="https://img.shields.io/badge/platform-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="platform">
   <img src="https://img.shields.io/badge/license-CC%20BY--NC%204.0-C0452F?style=flat-square" alt="license">
 </p>
@@ -24,14 +24,14 @@
 <table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
 <tr><td style="border-left:4px solid #C0452F; padding:14px 18px;">
   <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:16px;">Paper is the stage, ink is the text, vermillion is the accent, the seal is the signature.</b><br/>
-  <span style="color:#5C5445; font-size:13px;">Five skills, each guarding one page — together they form a single moving page of algorithm notes: from "what should I make this week" to delivered videos, automatic email notices, and a four-platform publishing schedule.</span>
+  <span style="color:#5C5445; font-size:13px;">Three skills, each guarding one page — together they form a single moving page of algorithm notes: from "what should I make this week" to delivered videos, automatic email notices, and a four-platform publishing schedule.</span>
 </td></tr>
 </table>
 </div>
 
 ## 📑 Contents
 
-- [Five Pages · Skill Overview](#-five-pages--skill-overview)
+- [Three Pages · Skill Overview](#-three-pages--skill-overview)
 - [The Voiceover Workflow](#-the-voiceover-workflow)
 - [Paper Algorithm · Design System](#-paper-algorithm--design-system)
 - [The Aliveness Gate](#-the-aliveness-gate)
@@ -41,7 +41,7 @@
 
 ---
 
-## 🧩 Five Pages · Skill Overview
+## 🧩 Three Pages · Skill Overview
 
 <div align="center">
 <table>
@@ -68,23 +68,6 @@
   <code style="font-size:12px;">$tryworld-topics</code>
 </td>
 </tr>
-<tr>
-<td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
-  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">🔬 Horizontal–Vertical Research</b><br/>
-  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-research</span>
-  <br/><br/><span style="font-size:13px; color:#1C1916;">Trace the life arc vertically, compare the landscape horizontally, cross the axes for insight.</span>
-  <br/><br/><span style="font-size:12px; color:#2E5E8C;">Delivers: 10k–30k-word PDF report</span><br/>
-  <code style="font-size:12px;">$tryworld-research</code>
-</td>
-<td width="34%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
-  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">✍️ WeChat Long-Form Writing</b><br/>
-  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-write</span>
-  <br/><br/><span style="font-size:13px; color:#1C1916;">Turns raw material into a finished long-form article in TryWorld's voice.</span>
-  <br/><br/><span style="font-size:12px; color:#2E5E8C;">Delivers: finished article</span><br/>
-  <code style="font-size:12px;">$tryworld-write</code>
-</td>
-<td width="33%" valign="top"></td>
-</tr>
 </table>
 </div>
 
@@ -92,7 +75,7 @@
 
 ## 🎬 The Voiceover Workflow
 
-Remember one entry: **`$tryworld-koubo`**. Hand it a script (Mode A) or ask for topics (Mode B). `tryworld-research` and `tryworld-write` are standalone.
+Remember one entry: **`$tryworld-koubo`**. Hand it a script (Mode A) or ask for topics (Mode B).
 
 ```mermaid
 flowchart LR
@@ -102,8 +85,6 @@ flowchart LR
     S -- "you choose" --> A
     A --> O["✅ Deliverables<br/>Video · covers · titles · schedule"]
     O -. "automatic" .-> M["📧 Email notice<br/>Deliverables + publish times"]
-    H["🔬 tryworld-research"] -. "standalone" .-> R["📄 PDF report"]
-    W["✍️ tryworld-write"] -. "standalone" .-> C["📝 WeChat article"]
 ```
 
 ---
@@ -196,9 +177,7 @@ tryworld-skills/
 └── skills/
     ├── tryworld-koubo/          # Voiceover router (routing + email notice)
     ├── tryworld-paper/          # Paper Algorithm video production
-    ├── tryworld-topics/         # AIHOT topic selection
-    ├── tryworld-research/       # Horizontal–Vertical deep research
-    └── tryworld-write/          # WeChat long-form writing
+    └── tryworld-topics/         # AIHOT topic selection
 ```
 
 ---

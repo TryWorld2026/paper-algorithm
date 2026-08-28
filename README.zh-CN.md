@@ -13,7 +13,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/状态-已启用-8FAF8C?style=flat-square" alt="status">
-  <img src="https://img.shields.io/badge/技能-5-1C1916?style=flat-square" alt="skills">
+  <img src="https://img.shields.io/badge/技能-3-1C1916?style=flat-square" alt="skills">
   <img src="https://img.shields.io/badge/平台-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="platform">
   <img src="https://img.shields.io/badge/许可-CC%20BY--NC%204.0-C0452F?style=flat-square" alt="license">
 </p>
@@ -24,14 +24,14 @@
 <table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
 <tr><td style="border-left:4px solid #C0452F; padding:14px 18px;">
   <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:16px;">纸面是舞台，墨迹是文字，朱红是重点，印章是签名。</b><br/>
-  <span style="color:#5C5445; font-size:13px;">五个技能各守一页，合起来就是一页会动的算法笔记——从「这周做什么」到成片交付、自动邮件通知、四平台发布计划。</span>
+  <span style="color:#5C5445; font-size:13px;">三个技能各守一页，合起来就是一页会动的算法笔记——从「这周做什么」到成片交付、自动邮件通知、四平台发布计划。</span>
 </td></tr>
 </table>
 </div>
 
 ## 📑 目录
 
-- [五张纸页 · 技能总览](#-五张纸页--技能总览)
+- [三张纸页 · 技能总览](#-三张纸页--技能总览)
 - [一条口播工作流](#-一条口播工作流)
 - [纸上算法 · 设计系统](#-纸上算法--设计系统)
 - [活人感门禁](#-活人感门禁)
@@ -41,7 +41,7 @@
 
 ---
 
-## 🧩 五张纸页 · 技能总览
+## 🧩 三张纸页 · 技能总览
 
 <div align="center">
 <table>
@@ -68,23 +68,6 @@
   <code style="font-size:12px;">$tryworld-topics</code>
 </td>
 </tr>
-<tr>
-<td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
-  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">🔬 横纵分析法</b><br/>
-  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-research</span>
-  <br/><br/><span style="font-size:13px; color:#1C1916;">纵轴追生命历程，横轴比竞品格局，交叉出独到洞察。</span>
-  <br/><br/><span style="font-size:12px; color:#2E5E8C;">产出：万字 PDF 研究报告</span><br/>
-  <code style="font-size:12px;">$tryworld-research</code>
-</td>
-<td width="34%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
-  <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">✍️ 公众号长文</b><br/>
-  <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-write</span>
-  <br/><br/><span style="font-size:13px; color:#1C1916;">按试界风格，把素材写成读得下去的公众号长文。</span>
-  <br/><br/><span style="font-size:12px; color:#2E5E8C;">产出：长文成品</span><br/>
-  <code style="font-size:12px;">$tryworld-write</code>
-</td>
-<td width="33%" valign="top"></td>
-</tr>
 </table>
 </div>
 
@@ -92,7 +75,7 @@
 
 ## 🎬 一条口播工作流
 
-只记一个入口：**`$tryworld-koubo`**。给稿走模式 A，要选题走模式 B；`tryworld-research` 与 `tryworld-write` 独立使用。
+只记一个入口：**`$tryworld-koubo`**。给稿走模式 A，要选题走模式 B。
 
 ```mermaid
 flowchart LR
@@ -102,8 +85,6 @@ flowchart LR
     S -- "你挑选" --> A
     A --> O["✅ 成片交付<br/>视频 · 封面 · 标题 · 发布计划"]
     O -. "自动" .-> M["📧 邮件通知<br/>产物 + 四平台发布时间"]
-    H["🔬 tryworld-research"] -. "独立" .-> R["📄 PDF 报告"]
-    W["✍️ tryworld-write"] -. "独立" .-> C["📝 公众号长文"]
 ```
 
 ---
@@ -196,9 +177,7 @@ tryworld-skills/
 └── skills/
     ├── tryworld-koubo/          # 口播总入口（路由 + 邮件通知）
     ├── tryworld-paper/          # 纸上算法视频制作
-    ├── tryworld-topics/         # AIHOT 口播选题
-    ├── tryworld-research/       # 横纵分析法深度研究
-    └── tryworld-write/          # 公众号长文写作
+    └── tryworld-topics/         # AIHOT 口播选题
 ```
 
 ---
