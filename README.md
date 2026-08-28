@@ -44,8 +44,8 @@ Install them into `~/.agents/skills`, open a session in any agent host that read
 **1 · Install** — clone the repo, then copy the skill folders into your skills directory:
 
 ```bash
-git clone https://github.com/TryWorld2026/tryworld-skills.git
-cd tryworld-skills
+git clone https://github.com/TryWorld2026/paper-algorithm.git
+cd paper-algorithm
 mkdir -p ~/.agents/skills
 cp -r skills/* ~/.agents/skills/
 ```
@@ -53,8 +53,8 @@ cp -r skills/* ~/.agents/skills/
 On Windows PowerShell:
 
 ```powershell
-git clone https://github.com/TryWorld2026/tryworld-skills.git
-cd tryworld-skills
+git clone https://github.com/TryWorld2026/paper-algorithm.git
+cd paper-algorithm
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills"
 Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
@@ -239,7 +239,7 @@ Each skill folder carries its own `SKILL.md` with the full workflow and where to
 ## 🗂 Repository Layout
 
 ```text
-tryworld-skills/
+paper-algorithm/
 ├── assets/
 │   ├── hero.svg                 # Brand banner
 │   └── license-badge.svg        # License badge
@@ -257,7 +257,7 @@ tryworld-skills/
 ## 🤝 Use and Remix
 
 - **Fork, don't copy.** Use the fork button — it keeps the link back to this repository and its commit history.
-- **Keep the upstream.** Every derivative repository must carry a visible attribution to this project (`TryWorld2026/tryworld-skills`) and the license notice.
+- **Keep the upstream.** Every derivative repository must carry a visible attribution to this project (`TryWorld2026/paper-algorithm`) and the license notice.
 - **Share alike.** Remixes must be released under the same license (CC BY-SA 4.0). A repository that doesn't carry this license statement is not licensed for derivative work.
 - **Commercial use is welcome** — as long as the attribution and the license travel with it.
 

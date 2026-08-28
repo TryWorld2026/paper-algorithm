@@ -44,8 +44,8 @@
 **第 1 步 · 安装**——克隆仓库，再把技能文件夹复制到你的技能目录：
 
 ```bash
-git clone https://github.com/TryWorld2026/tryworld-skills.git
-cd tryworld-skills
+git clone https://github.com/TryWorld2026/paper-algorithm.git
+cd paper-algorithm
 mkdir -p ~/.agents/skills
 cp -r skills/* ~/.agents/skills/
 ```
@@ -53,8 +53,8 @@ cp -r skills/* ~/.agents/skills/
 Windows PowerShell 等价命令：
 
 ```powershell
-git clone https://github.com/TryWorld2026/tryworld-skills.git
-cd tryworld-skills
+git clone https://github.com/TryWorld2026/paper-algorithm.git
+cd paper-algorithm
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills"
 Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
@@ -239,7 +239,7 @@ Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\s
 ## 🗂 仓库结构
 
 ```text
-tryworld-skills/
+paper-algorithm/
 ├── assets/
 │   ├── hero.svg                 # 品牌横幅
 │   └── license-badge.svg        # 许可徽章
@@ -257,7 +257,7 @@ tryworld-skills/
 ## 🤝 使用与二创
 
 - **请 fork，不要复制粘贴。** 用仓库右上角的 fork 按钮使用，保持与上游的连接和提交历史。
-- **保留上游。** 任何二创仓库必须显著标注本仓库（`TryWorld2026/tryworld-skills`）与许可声明。
+- **保留上游。** 任何二创仓库必须显著标注本仓库（`TryWorld2026/paper-algorithm`）与许可声明。
 - **相同方式共享。** 二创必须使用同一许可（CC BY-SA 4.0）发布；不带本许可声明的仓库，不视为已获授权的二创。
 - **商业使用欢迎**——只要署名与本许可随作品一起保留。
 
