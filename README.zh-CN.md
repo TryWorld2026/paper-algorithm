@@ -142,12 +142,12 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 
 ```mermaid
 flowchart LR
-    U(["你的一句话"]) --> P["🎬 tryworld-koubo<br/>统一入口 · 自动路由"]
-    P -- "模式 A · 直接给稿" --> A["📜 tryworld-paper<br/>优化 → 确认 → 出片"]
-    P -- "模式 B · 帮我选题" --> S["🎯 tryworld-topics<br/>AIHOT 资讯 → 选题清单"]
+    U(["你的一句话"]) --> P["tryworld-koubo<br/>统一入口, 自动路由"]
+    P -- "模式 A, 直接给稿" --> A["tryworld-paper<br/>优化, 确认, 出片"]
+    P -- "模式 B, 帮我选题" --> S["tryworld-topics<br/>AIHOT 资讯出选题清单"]
     S -- "你挑选" --> A
-    A --> O["✅ 成片交付<br/>视频 · 封面 · 标题 · 发布计划"]
-    O -. "自动" .-> M["📧 邮件通知<br/>产物 + 四平台发布时间"]
+    A --> O["成片交付<br/>视频, 封面, 标题, 发布计划"]
+    O -. 自动 .-> M["邮件通知<br/>产物和四平台发布时间"]
 ```
 
 ---
