@@ -15,7 +15,7 @@
   <img src="https://img.shields.io/badge/状态-已启用-8FAF8C?style=flat-square" alt="status">
   <img src="https://img.shields.io/badge/技能-3-1C1916?style=flat-square" alt="skills">
   <img src="https://img.shields.io/badge/平台-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="platform">
-  <img src="https://img.shields.io/badge/许可-CC%20BY--NC%204.0-C0452F?style=flat-square" alt="license">
+  <img src="https://img.shields.io/badge/许可-CC%20BY--SA%204.0-C0452F?style=flat-square" alt="license">
 </p>
 
 ---
@@ -69,6 +69,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 - [活人感门禁](#-活人感门禁)
 - [安装与使用](#-安装与使用)
 - [仓库结构](#-仓库结构)
+- [使用与二创](#-使用与二创)
 - [许可](#-许可)
 
 ---
@@ -230,7 +231,7 @@ tryworld-skills/
 │   └── license-badge.svg        # 许可徽章
 ├── README.md                    # 索引（English）
 ├── README.zh-CN.md              # 索引（简体中文）
-├── LICENSE                      # CC BY-NC 4.0
+├── LICENSE                      # CC BY-SA 4.0
 └── skills/
     ├── tryworld-koubo/          # 口播总入口（路由 + 邮件通知）
     ├── tryworld-paper/          # 纸上算法视频制作
@@ -239,11 +240,20 @@ tryworld-skills/
 
 ---
 
+## 🤝 使用与二创
+
+- **请 fork，不要复制粘贴。** 用仓库右上角的 fork 按钮使用，保持与上游的连接和提交历史。
+- **保留上游。** 任何二创仓库必须显著标注本仓库（`TryWorld2026/tryworld-skills`）与许可声明。
+- **相同方式共享。** 二创必须使用同一许可（CC BY-SA 4.0）发布；不带本许可声明的仓库，不视为已获授权的二创。
+- **商业使用欢迎**——只要署名与本许可随作品一起保留。
+
+---
+
 ## ⚖️ 许可
 
-本仓库采用知识共享 **署名-非商业性使用 4.0 国际（CC BY-NC 4.0）**：允许署名、非商业用途的自由分享与演绎，禁止商业用途。完整条款见 [LICENSE](LICENSE)。
+本仓库采用知识共享 **署名-相同方式共享 4.0 国际（CC BY-SA 4.0）**：允许自由分享与演绎（含商业用途），但必须署名，且任何二创（衍生作品）必须使用同一许可发布。完整条款见 [LICENSE](LICENSE)。
 
-[![CC BY-NC 4.0](assets/license-badge.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![CC BY-SA 4.0](assets/license-badge.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ---
 

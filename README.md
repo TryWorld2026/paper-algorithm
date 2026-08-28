@@ -15,7 +15,7 @@
   <img src="https://img.shields.io/badge/status-active-8FAF8C?style=flat-square" alt="status">
   <img src="https://img.shields.io/badge/skills-3-1C1916?style=flat-square" alt="skills">
   <img src="https://img.shields.io/badge/platform-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="platform">
-  <img src="https://img.shields.io/badge/license-CC%20BY--NC%204.0-C0452F?style=flat-square" alt="license">
+  <img src="https://img.shields.io/badge/license-CC%20BY--SA%204.0-C0452F?style=flat-square" alt="license">
 </p>
 
 ---
@@ -69,6 +69,7 @@ That's it. The request is recognized and routed through the whole pipeline autom
 - [The Aliveness Gate](#-the-aliveness-gate)
 - [Installation and Usage](#-installation-and-usage)
 - [Repository Layout](#-repository-layout)
+- [Use and Remix](#-use-and-remix)
 - [License](#-license)
 
 ---
@@ -230,7 +231,7 @@ tryworld-skills/
 │   └── license-badge.svg        # License badge
 ├── README.md                    # Index (English)
 ├── README.zh-CN.md              # Index (简体中文)
-├── LICENSE                      # CC BY-NC 4.0
+├── LICENSE                      # CC BY-SA 4.0
 └── skills/
     ├── tryworld-koubo/          # Voiceover router (routing + email notice)
     ├── tryworld-paper/          # Paper Algorithm video production
@@ -239,11 +240,20 @@ tryworld-skills/
 
 ---
 
+## 🤝 Use and Remix
+
+- **Fork, don't copy.** Use the fork button — it keeps the link back to this repository and its commit history.
+- **Keep the upstream.** Every derivative repository must carry a visible attribution to this project (`TryWorld2026/tryworld-skills`) and the license notice.
+- **Share alike.** Remixes must be released under the same license (CC BY-SA 4.0). A repository that doesn't carry this license statement is not licensed for derivative work.
+- **Commercial use is welcome** — as long as the attribution and the license travel with it.
+
+---
+
 ## ⚖️ License
 
-This work is licensed under a **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** license: share and adapt freely for **non-commercial** purposes, with attribution. Commercial use is not permitted. Full terms: [LICENSE](LICENSE).
+This work is licensed under a **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)** license: share and adapt freely — including commercially — as long as you give credit, and any remix is released under the same license. Full terms: [LICENSE](LICENSE).
 
-[![CC BY-NC 4.0](assets/license-badge.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![CC BY-SA 4.0](assets/license-badge.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ---
 
