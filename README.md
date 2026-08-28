@@ -20,6 +20,16 @@
 
 ---
 
+## 🧭 What Is This
+
+**TryWorld（试界）official AI-agent skill set** — a complete Chinese voiceover-video production line, from one sentence to a delivered video. Topic selection, scriptwriting, polish, rendering, publish plan, and email notice are all packaged into three self-contained Skills:
+
+- **🎬 `tryworld-koubo`** — the single entry. One sentence in, auto-routed through topics → script → polish → video.
+- **🎯 `tryworld-topics`** — AIHOT-based topic selection: hundreds of daily AI headlines distilled into 3–8 fresh picks.
+- **📜 `tryworld-paper`** — the "Paper Algorithm" video pipeline: script → branded 16:9 video with covers, titles, and captions.
+
+Install one or all of them into `~/.agents/skills`, open a session in any agent host that reads that directory (Codex / Claude Code / Cursor / ZCode …), and say one sentence in Chinese. The skills pick up the whole chain from there — topic list, scripts, rendered video, covers, titles, even the automatic email notice.
+
 <div align="center">
 <table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
 <tr><td style="border-left:4px solid #C0452F; padding:14px 18px;">
@@ -29,13 +39,35 @@
 </table>
 </div>
 
+## ⏱ 30-Second Quick Start
+
+**1 · Install** — copy the skill folders into your skills directory:
+
+```powershell
+Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recurse
+```
+
+**2 · Say it** — open a session with your agent and just talk:
+
+```text
+帮我做一期口播
+```
+
+That's it. The request is recognized and routed through the whole pipeline automatically — no commands to memorize. You can also name a skill directly (`$tryworld-koubo`, `$tryworld-topics`, `$tryworld-paper`); the `$`-name is the skill's call sign in agent sessions.
+
+**3 · Receive** — the pipeline ends with the rendered video, horizontal/vertical covers, platform titles, captions, a four-platform publish plan, and an automatic email notice.
+
+---
+
 ## 📑 Contents
 
+- [What Is This](#-what-is-this)
+- [30-Second Quick Start](#-30-second-quick-start)
 - [Three Pages · Skill Overview](#-three-pages--skill-overview)
 - [The Voiceover Workflow](#-the-voiceover-workflow)
 - [Paper Algorithm · Design System](#-paper-algorithm--design-system)
 - [The Aliveness Gate](#-the-aliveness-gate)
-- [Quick Start](#-quick-start)
+- [Installation and Usage](#-installation-and-usage)
 - [Repository Layout](#-repository-layout)
 - [License](#-license)
 
@@ -143,7 +175,9 @@ Before delivery, every polished script and platform title passes a machine gate 
 
 ---
 
-## 🚀 Quick Start
+## 🛠 Installation and Usage
+
+### Install
 
 Each skill folder is a self-contained Skill. Copy it into your local skills directory:
 
@@ -155,12 +189,35 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
-> Other hosts (Codex / Claude Code / Cursor, etc.) read `~/.agents/skills` too. Then just say it in a session:
+> Other hosts (Codex / Claude Code / Cursor, etc.) read `~/.agents/skills` too.
 
-```text
-Make me a TryWorld voiceover video
-Use $tryworld-koubo to produce this
-```
+### How to trigger
+
+A skill fires when the request matches its trigger words — no commands to memorize:
+
+- Say it in plain words: 「帮我做一期口播」「这周做什么口播」「把这篇稿子做成视频」…
+- Name the skill explicitly: `$tryworld-koubo` / `$tryworld-topics` / `$tryworld-paper`
+- Paste a script and ask to produce it — the router detects the input and goes straight into the video pipeline.
+
+### What you get
+
+| You say | Skill | You get |
+|---|---|---|
+| 帮我做一期口播 / 帮我选题 | tryworld-koubo | routed pipeline · publish plan · email notice |
+| 这周做什么口播 | tryworld-topics | 3–8 topic picks (angle · source · priority) |
+| 把这篇稿子做成视频 | tryworld-paper | 16:9 video · covers · titles · captions |
+
+### Environment notes
+
+These skills are built for TryWorld's own production workflow, so a few things are assumed. All of them are adjustable in the skill files:
+
+- **Windows** — data-fetching and email-notice scripts are PowerShell (`scripts/*.ps1`); cross-platform alternatives are documented in each skill's `references/`.
+- **Python 3** — the prose gate (`scripts/check_prose.py`) and the Azure-Yunxi voiceover (`scripts/tts_yunxi.py`).
+- **Node.js + HyperFrames** — rendering (`npx hyperframes render`).
+- **Working directory** — finished projects land in `E:\Codex口播视频` by convention; change it in the skill files to your own.
+- **Email notice** — requires a sender credential configured (via the `$qq-email` skill); skipped gracefully when absent.
+
+Each skill folder carries its own `SKILL.md` with the full workflow and where to change environment defaults.
 
 ---
 

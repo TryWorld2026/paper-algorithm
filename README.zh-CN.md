@@ -20,6 +20,16 @@
 
 ---
 
+## 🧭 这是什么
+
+**试界 TryWorld 官方 AI 技能合集**——一条完整的中文口播视频生产线：从一句话到成片。选题、写稿、优化、出片、发布计划、邮件通知，全部打包成三个相互独立、即装即用的 Skill：
+
+- **🎬 `tryworld-koubo`**——统一入口。一句人话，自动路由选题 → 写稿 → 优化 → 出片。
+- **🎯 `tryworld-topics`**——AIHOT 选题。每天几百条 AI 资讯，压成 3–8 个能做、能火、不重复的选题。
+- **📜 `tryworld-paper`**——纸上算法出片。口播稿 → 品牌化 16:9 横屏视频，含封面、标题、字幕。
+
+装进 `~/.agents/skills` 后，在任何读取该目录的 AI 工具（Codex / Claude Code / Cursor / ZCode 等）的会话里说一句中文，整条链路就从选题清单、口播稿、渲染成片、封面标题，一直到自动邮件通知自动走完，不需要你记任何命令。
+
 <div align="center">
 <table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
 <tr><td style="border-left:4px solid #C0452F; padding:14px 18px;">
@@ -29,13 +39,35 @@
 </table>
 </div>
 
+## ⏱ 30 秒上手
+
+**第 1 步 · 安装**——把技能文件夹复制到你的技能目录：
+
+```powershell
+Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recurse
+```
+
+**第 2 步 · 说话**——打开 AI 工具会话，直接说：
+
+```text
+帮我做一期口播
+```
+
+就这样。请求会被自动识别并路由到整条流水线，不用记任何命令。也可以直接点名技能（`$tryworld-koubo`、`$tryworld-topics`、`$tryworld-paper`）；带 `$` 的名字就是技能在会话里的呼号。
+
+**第 3 步 · 收货**——流水线末端交付：渲染成片、横竖封面、平台标题、字幕、四平台发布计划，外加一封自动邮件通知。
+
+---
+
 ## 📑 目录
 
+- [这是什么](#-这是什么)
+- [30 秒上手](#-30-秒上手)
 - [三张纸页 · 技能总览](#-三张纸页--技能总览)
 - [一条口播工作流](#-一条口播工作流)
 - [纸上算法 · 设计系统](#-纸上算法--设计系统)
 - [活人感门禁](#-活人感门禁)
-- [快速开始](#-快速开始)
+- [安装与使用](#-安装与使用)
 - [仓库结构](#-仓库结构)
 - [许可](#-许可)
 
@@ -143,7 +175,9 @@ flowchart LR
 
 ---
 
-## 🚀 快速开始
+## 🛠 安装与使用
+
+### 安装
 
 每个技能文件夹都是独立的 Skill，复制到本机技能目录即可：
 
@@ -155,12 +189,35 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
-> 其他宿主（Codex / Claude Code / Cursor 等）同样读取 `~/.agents/skills`。安装后在会话中直接说：
+> 其他宿主（Codex / Claude Code / Cursor 等）同样读取 `~/.agents/skills`。
 
-```text
-帮我做一期口播
-用 $tryworld-koubo 出片
-```
+### 怎么触发
+
+技能靠触发词自动命中，不需要记命令：
+
+- 直接说人话：「帮我做一期口播」「这周做什么口播」「把这篇稿子做成视频」……
+- 点名技能：`$tryworld-koubo` / `$tryworld-topics` / `$tryworld-paper`
+- 直接粘贴口播稿要出片——路由会自动识别输入，直接进入出片流水线。
+
+### 你说什么，得到什么
+
+| 你说 | 走哪个技能 | 得到 |
+|---|---|---|
+| 帮我做一期口播 / 帮我选题 | tryworld-koubo | 全流程路由 · 发布计划 · 邮件通知 |
+| 这周做什么口播 | tryworld-topics | 3–8 个选题（角度 · 来源 · 优先级） |
+| 把这篇稿子做成视频 | tryworld-paper | 16:9 成片 · 横竖封面 · 标题 · 字幕 |
+
+### 环境要求
+
+这些技能按试界自己的工作流定制，默认假设如下——全部都可以在技能文件里自行调整：
+
+- **Windows**——拉取数据与发通知邮件的脚本是 PowerShell（`scripts/*.ps1`）；跨平台替代方案见各技能的 `references/`。
+- **Python 3**——改稿检查（`scripts/check_prose.py`）与云希配音（`scripts/tts_yunxi.py`）。
+- **Node.js + HyperFrames**——渲染（`npx hyperframes render`）。
+- **工作目录**——成片项目默认落在 `E:\Codex口播视频`，可按需在技能文件里改成你自己的目录。
+- **邮件通知**——需要配置发信凭证（经 `$qq-email` 技能）；未配置时自动跳过，不阻塞交付。
+
+每个技能文件夹里的 `SKILL.md` 都有完整工作流，以及在哪里改环境默认值。
 
 ---
 
