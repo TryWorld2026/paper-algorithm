@@ -79,6 +79,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 - [效果展示](#-效果展示)
 - [一条口播工作流](#-一条口播工作流)
 - [纸上算法 · 设计系统](#-纸上算法--设计系统)
+- [配音音色](#-配音音色)
 - [活人感门禁](#-活人感门禁)
 - [安装与使用](#-安装与使用)
 - [仓库结构](#-仓库结构)
@@ -103,7 +104,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
   <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">📜 纸上算法视频</b><br/>
   <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-paper</span>
   <br/><br/><span style="font-size:13px; color:#1C1916;">口播稿 → 品牌化横屏视频，一页会动的算法笔记。</span>
-  <br/><br/><span style="font-size:12px; color:#2E5E8C;">产出：主视频 · 横竖封面 · 标题 · 字幕</span><br/>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">产出：主视频 · 横竖封面 · 标题 · 字幕 · 多音色</span><br/>
   <code style="font-size:12px;">$tryworld-paper</code>
 </td>
 <td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
@@ -188,6 +189,29 @@ flowchart LR
 | **字体** | 思源宋体（主标题）· ZCOOL 小薇（批注）· 等宽字体（数据） |
 | **动效** | 墨落纸 · 笔写入 · 盖章——全片三种签名动效 |
 | **防伪** | 朱红「试界原创」印章右上角全程常驻，是视频唯一水印 |
+
+---
+
+## 🎙 配音音色
+
+配音默认 **云希**（试界品牌音色），内置七个可切换预设，一个参数就能换：
+
+| 预设名 | 音色 | 特点 |
+|---|---|---|
+| `yunxi`（默认） | 云希 | 男 · 阳光 |
+| `xiaoxiao` | 晓晓 | 女 · 温暖 |
+| `xiaoyi` | 晓伊 | 女 · 活泼 |
+| `yunjian` | 云健 | 男 · 浑厚激情 |
+| `yunyang` | 云扬 | 男 · 新闻播报 |
+| `yunxia` | 云夏 | 男 · 少年感 |
+| `xiaobei` | 小贝 | 女 · 东北方言 |
+| `xiaoni` | 小妮 | 女 · 陕西方言 |
+
+```powershell
+python tryworld-paper/scripts/tts_yunxi.py script.txt --out work/audio --voice xiaoxiao
+```
+
+也接受完整的 edge-tts 音色 id。默认流程不打听音色，直接用云希；你说一句想换声音（女声、播报感之类），它会拿你这篇稿子的开头现场合成几段试听，你听完再挑。
 
 ---
 

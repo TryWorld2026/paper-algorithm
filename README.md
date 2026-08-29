@@ -79,6 +79,7 @@ That's it. The request is recognized and routed through the whole pipeline autom
 - [Showcase](#-showcase)
 - [The Voiceover Workflow](#-the-voiceover-workflow)
 - [Paper Algorithm · Design System](#-paper-algorithm--design-system)
+- [Voice Presets](#-voice-presets)
 - [The Aliveness Gate](#-the-aliveness-gate)
 - [Installation and Usage](#-installation-and-usage)
 - [Repository Layout](#-repository-layout)
@@ -103,7 +104,7 @@ That's it. The request is recognized and routed through the whole pipeline autom
   <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:15px;">📜 Paper Algorithm Video</b><br/>
   <span style="color:#C0452F; font-size:12px; font-weight:bold;">tryworld-paper</span>
   <br/><br/><span style="font-size:13px; color:#1C1916;">Script → branded horizontal video, a page of moving algorithm notes.</span>
-  <br/><br/><span style="font-size:12px; color:#2E5E8C;">Delivers: video · covers · titles · captions</span><br/>
+  <br/><br/><span style="font-size:12px; color:#2E5E8C;">Delivers: video · covers · titles · captions · multi-voice</span><br/>
   <code style="font-size:12px;">$tryworld-paper</code>
 </td>
 <td width="33%" valign="top" style="border:1px solid #E4DCC8; border-top:3px solid #C0452F; background:#FBF7EC; border-radius:6px; padding:12px 14px;">
@@ -188,6 +189,29 @@ The visual contract behind every TryWorld video — **scientific manuscript + Ch
 | **Type** | Noto Serif SC (headings) · ZCOOL XiaoWei (notes) · monospace (data) |
 | **Motion** | ink drop · brush stroke · seal stamp — three signature moves throughout |
 | **Authenticity** | vermilion「试界原创」seal, always visible top-right — the only watermark |
+
+---
+
+## 🎙 Voice Presets
+
+The voiceover defaults to **Yunxi** (云希, TryWorld's brand voice), with seven more presets built in — one flag to switch:
+
+| Preset | Voice | Character |
+|---|---|---|
+| `yunxi` (default) | 云希 | male, sunny |
+| `xiaoxiao` | 晓晓 | female, warm |
+| `xiaoyi` | 晓伊 | female, lively |
+| `yunjian` | 云健 | male, passionate |
+| `yunyang` | 云扬 | male, news anchor |
+| `yunxia` | 云夏 | male, youthful |
+| `xiaobei` | 小贝 | female, Northeastern dialect |
+| `xiaoni` | 小妮 | female, Shaanxi dialect |
+
+```powershell
+python tryworld-paper/scripts/tts_yunxi.py script.txt --out work/audio --voice xiaoxiao
+```
+
+Full edge-tts voice ids are accepted too. By default the pipeline never asks about voices — say you want a different one (a female voice, a news-anchor feel) and it synthesizes short auditions from your own script for you to pick.
 
 ---
 
