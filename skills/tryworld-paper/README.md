@@ -3,7 +3,7 @@
 > 一页会动的算法笔记 —— 把 AI 知识口播稿变成风格统一的横屏视频、横竖封面与平台标题。
 
 ![风格](https://img.shields.io/badge/风格-纸上算法-C0452F)
-![配音](https://img.shields.io/badge/配音-Azure%20YunxiNeural-2E5E8C)
+![配音](https://img.shields.io/badge/配音-多音色·默认云希-2E5E8C)
 ![画幅](https://img.shields.io/badge/画幅-1920x1080-1C1916)
 ![状态](https://img.shields.io/badge/状态-已启用-8FAF8C)
 
@@ -52,7 +52,7 @@
 
 ## 配音质量保障
 
-- **真云希**：Azure YunxiNeural（edge-tts 本地合成，无需 API Key）
+- **多音色**：默认云希（Azure YunxiNeural，试界品牌音色），`--voice` 可换预设（xiaoxiao 晓晓 / yunjian 云健 / yunyang 云扬 / xiaoyi 晓伊 / yunxia 云夏 / xiaobei 小贝东北话 / xiaoni 小妮陕西话），也接受完整 edge-tts 音色 id；本地合成，无需 API Key
 - **默认语速** +8%，可按内容微调 +5%~+15%
 - **防卡顿机制**：文本自动规整（清除 markdown、合并句中换行），按句切分合成——停顿只允许出现在句号/问号/感叹号处，句子中间永不硬断
 - 句级时间戳（`sentences.json`）直接驱动字幕同步，不依赖 whisper

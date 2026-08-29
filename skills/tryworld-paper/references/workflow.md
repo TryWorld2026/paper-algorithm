@@ -103,7 +103,7 @@ python -X utf8 "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\check_pro
 
 产出：`plan.json`（或 Markdown 场景规划表），含每章标题、口播段落、场景数、节奏模式。
 
-## 2. 配音（云希）
+## 2. 配音（默认云希，可选预设音色）
 
 ```powershell
 python "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\tts_yunxi.py" script.txt --out work/audio
@@ -115,7 +115,7 @@ python "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\tts_yunxi.py" scr
 - `work/audio/narration.mp3`：合并全片
 - `work/audio/segments.json`：每段 start/duration，用于章节时间轴
 
-参数：默认 `--rate +8%`（语速偏快一档，可按内容微调 +5%~+15%）、`--voice zh-CN-YunxiNeural`。
+参数：默认 `--rate +8%`（语速偏快一档，可按内容微调 +5%~+15%）、`--voice yunxi`（默认云希；预设音色 xiaoxiao/xiaoyi/yunjian/yunyang/yunxia/xiaobei/xiaoni，也接受完整 edge-tts 音色 id）。
 
 用户提供云希音频时：跳过本步，直接用其音频，记录章节切点。
 
@@ -162,7 +162,7 @@ npx hyperframes inspect --strict --samples 15
 最终渲染前，逐项核对以下清单，**全部通过才允许渲染**；任一项不满足，先修改再重新核验，避免返工浪费。
 
 1. **脚本净化**：全稿无写作标记残留（"一、开场钩子"、括号指令、写作提示等均不朗读、不上字幕、不显示为画面文字）。
-2. **配音**：真云希（Azure YunxiNeural）、语速默认 +8%、句级切分、无句中停顿/卡顿；`sentences.json` 时间轴与口播对得上；结尾为默认签名句（试界TryWorld 标准收尾）。
+2. **配音**：按 `--voice` 指定的音色（默认真云希 Azure YunxiNeural）、语速默认 +8%、句级切分、无句中停顿/卡顿；`sentences.json` 时间轴与口播对得上；结尾为默认签名句（试界TryWorld 标准收尾）。
 3. **字幕**：全片烧录在画面内、无字幕空段；样式为墨黑字 + 当前句关键词朱红，与配音句级同步；与画面动画文字无重复（同一信息同屏只呈现一次）。
 4. **风格与动效**：4 色板无越界色、字体合规（无被禁字体）、三种签名动效；动效丰富度达标（无连续 3 秒静止、每场有 ambient、≥3 层视觉、≥2 焦点）；安全护栏通过（无字幕/印章区入侵、同屏并发 ≤3、无诡异运动、无重叠）；场景间有墨染转场、无硬切。
 5. **防伪**：右上角朱红"试界原创"印章全程常驻显示（抽查首/中/尾帧确认）；与字幕/内容/动画保持安全距离，无重叠、不贴近；封面同样适用；视频与封面无"试界TryWorld 纸上算法"文字水印。

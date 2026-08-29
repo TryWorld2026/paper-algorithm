@@ -11,7 +11,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 
 - 平台名：**试界TryWorld**（视频、封面、标题统一使用）
 - 画幅：横屏 1920x1080；口播时长最长约 10 分钟（短可到抖音 30 秒），口播稿过长必须先提炼核心精华压缩，时长与质量并重
-- 配音：**Azure YunxiNeural（真·云希）**，用 `scripts/tts_yunxi.py` 合成
+- 配音：默认 **Azure YunxiNeural（真·云希）**（试界品牌音色），用 `scripts/tts_yunxi.py` 合成；内置多音色预设，`--voice <预设名>` 可指定（xiaoxiao 晓晓 / yunjian 云健 / yunyang 云扬 / xiaoyi 晓伊 / yunxia 云夏 / xiaobei 小贝东北话 / xiaoni 小妮陕西话），默认流程不变
 - 风格：**纸上算法 Paper Algorithm**（科学手稿 + 中文印刷传统）
 - 防伪：右上角朱红"试界原创"印章全程常驻显示（`assets/seal.svg`），必须用根层常驻覆盖实现（`data-start="0"`、`data-duration` = 全片时长），禁止只放在章节首幕；印章为保护区，与文字、内容、动画保持距离，不重叠、不贴近
 - 水印：禁止任何"试界TryWorld 纸上算法"文字水印（视频右下角、封面一律不得出现）；印章是唯一水印
@@ -69,9 +69,16 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 防 AI 味：禁止紫蓝霓虹、黑底光效、通用科技字体、机械匀速动画、空荡背景、每句整屏大字。
 - 活人感：净化后口播稿正文与 `titles.txt` 硬禁项清零——动作级禁令：翻案腔（先立误解再推翻抬价，含 9+ 变形）、三项以上同构排比、抒情借喻（抽象名词配具体动词）、动词名词化；标点：破折号全禁、冒号仅引出直接原话可用；硬停词"说白了/说穿了/先说结论"；模型洞察路标；商业与模型黑话（绝对禁词 + 语境判断词两档，清单见 `scripts/check_prose.py`）；`check_prose.py` 失败不交付。
 
+## 音色选择（静默默认，按需试听）
+
+- 默认流程**不询问音色**，直接用云希；只有用户主动提到换声音（女声/男声/换个音色/有哪些音色等）时才进入选择。
+- 进入选择时：用用户当前稿子的开头两句（约 30 字）对候选音色各合成 3-5 秒试听 mp3，列出文件让用户听完再定；禁止只用文字描述（「温暖」「活泼」）代替试听。
+- 用户选定后，本次配音带 `--voice <预设名>`，交付物注明所用音色；用户说「以后都用这个」时记录偏好，后续流程默认该音色，不再询问。
+- 推荐组合（供用户参考）：资讯盘点 `yunyang`（播报感）、热血/体育向选题 `yunjian`、知识讲解 `yunxi`/`xiaoxiao`、方言玩梗 `xiaobei`/`xiaoni`。
+
 ## 语音回退（按序）
 
-1. 默认：`scripts/tts_yunxi.py`（edge-tts，Azure YunxiNeural，需联网）。
+1. 默认：`scripts/tts_yunxi.py`（edge-tts，默认云希，`--voice` 可换预设音色，需联网）。
 2. 用户提供云希音频：直接导入并转写，跳过合成步骤。
 3. 离线兜底：`npx hyperframes tts --voice zm_yunxi`（音色偏平，需告知用户差异）。
 
@@ -80,7 +87,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - `references/style-system.md`：设计契约（色板/字体/动效/转场/字幕/图片处理/防伪/封面）
 - `references/workflow.md`：详细生产流程与命令
 - `references/titles.md`：平台标题规则
-- `scripts/tts_yunxi.py`：云希配音管线
+- `scripts/tts_yunxi.py`：配音管线（内置多音色预设，默认云希）
 - `scripts/check_prose.py`：活人感硬禁项检查脚本（TryWorld 改造版，源自 KKKKhazix/human-writing v1.1.0，MIT；禁令上移到修辞动作级）
 - `assets/paper-grain.svg`：纸纹叠加层
 - `assets/seal.svg`：朱红"试界原创"印章

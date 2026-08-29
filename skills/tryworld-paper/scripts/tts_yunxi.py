@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
-"""Synthesize Chinese narration with Azure YunxiNeural (真·云希) via edge-tts.
+"""Synthesize Chinese narration via edge-tts (multi-voice, default 真·云希).
 
 Usage:
-  python tts_yunxi.py <script.txt> --out work/audio [--voice zh-CN-YunxiNeural]
+  python tts_yunxi.py <script.txt> --out work/audio [--voice yunxi]
                        [--rate +8%] [--volume +0%] [--pitch +0Hz]
                        [--max-chars 700]
+
+Voice presets (--voice takes a preset name or any full edge-tts voice id):
+  yunxi     zh-CN-YunxiNeural              male, sunny (default, brand voice)
+  xiaoxiao  zh-CN-XiaoxiaoNeural           female, warm
+  xiaoyi    zh-CN-XiaoyiNeural             female, lively
+  yunjian   zh-CN-YunjianNeural            male, passionate
+  yunyang   zh-CN-YunyangNeural            male, news anchor
+  yunxia    zh-CN-YunxiaNeural             male, youthful
+  xiaobei   zh-CN-liaoning-XiaobeiNeural   female, Northeastern dialect
+  xiaoni    zh-CN-shaanxi-XiaoniNeural     female, Shaanxi dialect
 
 Input: UTF-8 text file. Blank-line separated paragraphs are preserved as
 groups. Mid-sentence line breaks are joined (no artificial pause). Segments
@@ -189,16 +199,44 @@ def build_segments(paragraphs: list[str], max_chars: int) -> list[tuple[int, str
     return segments
 
 
+# 中文音色预设（实测于 edge-tts --list-voices，2026-08-28；--voice 也接受完整音色 id）
+VOICE_PRESETS = {
+    "yunxi": "zh-CN-YunxiNeural",  # 男 · 阳光（默认，试界品牌音色）
+    "xiaoxiao": "zh-CN-XiaoxiaoNeural",  # 女 · 温暖（新闻/小说）
+    "xiaoyi": "zh-CN-XiaoyiNeural",  # 女 · 活泼
+    "yunjian": "zh-CN-YunjianNeural",  # 男 · 浑厚激情（体育/小说）
+    "yunyang": "zh-CN-YunyangNeural",  # 男 · 新闻播报，专业沉稳
+    "yunxia": "zh-CN-YunxiaNeural",  # 男 · 少年感
+    "xiaobei": "zh-CN-liaoning-XiaobeiNeural",  # 女 · 东北方言
+    "xiaoni": "zh-CN-shaanxi-XiaoniNeural",  # 女 · 陕西方言
+}
+DEFAULT_VOICE = "yunxi"
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Azure YunxiNeural (真·云希) narration pipeline")
+    parser = argparse.ArgumentParser(description="Chinese narration pipeline (default 真·云希, multi-voice)")
     parser.add_argument("script", type=Path, help="UTF-8 script file (.txt/.md)")
     parser.add_argument("--out", type=Path, default=Path("work/audio"), help="output directory")
-    parser.add_argument("--voice", default="zh-CN-YunxiNeural", help="edge-tts voice")
+    parser.add_argument(
+        "--voice", default=DEFAULT_VOICE,
+        help="voice preset (yunxi/xiaoxiao/xiaoyi/yunjian/yunyang/yunxia/xiaobei/xiaoni) "
+             "or a full edge-tts voice id",
+    )
     parser.add_argument("--rate", default="+8%", help="speech rate, e.g. +5% / +8% / +15%")
     parser.add_argument("--volume", default="+0%", help="volume, e.g. +0%")
     parser.add_argument("--pitch", default="+0Hz", help="pitch, e.g. +0Hz")
     parser.add_argument("--max-chars", type=int, default=700, help="max chars per segment")
     args = parser.parse_args()
+    voice = VOICE_PRESETS.get(args.voice, args.voice)
+    if "-" not in voice:
+        print(
+            f"error: unknown voice '{args.voice}'. Available presets: "
+            f"{'/'.join(VOICE_PRESETS)}; or pass a full edge-tts voice id "
+            "(e.g. zh-CN-XiaoxiaoNeural).",
+            file=sys.stderr,
+        )
+        return 1
+    print(f"voice: {voice}")
 
     if not args.script.exists():
         print(f"error: script file not found: {args.script}", file=sys.stderr)
@@ -225,7 +263,7 @@ def main() -> int:
         mp3 = args.out / f"segment-{segment_index:03d}.mp3"
         print(f"[{segment_index}/{len(segments)}] synthesizing {len(text)} chars ...")
         sentences = asyncio.run(
-            synth(text, mp3, args.voice, args.rate, args.volume, args.pitch)
+            synth(text, mp3, voice, args.rate, args.volume, args.pitch)
         )
         duration, duration_source = duration_seconds(mp3, text)
         segments_meta.append(

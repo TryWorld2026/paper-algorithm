@@ -25,7 +25,7 @@
    - 硬禁项检查：净化后正文与 `titles.txt` 运行 `python -X utf8 "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\check_prose.py" <文件>`，清零才允许展示；
    - 展示优化稿 + 优化说明 + 元素落点 + 数据来源清单；
    - **闸门：等用户确认**；未确认禁止配音/构图/渲染。
-3. 确认后按 paper-algorithm 流程：分段 → 云希配音 → 场景规划 → 构图 → lint/validate/inspect → 渲染 → 封面 → 标题。
+3. 确认后按 paper-algorithm 流程：分段 → 配音（默认云希，可指定音色） → 场景规划 → 构图 → lint/validate/inspect → 渲染 → 封面 → 标题。
 4. 交付到项目 `outputs/`，并补 `发布计划.txt`。
 
 ## 模式 B：选题 → 写稿 → 优化 → 出片

@@ -243,7 +243,7 @@ Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\s
 运行 `npx hyperframes doctor` 可一键检查环境。这些技能按试界自己的工作流定制，默认假设如下——全部都可以在技能文件里自行调整：
 
 - **Windows PowerShell**——拉取数据（tryworld-topics）与发通知邮件（tryworld-koubo）的脚本是 PowerShell（`scripts/*.ps1`）；tryworld-topics 的 `references/` 里提供了非 Windows 的 curl 替代。
-- **Python 3.10+**——`pip install edge-tts` 用于云希配音（`tryworld-paper/scripts/tts_yunxi.py`）；`tryworld-paper/scripts/check_prose.py` 无需第三方包。
+- **Python 3.10+**——`pip install edge-tts` 用于配音管线（`tryworld-paper/scripts/tts_yunxi.py`，默认云希、内置多音色预设）；`tryworld-paper/scripts/check_prose.py` 无需第三方包。
 - **Node.js >= 22 + HyperFrames**——渲染（`npx hyperframes render` / `lint` / `validate` / `inspect`）。
 - **FFmpeg**（含 ffprobe，加入 PATH）——音频处理。
 - **外部技能**——`$hyperframes`（渲染，必需）与 `$qq-email`（邮件通知，可选）不在本仓库内，需另行安装。
