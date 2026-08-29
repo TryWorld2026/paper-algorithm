@@ -196,16 +196,18 @@ The visual contract behind every TryWorld video — **scientific manuscript + Ch
 
 The voiceover defaults to **Yunxi** (云希, TryWorld's brand voice), with seven more presets built in — one flag to switch:
 
-| Preset | Voice | Character |
-|---|---|---|
-| `yunxi` (default) | 云希 | male, sunny |
-| `xiaoxiao` | 晓晓 | female, warm |
-| `xiaoyi` | 晓伊 | female, lively |
-| `yunjian` | 云健 | male, passionate |
-| `yunyang` | 云扬 | male, news anchor |
-| `yunxia` | 云夏 | male, youthful |
-| `xiaobei` | 小贝 | female, Northeastern dialect |
-| `xiaoni` | 小妮 | female, Shaanxi dialect |
+| Preset | Voice | Character | Audition |
+|---|---|---|---|
+| `yunxi` (default) | 云希 | male, sunny | [▶ listen](assets/voice-samples/yunxi.mp3) |
+| `xiaoxiao` | 晓晓 | female, warm | [▶ listen](assets/voice-samples/xiaoxiao.mp3) |
+| `xiaoyi` | 晓伊 | female, lively | [▶ listen](assets/voice-samples/xiaoyi.mp3) |
+| `yunjian` | 云健 | male, passionate | [▶ listen](assets/voice-samples/yunjian.mp3) |
+| `yunyang` | 云扬 | male, news anchor | [▶ listen](assets/voice-samples/yunyang.mp3) |
+| `yunxia` | 云夏 | male, youthful | [▶ listen](assets/voice-samples/yunxia.mp3) |
+| `xiaobei` | 小贝 | female, Northeastern dialect | [▶ listen](assets/voice-samples/xiaobei.mp3) |
+| `xiaoni` | 小妮 | female, Shaanxi dialect | [▶ listen](assets/voice-samples/xiaoni.mp3) |
+
+All samples above are synthesized with TryWorld's fixed sign-off line, so you hear each voice exactly as it sounds in a real video.
 
 ```powershell
 python tryworld-paper/scripts/tts_yunxi.py script.txt --out work/audio --voice xiaoxiao

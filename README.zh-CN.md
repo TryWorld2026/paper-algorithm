@@ -196,16 +196,18 @@ flowchart LR
 
 配音默认 **云希**（试界品牌音色），内置七个可切换预设，一个参数就能换：
 
-| 预设名 | 音色 | 特点 |
-|---|---|---|
-| `yunxi`（默认） | 云希 | 男 · 阳光 |
-| `xiaoxiao` | 晓晓 | 女 · 温暖 |
-| `xiaoyi` | 晓伊 | 女 · 活泼 |
-| `yunjian` | 云健 | 男 · 浑厚激情 |
-| `yunyang` | 云扬 | 男 · 新闻播报 |
-| `yunxia` | 云夏 | 男 · 少年感 |
-| `xiaobei` | 小贝 | 女 · 东北方言 |
-| `xiaoni` | 小妮 | 女 · 陕西方言 |
+| 预设名 | 音色 | 特点 | 试听 |
+|---|---|---|---|
+| `yunxi`（默认） | 云希 | 男 · 阳光 | [▶ 试听](assets/voice-samples/yunxi.mp3) |
+| `xiaoxiao` | 晓晓 | 女 · 温暖 | [▶ 试听](assets/voice-samples/xiaoxiao.mp3) |
+| `xiaoyi` | 晓伊 | 女 · 活泼 | [▶ 试听](assets/voice-samples/xiaoyi.mp3) |
+| `yunjian` | 云健 | 男 · 浑厚激情 | [▶ 试听](assets/voice-samples/yunjian.mp3) |
+| `yunyang` | 云扬 | 男 · 新闻播报 | [▶ 试听](assets/voice-samples/yunyang.mp3) |
+| `yunxia` | 云夏 | 男 · 少年感 | [▶ 试听](assets/voice-samples/yunxia.mp3) |
+| `xiaobei` | 小贝 | 女 · 东北方言 | [▶ 试听](assets/voice-samples/xiaobei.mp3) |
+| `xiaoni` | 小妮 | 女 · 陕西方言 | [▶ 试听](assets/voice-samples/xiaoni.mp3) |
+
+以上试听全部用试界固定签名句合成，听到的就是真实成片里的效果。
 
 ```powershell
 python tryworld-paper/scripts/tts_yunxi.py script.txt --out work/audio --voice xiaoxiao
