@@ -80,6 +80,8 @@ That's it. The request is recognized and routed through the whole pipeline autom
 - [The Voiceover Workflow](#-the-voiceover-workflow)
 - [Paper Algorithm · Design System](#-paper-algorithm--design-system)
 - [Voice Presets](#-voice-presets)
+- [Themes](#-themes)
+- [For AI Agents](#-for-ai-agents)
 - [The Aliveness Gate](#-the-aliveness-gate)
 - [Installation and Usage](#-installation-and-usage)
 - [Repository Layout](#-repository-layout)
@@ -208,6 +210,73 @@ The voiceover defaults to **Yunxi** (云希, TryWorld's brand voice), with seven
 | `xiaoni` | 小妮 | female, Shaanxi dialect | [▶ listen](assets/voice-samples/xiaoni.mp3) |
 
 All samples above are synthesized with TryWorld's fixed sign-off line, so you hear each voice exactly as it sounds in a real video.
+
+---
+
+## 🎨 Themes
+
+The default look is the **Paper Algorithm** theme (TryWorld's brand), but all brand values — palette, fonts, seal, platform name, sign-off, cover style, default voice — live in one theme file: `tryworld-paper/themes/paper-algorithm.json`.
+
+Want your own brand on this pipeline? Copy the theme JSON, change the values following `tryworld-paper/references/theme-guide.md`, and ship videos under your name. The pipeline contract is not configurable — confirmation gates, the aliveness-gate check, burned-in captions, and quality checks all stay — only the skin changes.
+
+```jsonc
+// themes/your-brand.json (excerpt)
+{
+  "brand": { "platform_name": "YourChannel", "seal_text": "原创认证", "sign_off": "..." },
+  "palette": { "background": "#F7F7F2", "text": "#111111", "accent": "#0F62FE", "secondary": "#5A6B7B" }
+}
+```
+
+Community themes are welcome — PR to `themes/` with a 720p sample (CC BY-SA 4.0 applies).
+
+---
+
+## 🤖 For AI Agents
+
+If you are an AI coding agent (Claude Code / Codex / Cursor …) whose user installed or cloned this repo, this section is your operating manual. The human talks; you drive the pipeline.
+
+### 1. Skills are executable manuals
+
+Each folder under `skills/` is a skill whose `SKILL.md` is a complete, executable instruction set:
+
+| Skill | Role | Read it when |
+|---|---|---|
+| `skills/tryworld-koubo/SKILL.md` | Single entry / router | Any voiceover request (make an episode, pick topics, optimize a script) |
+| `skills/tryworld-paper/SKILL.md` | Script → video production | Once a script is confirmed for production |
+| `skills/tryworld-topics/SKILL.md` | AIHOT topic selection | Mode B topic picking |
+
+After installation into `~/.agents/skills`, hosts trigger these by the `description` frontmatter; when the user names one (`$tryworld-koubo`), open its SKILL.md and follow it literally.
+
+### 2. The execution sequence for one full episode
+
+1. **Route** — read `tryworld-koubo/SKILL.md`, decide Mode A (user gave a script → optimize & produce) or Mode B (topic request → select → write → produce).
+2. **Environment check** — `node --version` (≥22) · `python --version` (≥3.10) · `python -c "import edge_tts"` · `ffmpeg -version` · `npx hyperframes doctor`. Install or warn on whatever is missing before proceeding.
+3. **Mode B only** — run `tryworld-topics/scripts/fetch_aihot.ps1` (Windows) or the curl fallback in its `references/api.md`, apply `references/selection-rules.md`, produce 3–8 candidate topics.
+4. **Gate 1 (STOP)** — present the topic list and wait for the user's pick. Do not proceed unasked.
+5. **Write** — follow the writing rules in koubo's SKILL.md (2,500–2,800 chars standard, sources for every datapoint, aliveness rules).
+6. **Polish & gate** — hand over to `tryworld-paper/SKILL.md`: optimize, then run `scripts/check_prose.py` until zero hard violations.
+7. **Gate 2 (STOP)** — show the full polished script + what/why of edits + element mapping + data sources. Wait for explicit confirmation. Never render without it.
+8. **Produce** — read the theme file (`tryworld-paper/themes/paper-algorithm.json`) for all brand values → segment → `scripts/tts_yunxi.py` (voiceover + `sentences.json` timeline) → build HyperFrames compositions per `references/style-system.md` → `npx hyperframes lint` / `validate` / `inspect --strict` all pass → render (draft first, then high) → covers (independent design, never video frames) → titles per `references/titles.md` → everything into `outputs/` + `发布计划.txt`.
+9. **Notify** — run `tryworld-koubo/scripts/notify_delivery.ps1 -ProjectDir <dir>`; missing credentials/node → skip gracefully, never block delivery.
+
+Projects live in their own folder (default convention: `E:\Codex口播视频\<slug>\` with `work/` and `outputs/`).
+
+### 3. Hard rules (violating any = task failed)
+
+- Both gates require the user's explicit confirmation. Never self-advance past a gate.
+- `check_prose.py` hard violations must be zero before the polished script may even be shown.
+- Brand values (palette, seal, sign-off, fonts, default voice) come **only** from the theme file — never hardcode them from memory.
+- Before rendering, `lint`/`validate`/`inspect --strict` must pass with zero errors and warnings.
+- Script data points need sources; unverifiable ones are marked 待核实, never invented.
+
+### 4. Common failures
+
+| Symptom | Fix |
+|---|---|
+| `npx hyperframes` missing | First `npx` call auto-installs it; needs Node ≥22 |
+| edge-tts 403 / rate limit | The script already retries 429/5xx with backoff; retry or switch network |
+| Email notice fails | Credentials missing → it skips by design; delivery is not blocked |
+| Fonts wrong in render | Check `style-system.md` font embed table; non-native fonts need bundled woff2 |
 
 ```powershell
 python tryworld-paper/scripts/tts_yunxi.py script.txt --out work/audio --voice xiaoxiao

@@ -1,0 +1,45 @@
+{
+  "theme": "paper-algorithm",
+  "name": "纸上算法 Paper Algorithm",
+  "description": "科学手稿 + 中文印刷传统。默认主题：纸面是舞台，墨迹是文字，朱红是重点，印章是签名。",
+
+  "brand": {
+    "platform_name": "试界TryWorld",
+    "seal_text": "试界原创",
+    "sign_off": "我是试界TryWorld，持续把 AI 讲清楚，让每个普通人都看得懂、用得上。觉得这条视频有用，点个赞，也欢迎关注，谢谢大家，下期见。",
+    "cover_brand_line": "试界TryWorld · 栏目/期数"
+  },
+
+  "palette": {
+    "background": "#F4EFE4",
+    "text": "#1C1916",
+    "accent": "#C0452F",
+    "secondary": "#2E5E8C",
+    "cover_background": "#12100D",
+    "cover_card": "#221F1B"
+  },
+
+  "fonts": {
+    "heading": "Noto Serif SC（思源宋体，900/700 字重）",
+    "notes": "ZCOOL XiaoWei（小薇宋体）",
+    "data": "JetBrains Mono / 等宽字体"
+  },
+
+  "assets": {
+    "seal": "assets/seal.svg",
+    "grain": "assets/paper-grain.svg"
+  },
+
+  "voice": {
+    "engine": "edge-tts",
+    "preset": "yunxi"
+  },
+
+  "motion_signatures": ["ink_drop 墨落纸（主入场）", "brush_write 笔写入（小元素/批注）", "seal_stamp 盖章（数字/结论/印章）"],
+  "transition": "ink_bleed 墨染过渡",
+
+  "cover": {
+    "style": "dark_poster 深墨海报（与视频浅纸面两套语言）",
+    "background": "#12100D"
+  }
+}

@@ -80,6 +80,8 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 - [一条口播工作流](#-一条口播工作流)
 - [纸上算法 · 设计系统](#-纸上算法--设计系统)
 - [配音音色](#-配音音色)
+- [主题](#-主题)
+- [给 AI 的使用说明](#-给-ai-的使用说明)
 - [活人感门禁](#-活人感门禁)
 - [安装与使用](#-安装与使用)
 - [仓库结构](#-仓库结构)
@@ -208,6 +210,73 @@ flowchart LR
 | `xiaoni` | 小妮 | 女 · 陕西方言 | [▶ 试听](assets/voice-samples/xiaoni.mp3) |
 
 以上试听全部用试界固定签名句合成，听到的就是真实成片里的效果。
+
+---
+
+## 🎨 主题
+
+默认视觉是**纸上算法**主题（试界品牌），但全部品牌值——色板、字体、印章、平台名、签名语、封面风格、默认音色——都集中在一个主题文件里：`tryworld-paper/themes/paper-algorithm.json`。
+
+想在这套流水线上挂你自己的品牌？复制主题 JSON，按 `tryworld-paper/references/theme-guide.md` 改值，就能用你自己的名字出片。流水线契约不可配置——确认闸门、活人感门禁、烧录字幕、质量检查全部保留，换的只是皮。
+
+```jsonc
+// themes/your-brand.json（节选）
+{
+  "brand": { "platform_name": "你的频道", "seal_text": "原创认证", "sign_off": "..." },
+  "palette": { "background": "#F7F7F2", "text": "#111111", "accent": "#0F62FE", "secondary": "#5A6B7B" }
+}
+```
+
+欢迎社区贡献主题——PR 到 `themes/` 目录并附一段 720p 示例（遵循 CC BY-SA 4.0）。
+
+---
+
+## 🤖 给 AI 的使用说明
+
+如果你是读取本仓库的 AI 编程助手（Claude Code / Codex / Cursor 等），这一节是你的操作手册。用户负责说话，你负责驱动整条流水线。
+
+### 1. 技能就是可执行说明书
+
+`skills/` 下每个文件夹是一个技能，其中的 `SKILL.md` 是完整的可执行指令集：
+
+| 技能 | 角色 | 何时读它 |
+|---|---|---|
+| `skills/tryworld-koubo/SKILL.md` | 统一入口 / 路由 | 任何口播类请求（做一期、要选题、优化稿子） |
+| `skills/tryworld-paper/SKILL.md` | 稿子 → 成片生产 | 稿子确认进入出片阶段时 |
+| `skills/tryworld-topics/SKILL.md` | AIHOT 选题 | 模式 B 挑选题时 |
+
+安装到 `~/.agents/skills` 后，宿主按 frontmatter 的 description 自动触发；用户点名（`$tryworld-koubo`）时，直接打开对应 SKILL.md 逐条照做。
+
+### 2. 一期完整口播的执行序列
+
+1. **路由**——读 `tryworld-koubo/SKILL.md`，判定模式 A（用户给了稿 → 优化并出片）或模式 B（要选题 → 选题 → 写稿 → 出片）。
+2. **环境自检**——`node --version`（≥22）、`python --version`（≥3.10）、`python -c "import edge_tts"`、`ffmpeg -version`、`npx hyperframes doctor`。缺什么先装或明确告知，再继续。
+3. **仅模式 B**——运行 `tryworld-topics/scripts/fetch_aihot.ps1`（Windows）或其 `references/api.md` 的 curl 替代，按 `references/selection-rules.md` 产出 3-8 个候选选题。
+4. **闸门 1（停下）**——展示选题清单，等用户挑选。未经允许不得继续。
+5. **写稿**——按 koubo SKILL.md 的写稿规范（标准版 2500-2800 字、数据点必须带来源、活人感规则）。
+6. **优化过门禁**——转入 `tryworld-paper/SKILL.md`：优化净化，然后跑 `scripts/check_prose.py` 直到硬禁项清零。
+7. **闸门 2（停下）**——完整展示优化稿 + 修改说明 + 元素落点 + 数据来源。等用户明确确认，未经确认禁止渲染。
+8. **出片**——读主题文件（`tryworld-paper/themes/paper-algorithm.json`）获取全部品牌值 → 分段 → `scripts/tts_yunxi.py` 配音（产 `sentences.json` 时间轴）→ 按 `references/style-system.md` 写 HyperFrames 构图 → `npx hyperframes lint` / `validate` / `inspect --strict` 全部通过 → 渲染（先 draft 后 high）→ 封面（独立设计，禁止截帧）→ 按 `references/titles.md` 出标题 → 全部产物进 `outputs/` + `发布计划.txt`。
+9. **通知**——运行 `tryworld-koubo/scripts/notify_delivery.ps1 -ProjectDir <目录>`；凭证或 node 缺失时脚本自动跳过，不阻塞交付。
+
+项目各自独立文件夹（默认约定 `E:\Codex口播视频\<slug>\`，内含 `work/` 与 `outputs/`）。
+
+### 3. 硬规则（违反任何一条 = 任务失败）
+
+- 两个闸门都必须等用户明确确认，禁止自行跨过闸门。
+- `check_prose.py` 硬禁项不清零，连展示优化稿都不允许。
+- 品牌值（色板、印章、签名语、字体、默认音色）**只能**从主题文件读取，禁止凭记忆写死。
+- 渲染前 `lint`/`validate`/`inspect --strict` 必须零错误零警告。
+- 稿中数据点必须有来源；无法核实的标注「待核实」，禁止编造。
+
+### 4. 常见故障
+
+| 症状 | 处理 |
+|---|---|
+| `npx hyperframes` 不存在 | 首次 npx 会自动安装；需 Node ≥22 |
+| edge-tts 403 / 限流 | 脚本已内置 429/5xx 退避重试；再试或换网络 |
+| 邮件通知失败 | 凭证缺失时设计为跳过；不阻塞交付 |
+| 渲染字体不对 | 查 `style-system.md` 字体嵌入实测表；非原生字体需自带 woff2 |
 
 ```powershell
 python tryworld-paper/scripts/tts_yunxi.py script.txt --out work/audio --voice xiaoxiao
