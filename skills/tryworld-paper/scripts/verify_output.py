@@ -13,16 +13,21 @@ from pathlib import Path
 
 
 def ffprobe(path: Path, args: list[str]) -> str:
-    r = subprocess.run(
-        ["ffprobe", "-v", "error", *args, "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
-        capture_output=True, text=True,
-    )
+    try:
+        r = subprocess.run(
+            ["ffprobe", "-v", "error", *args, "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
+            capture_output=True, text=True,
+        )
+    except FileNotFoundError:
+        print("error: ffprobe 不可用（请安装 FFmpeg 并加入 PATH），无法执行核验。")
+        sys.exit(2)
     return r.stdout.strip() if r.returncode == 0 else ""
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="交付核验硬门禁")
     ap.add_argument("--dir", type=Path, default=Path("outputs"), help="outputs 目录")
+    ap.add_argument("--video", type=Path, default=None, help="主视频路径（outputs 中有多个 mp4 时用于指定）")
     args = ap.parse_args()
     out = args.dir
     failures: list[str] = []
@@ -33,20 +38,31 @@ def main() -> int:
         if not ok:
             failures.append(label)
 
-    # 1. 主视频存在且有音轨
+    # 1. 主视频唯一、有视频流与音轨
     videos = sorted(out.glob("*.mp4"))
-    video = videos[0] if videos else None
-    check(video is not None, "主视频 *.mp4 存在")
-    if video:
-        streams = ffprobe(video, ["-show_entries", "stream=codec_type"])
-        has_audio = "audio" in streams
-        check(has_audio, "主视频含音轨", "配音缺失即静音成片，禁止交付")
-        dur = ffprobe(video, ["-show_entries", "format=duration"])
-        try:
-            dur_f = float(dur)
-        except ValueError:
-            dur_f = 0.0
-        check(dur_f > 1, "主视频时长 > 1s", f"{dur_f:.1f}s")
+    dur_f = 0.0
+    video = args.video if args.video else (videos[0] if len(videos) == 1 else None)
+    if video is None:
+        if len(videos) > 1:
+            check(False, "outputs 中恰好一个主视频 mp4",
+                  f"发现 {len(videos)} 个：{'、'.join(v.name for v in videos)}；删除多余文件，或用 --video 指定主视频")
+        else:
+            check(False, "主视频 *.mp4 存在")
+    else:
+        if not video.exists():
+            check(False, "主视频存在（--video 指定的文件不存在）", str(video))
+        else:
+            streams = ffprobe(video, ["-show_entries", "stream=codec_type"])
+            has_video = "video" in streams
+            has_audio = "audio" in streams
+            check(has_video, "主视频含视频流")
+            check(has_audio, "主视频含音轨", "配音缺失即静音成片，禁止交付")
+            dur = ffprobe(video, ["-show_entries", "format=duration"])
+            try:
+                dur_f = float(dur)
+            except ValueError:
+                dur_f = 0.0
+            check(dur_f > 1, "主视频时长 > 1s", f"{dur_f:.1f}s")
 
     # 2. 字幕时间轴与主视频时长一致（±1s）
     tl = out / "字幕时间轴_sentences.json"
