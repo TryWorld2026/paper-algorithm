@@ -215,9 +215,9 @@ flowchart LR
 
 ## 🎨 主题
 
-默认视觉是**纸上算法**主题（试界品牌），但全部品牌值——色板、字体、印章、平台名、签名语、封面风格、默认音色——都集中在一个主题文件里：`tryworld-paper/themes/paper-algorithm.json`。
+默认视觉是**纸上算法**主题（试界品牌），但全部品牌值——色板、字体、印章、平台名、签名语、封面风格、默认音色——都集中在一个主题文件里：`skills/tryworld-paper/themes/paper-algorithm.json`。
 
-想在这套流水线上挂你自己的品牌？复制主题 JSON，按 `tryworld-paper/references/theme-guide.md` 改值，就能用你自己的名字出片。流水线契约不可配置——确认闸门、活人感门禁、烧录字幕、质量检查全部保留，换的只是皮。
+想在这套流水线上挂你自己的品牌？复制主题 JSON，按 `tryworld-paper/references/theme-guide.md` 改值，就能用你自己的名字出片。流水线契约不可配置——确认闸门、活人感门禁、烧录字幕、质量检查全部保留，换的只是皮。边界说明：主题化当前覆盖 **paper 出片技能**；koubo 的写稿方法论与 topics 的选题定位仍带试界的内容视角（按你自己的频道定位调整其 SKILL.md / selection-rules.md，或等后续参数化版本）。
 
 ```jsonc
 // themes/your-brand.json（节选）
@@ -227,7 +227,7 @@ flowchart LR
 }
 ```
 
-欢迎社区贡献主题——PR 到 `themes/` 目录并附一段 720p 示例（遵循 CC BY-SA 4.0）。
+欢迎社区贡献主题——PR 到 `skills/tryworld-paper/themes/` 目录并附一段 720p 示例（遵循 CC BY-SA 4.0）。
 
 ---
 
@@ -256,7 +256,7 @@ flowchart LR
 5. **写稿**——按 koubo SKILL.md 的写稿规范（标准版 2500-2800 字、数据点必须带来源、活人感规则）。
 6. **优化过门禁**——转入 `tryworld-paper/SKILL.md`：优化净化，然后跑 `scripts/check_prose.py` 直到硬禁项清零。
 7. **闸门 2（停下）**——完整展示优化稿 + 修改说明 + 元素落点 + 数据来源。等用户明确确认，未经确认禁止渲染。
-8. **出片**——读主题文件（`tryworld-paper/themes/paper-algorithm.json`）获取全部品牌值 → 分段 → `scripts/tts_yunxi.py` 配音（产 `sentences.json` 时间轴）→ 按 `references/style-system.md` 写 HyperFrames 构图 → `npx hyperframes lint` / `validate` / `inspect --strict` 全部通过 → 渲染（先 draft 后 high）→ 封面（独立设计，禁止截帧）→ 按 `references/titles.md` 出标题 → 全部产物进 `outputs/` + `发布计划.txt`。
+8. **出片**——读主题文件（`skills/tryworld-paper/themes/paper-algorithm.json`）获取全部品牌值 → 分段 → `scripts/tts_yunxi.py` 配音（产 `sentences.json` 时间轴）→ 按 `references/style-system.md` 写 HyperFrames 构图 → `npx hyperframes lint` / `validate` / `inspect --strict` 全部通过 → 渲染（先 draft 后 high）→ 封面（独立设计，禁止截帧）→ 按 `references/titles.md` 出标题 → 全部产物进 `outputs/` + `发布计划.txt`。
 9. **通知**——运行 `tryworld-koubo/scripts/notify_delivery.ps1 -ProjectDir <目录>`；凭证或 node 缺失时脚本自动跳过，不阻塞交付。
 
 项目各自独立文件夹（默认约定 `E:\Codex口播视频\<slug>\`，内含 `work/` 与 `outputs/`）。
@@ -274,7 +274,7 @@ flowchart LR
 | 症状 | 处理 |
 |---|---|
 | `npx hyperframes` 不存在 | 首次 npx 会自动安装；需 Node ≥22 |
-| edge-tts 403 / 限流 | 脚本已内置 429/5xx 退避重试；再试或换网络 |
+| edge-tts 403 / 限流 | 配音脚本失败会自动重试一次；AIHOT 拉取脚本对 429/5xx 有退避重试——再试或换网络 |
 | 邮件通知失败 | 凭证缺失时设计为跳过；不阻塞交付 |
 | 渲染字体不对 | 查 `style-system.md` 字体嵌入实测表；非原生字体需自带 woff2 |
 
@@ -365,6 +365,7 @@ paper-algorithm/
 └── skills/
     ├── tryworld-koubo/          # 口播总入口（路由 + 邮件通知）
     ├── tryworld-paper/          # 纸上算法视频制作
+    │   ├── themes/              # Brand theme files (paper-algorithm.json)
     └── tryworld-topics/         # AIHOT 口播选题
 ```
 

@@ -218,19 +218,45 @@ def main() -> int:
     parser.add_argument("script", type=Path, help="UTF-8 script file (.txt/.md)")
     parser.add_argument("--out", type=Path, default=Path("work/audio"), help="output directory")
     parser.add_argument(
-        "--voice", default=DEFAULT_VOICE,
+        "--voice", default=None,
         help="voice preset (yunxi/xiaoxiao/xiaoyi/yunjian/yunyang/yunxia/xiaobei/xiaoni) "
-             "or a full edge-tts voice id",
+             "or a full edge-tts voice id; overrides --theme",
+    )
+    parser.add_argument(
+        "--theme", type=Path, default=None,
+        help="theme JSON file; its voice.preset is used when --voice is omitted",
     )
     parser.add_argument("--rate", default="+8%", help="speech rate, e.g. +5% / +8% / +15%")
     parser.add_argument("--volume", default="+0%", help="volume, e.g. +0%")
     parser.add_argument("--pitch", default="+0Hz", help="pitch, e.g. +0Hz")
     parser.add_argument("--max-chars", type=int, default=700, help="max chars per segment")
     args = parser.parse_args()
-    voice = VOICE_PRESETS.get(args.voice, args.voice)
+
+    theme_preset = None
+    if args.theme is not None:
+        if not args.theme.exists():
+            print(f"error: theme file not found: {args.theme}", file=sys.stderr)
+            return 1
+        try:
+            cfg = json.loads(args.theme.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            print(f"error: cannot read theme file: {exc}", file=sys.stderr)
+            return 1
+        theme_voice = cfg.get("voice") or {}
+        theme_preset = theme_voice.get("preset")
+        engine = theme_voice.get("engine")
+        if engine and engine != "edge-tts":
+            print(
+                f"warning: theme requests engine '{engine}' but this script only supports "
+                "edge-tts; continuing with edge-tts.",
+                file=sys.stderr,
+            )
+
+    voice_name = args.voice or theme_preset or DEFAULT_VOICE
+    voice = VOICE_PRESETS.get(voice_name, voice_name)
     if "-" not in voice:
         print(
-            f"error: unknown voice '{args.voice}'. Available presets: "
+            f"error: unknown voice '{voice_name}'. Available presets: "
             f"{'/'.join(VOICE_PRESETS)}; or pass a full edge-tts voice id "
             "(e.g. zh-CN-XiaoxiaoNeural).",
             file=sys.stderr,

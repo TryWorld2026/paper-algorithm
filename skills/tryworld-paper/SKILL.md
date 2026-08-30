@@ -24,7 +24,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 想用自己的品牌做频道：复制主题 JSON 并按 `references/theme-guide.md` 修改（可改色板/印章/签名/字体/音色等；流水线契约不可配置）
 - 默认主题的视觉细则见 `references/style-system.md`（纸上算法视觉系统的完整定义）
 
-配音默认取主题 `voice` 字段（当前为 edge-tts 引擎、云希音色）；`--voice <预设名>` 可临时指定（xiaoxiao 晓晓 / yunjian 云健 / yunyang 云扬 / xiaoyi 晓伊 / yunxia 云夏 / xiaobei 小贝东北话 / xiaoni 小妮陕西话），交互规则见「音色选择」章节。
+配音默认音色来自主题文件：出片配音命令带 `--theme <主题文件>`，脚本读取主题 `voice.preset` 作为音色（默认主题为云希）；`--voice <预设名>` 可覆盖（xiaoxiao 晓晓 / yunjian 云健 / yunyang 云扬 / xiaoyi 晓伊 / yunxia 云夏 / xiaobei 小贝东北话 / xiaoni 小妮陕西话），交互规则见「音色选择」章节。
 
 ## 启动前必读
 
@@ -42,7 +42,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 2. **优化并净化脚本**：按流量第一性原理优化口播稿（共鸣选题带流量、认可攒赞、槽点引评论、嘴替促转发、价值认同涨粉），再按"活人感改稿七遍"清模型腔与注水（看谁在说 → 检查推进/删注水 → 拆表演性中文 → 听中文节奏 → 清硬禁项 → 核现实 → 查结尾，固定签名保留），随后清除写作标记/结构标签（如"一、开场钩子"、"（插入截图）"）——标记不得以原文出现在视频中（不朗读、不上字幕、不显示），按意图转化为实际表达。净化后正文与平台标题必须运行 `scripts/check_prose.py` 清零硬禁项。规则见 workflow.md。
 3. **交付优化稿并等待确认**：净化后正文先通过 `$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\check_prose.py`（硬禁项清零），再把优化后的口播稿完整展示给用户审阅，附简明优化说明（改了什么、为什么）、元素落点清单（钩子/干货/槽点/嘴替/价值收尾）与数据来源清单；**未获用户确认前，禁止进入配音/构图/渲染**。
 4. **分段**：按净化后口播时长分段，每章 40-90 秒；不足 1 分钟不分章；口播目标不超过约 10 分钟，超长稿先提炼核心精华压缩再分段；标记章节标题、关键词、数据点、图片提示。
-5. **配音**：`python "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\tts_yunxi.py" <净化后的脚本> --out work/audio` 生成云希配音、分段时间与合并音轨。
+5. **配音**：`python "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\tts_yunxi.py" <净化后的脚本> --out work/audio --theme "$env:USERPROFILE\.agents\skills\tryworld-paper\themes\paper-algorithm.json"`（或用户指定的主题文件）生成配音、分段时间与合并音轨。
 6. **时间轴**：字幕时间轴来自 `work/audio/sentences.json`（edge-tts 句级时间戳，已带绝对时间）；如需词级时间轴可用 `npx hyperframes transcribe`（依赖 whisper，可选）。
 7. **场景规划**：按章节规划场景与节奏（开场-讲解-数据-小结），数据/对比/流程优先规划为动态图表场景，避免大段静态文字；先声明节奏模式再写 HTML。
 8. **构图**：把 `assets/` 复制进项目；按 style-system.md 与 hyperframes 规则编写 16:9 主构图。每个场景必须有入场动画与转场；除末场外禁止退场动画。
@@ -80,7 +80,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 
 ## 音色选择（静默默认，按需试听）
 
-- 默认流程**不询问音色**，直接用云希；只有用户主动提到换声音（女声/男声/换个音色/有哪些音色等）时才进入选择。
+- 默认流程**不询问音色**，直接用当前主题的默认音色（默认主题为云希）；只有用户主动提到换声音（女声/男声/换个音色/有哪些音色等）时才进入选择。
 - 进入选择时：用用户当前稿子的开头两句（约 30 字）对候选音色各合成 3-5 秒试听 mp3，列出文件让用户听完再定；禁止只用文字描述（「温暖」「活泼」）代替试听。
 - 用户选定后，本次配音带 `--voice <预设名>`，交付物注明所用音色；用户说「以后都用这个」时记录偏好，后续流程默认该音色，不再询问。
 - 推荐组合（供用户参考）：资讯盘点 `yunyang`（播报感）、热血/体育向选题 `yunjian`、知识讲解 `yunxi`/`xiaoxiao`、方言玩梗 `xiaobei`/`xiaoni`。

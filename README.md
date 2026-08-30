@@ -215,9 +215,9 @@ All samples above are synthesized with TryWorld's fixed sign-off line, so you he
 
 ## 🎨 Themes
 
-The default look is the **Paper Algorithm** theme (TryWorld's brand), but all brand values — palette, fonts, seal, platform name, sign-off, cover style, default voice — live in one theme file: `tryworld-paper/themes/paper-algorithm.json`.
+The default look is the **Paper Algorithm** theme (TryWorld's brand), but all brand values — palette, fonts, seal, platform name, sign-off, cover style, default voice — live in one theme file: `skills/tryworld-paper/themes/paper-algorithm.json`.
 
-Want your own brand on this pipeline? Copy the theme JSON, change the values following `tryworld-paper/references/theme-guide.md`, and ship videos under your name. The pipeline contract is not configurable — confirmation gates, the aliveness-gate check, burned-in captions, and quality checks all stay — only the skin changes.
+Want your own brand on this pipeline? Copy the theme JSON, change the values following `tryworld-paper/references/theme-guide.md`, and ship videos under your name. The pipeline contract is not configurable — confirmation gates, the aliveness-gate check, burned-in captions, and quality checks all stay — only the skin changes. Note the boundary: theming covers the **paper production skill**; koubo's writing methodology and topics' channel positioning still carry TryWorld's editorial voice (adjust their SKILL.md / selection-rules.md for your channel, or wait for a later parameterized release).
 
 ```jsonc
 // themes/your-brand.json (excerpt)
@@ -227,7 +227,7 @@ Want your own brand on this pipeline? Copy the theme JSON, change the values fol
 }
 ```
 
-Community themes are welcome — PR to `themes/` with a 720p sample (CC BY-SA 4.0 applies).
+Community themes are welcome — PR to `skills/tryworld-paper/themes/` with a 720p sample (CC BY-SA 4.0 applies).
 
 ---
 
@@ -256,7 +256,7 @@ After installation into `~/.agents/skills`, hosts trigger these by the `descript
 5. **Write** — follow the writing rules in koubo's SKILL.md (2,500–2,800 chars standard, sources for every datapoint, aliveness rules).
 6. **Polish & gate** — hand over to `tryworld-paper/SKILL.md`: optimize, then run `scripts/check_prose.py` until zero hard violations.
 7. **Gate 2 (STOP)** — show the full polished script + what/why of edits + element mapping + data sources. Wait for explicit confirmation. Never render without it.
-8. **Produce** — read the theme file (`tryworld-paper/themes/paper-algorithm.json`) for all brand values → segment → `scripts/tts_yunxi.py` (voiceover + `sentences.json` timeline) → build HyperFrames compositions per `references/style-system.md` → `npx hyperframes lint` / `validate` / `inspect --strict` all pass → render (draft first, then high) → covers (independent design, never video frames) → titles per `references/titles.md` → everything into `outputs/` + `发布计划.txt`.
+8. **Produce** — read the theme file (`skills/tryworld-paper/themes/paper-algorithm.json`) for all brand values → segment → `scripts/tts_yunxi.py` (voiceover + `sentences.json` timeline) → build HyperFrames compositions per `references/style-system.md` → `npx hyperframes lint` / `validate` / `inspect --strict` all pass → render (draft first, then high) → covers (independent design, never video frames) → titles per `references/titles.md` → everything into `outputs/` + `发布计划.txt`.
 9. **Notify** — run `tryworld-koubo/scripts/notify_delivery.ps1 -ProjectDir <dir>`; missing credentials/node → skip gracefully, never block delivery.
 
 Projects live in their own folder (default convention: `E:\Codex口播视频\<slug>\` with `work/` and `outputs/`).
@@ -274,7 +274,7 @@ Projects live in their own folder (default convention: `E:\Codex口播视频\<sl
 | Symptom | Fix |
 |---|---|
 | `npx hyperframes` missing | First `npx` call auto-installs it; needs Node ≥22 |
-| edge-tts 403 / rate limit | The script already retries 429/5xx with backoff; retry or switch network |
+| edge-tts 403 / rate limit | The tts script auto-retries once on failure; the AIHOT fetch script retries 429/5xx with backoff — retry or switch network |
 | Email notice fails | Credentials missing → it skips by design; delivery is not blocked |
 | Fonts wrong in render | Check `style-system.md` font embed table; non-native fonts need bundled woff2 |
 
@@ -365,6 +365,7 @@ paper-algorithm/
 └── skills/
     ├── tryworld-koubo/          # Voiceover router (routing + email notice)
     ├── tryworld-paper/          # Paper Algorithm video production
+    │   ├── themes/              # Brand theme files (paper-algorithm.json)
     └── tryworld-topics/         # AIHOT topic selection
 ```
 
