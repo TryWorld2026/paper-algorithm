@@ -15,6 +15,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - 字幕全程烧录在画面内并与配音同步；印章/标识右上角全程常驻（根层覆盖实现），是唯一水印，禁止文字水印；印章为保护区
 - 画幅：横屏 1920x1080；口播时长最长约 10 分钟（短可到抖音 30 秒），超长稿先提炼压缩
 - 交付物：主视频（烧录字幕）、横版封面（1920x1440，4:3）、竖版封面（1080x1440，3:4）、3-5 个平台标题、字幕/时间轴
+- **交付核验（硬性，最后一步）**：交付前必须运行 `python -X utf8 scripts/verify_output.py --dir <outputs目录>`，逐项核验主视频音轨、时长对齐、双封面尺寸、标题与发布计划——任何一项 FAIL 都不交付，修复后重跑直到全部 PASS。禁止跳过或仅凭肉眼判断。
 - 数据必须有来源；场景必须有入场动画与转场（除末场无退场）
 
 ## 品牌主题（从主题文件读取）
@@ -99,6 +100,7 @@ description: Create branded 试界TryWorld AI-knowledge videos in the fixed "Pap
 - `references/workflow.md`：详细生产流程与命令
 - `references/titles.md`：平台标题规则
 - `scripts/tts_yunxi.py`：配音管线（内置多音色预设，默认云希）
+- `scripts/verify_output.py`：交付核验硬门禁（音轨/时长/双封面/标题/发布计划，全过才交付）
 - `scripts/check_prose.py`：活人感硬禁项检查脚本（TryWorld 改造版，源自 KKKKhazix/human-writing v1.1.0，MIT；禁令上移到修辞动作级）
 - `assets/paper-grain.svg`：纸纹叠加层
 - `assets/seal.svg`：朱红"试界原创"印章

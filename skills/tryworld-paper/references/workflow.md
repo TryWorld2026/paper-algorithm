@@ -204,7 +204,7 @@ ffmpeg -y -i covers/v.mp4 -frames:v 1 outputs/cover_3x4.png
 
 按 `references/titles.md` 生成 3-5 个候选，每个候选标注平台推荐与命中的增长原则（共鸣/认可/槽点/嘴替/价值认同），输出 `outputs/titles.txt`。候选标题同守硬禁词：禁冒号/破折号/翻案句/黑话/模型路标；生成后运行 `python -X utf8 "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\check_prose.py" outputs/titles.txt`，失败项改写后清零。
 
-## 11. 交付清单
+## 11. 交付清单与核验（硬性门禁）
 
 `outputs/` 下应有：
 
@@ -212,6 +212,15 @@ ffmpeg -y -i covers/v.mp4 -frames:v 1 outputs/cover_3x4.png
 - `cover_4x3.png`、`cover_3x4.png`
 - `titles.txt`（含平台推荐）
 - `narration.mp3` + `sentences.json`（配音与字幕时间轴，便于二次编辑）
+- `plan.json`（场景规划，便于复用章节结构）
+
+**交付核验（硬性，不通过不交付）**——整理完 `outputs/` 后必须运行：
+
+```powershell
+python -X utf8 "$env:USERPROFILE\.agents\skills\tryworld-paper\scripts\verify_output.py" --dir <outputs目录>
+```
+
+逐项核验主视频音轨存在、时长与时间轴对齐、双封面尺寸（4:3 与 3:4）、标题与发布计划齐全。任何一项 FAIL：修复后重跑，直到输出「核验全部通过」才允许向用户交付。禁止跳过此步或仅凭肉眼判断（音轨缺失、封面漏渲染在画面抽帧中看不出来）。
 - `plan.json`（场景规划，便于复用章节结构）
 
 ## 常见问题

@@ -258,6 +258,7 @@ After installation into `~/.agents/skills`, hosts trigger these by the `descript
 7. **Gate 2 (STOP)** — show the full polished script + what/why of edits + element mapping + data sources. Wait for explicit confirmation. Never render without it.
 8. **Produce** — read the theme file (`skills/tryworld-paper/themes/paper-algorithm.json`) for all brand values → segment → `scripts/tts_yunxi.py` (voiceover + `sentences.json` timeline) → build HyperFrames compositions per `references/style-system.md` → `npx hyperframes lint` / `validate` / `inspect --strict` all pass → render (draft first, then high) → covers (independent design, never video frames) → titles per `references/titles.md` → everything into `outputs/` + `发布计划.txt`.
 9. **Notify** — run `tryworld-koubo/scripts/notify_delivery.ps1 -ProjectDir <dir>`; missing credentials/node → skip gracefully, never block delivery.
+10. **Verify before delivery (hard gate)** — run `python -X utf8 tryworld-paper/scripts/verify_output.py --dir <outputs>`; every item must PASS (audio track present, durations aligned, both cover sizes, titles, publish plan). A FAIL means fix and re-run — never deliver an unverified outputs folder.
 
 Projects live in their own folder (default convention: `E:\Codex口播视频\<slug>\` with `work/` and `outputs/`).
 
@@ -268,6 +269,7 @@ Projects live in their own folder (default convention: `E:\Codex口播视频\<sl
 - Brand values (palette, seal, sign-off, fonts, default voice) come **only** from the theme file — never hardcode them from memory.
 - Before rendering, `lint`/`validate`/`inspect --strict` must pass with zero errors and warnings.
 - Script data points need sources; unverifiable ones are marked 待核实, never invented.
+- Run `verify_output.py` on `outputs/` before handing anything to the user; a silent video or a missing cover is a failed delivery.
 
 ### 4. Common failures
 

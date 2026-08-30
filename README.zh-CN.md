@@ -258,6 +258,7 @@ flowchart LR
 7. **闸门 2（停下）**——完整展示优化稿 + 修改说明 + 元素落点 + 数据来源。等用户明确确认，未经确认禁止渲染。
 8. **出片**——读主题文件（`skills/tryworld-paper/themes/paper-algorithm.json`）获取全部品牌值 → 分段 → `scripts/tts_yunxi.py` 配音（产 `sentences.json` 时间轴）→ 按 `references/style-system.md` 写 HyperFrames 构图 → `npx hyperframes lint` / `validate` / `inspect --strict` 全部通过 → 渲染（先 draft 后 high）→ 封面（独立设计，禁止截帧）→ 按 `references/titles.md` 出标题 → 全部产物进 `outputs/` + `发布计划.txt`。
 9. **通知**——运行 `tryworld-koubo/scripts/notify_delivery.ps1 -ProjectDir <目录>`；凭证或 node 缺失时脚本自动跳过，不阻塞交付。
+10. **交付核验（硬性闸门）**——运行 `python -X utf8 tryworld-paper/scripts/verify_output.py --dir <outputs目录>`；每一项都必须 PASS（音轨存在、时长对齐、双封面尺寸、标题、发布计划）。出现 FAIL 就修复重跑——禁止把未核验的 outputs 文件夹交给用户。
 
 项目各自独立文件夹（默认约定 `E:\Codex口播视频\<slug>\`，内含 `work/` 与 `outputs/`）。
 
@@ -268,6 +269,7 @@ flowchart LR
 - 品牌值（色板、印章、签名语、字体、默认音色）**只能**从主题文件读取，禁止凭记忆写死。
 - 渲染前 `lint`/`validate`/`inspect --strict` 必须零错误零警告。
 - 稿中数据点必须有来源；无法核实的标注「待核实」，禁止编造。
+- 交给用户之前必须对 `outputs/` 跑 `verify_output.py`；静音成片或缺封面就是交付失败。
 
 ### 4. 常见故障
 
