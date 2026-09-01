@@ -170,12 +170,12 @@ python -m pipeline.runner --project-dir <项目目录> --steps 3,4,5,6
 
 ```mermaid
 flowchart LR
-    U(("你的一句话")) --> P["tryworld-koubo\n统一入口·自动路由"]
-    P -- "模式A·直接给稿" --> A["tryworld-paper\n优化·确认·出片"]
-    P -- "模式B·帮我选题" --> S["tryworld-topics\nAIHOT出选题清单"]
-    S -- "你挑选" --> A
-    A --> O["成片交付\n视频·封面·标题·发布计划"]
-    O -.->|"自动"| M["邮件通知\n产物和四平台发布时间"]
+    U(["你的一句话"]) --> P["koubo 统一入口"]
+    P -- "模式A" --> A["paper 优化出片"]
+    P -- "模式B" --> S["topics 选题"]
+    S --> A
+    A --> O["成片交付"]
+    O --> M["邮件通知"]
 ```
 
 ---
