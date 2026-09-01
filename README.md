@@ -170,12 +170,12 @@ Remember one entry: **`$tryworld-koubo`**. Hand it a script (Mode A) or ask for 
 
 ```mermaid
 flowchart LR
-    U(["One sentence from you"]) --> P["🎬 tryworld-koubo<br/>Single entry, auto route"]
-    P -- "Mode A, script given" --> A["📜 tryworld-paper<br/>Optimize, confirm, produce"]
-    P -- "Mode B, pick a topic" --> S["🎯 tryworld-topics<br/>AIHOT news to topic list"]
+    U(("One sentence from you")) --> P["tryworld-koubo\nSingle entry · auto route"]
+    P -- "Mode A · script given" --> A["tryworld-paper\nOptimize · confirm · produce"]
+    P -- "Mode B · pick a topic" --> S["tryworld-topics\nAIHOT to topic list"]
     S -- "you choose" --> A
-    A --> O["✅ Deliverables<br/>Video, covers, titles, schedule"]
-    O -. automatic .-> M["📧 Email notice<br/>Deliverables and publish times"]
+    A --> O["Deliverables\nVideo · covers · titles · schedule"]
+    O -.->|"automatic"| M["Email notice\nDeliverables and publish times"]
 ```
 
 ---
