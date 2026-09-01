@@ -7,6 +7,10 @@ description: 基于 aihot.virxact.com 最新 AI 资讯，为 AI 口播频道（�
 
 为试界TryWorld 的 AI 口播频道做选题：先拉取 AIHOT 最新 AI 资讯，再按频道选题规则筛出值得做的选题清单。
 
+## 内容主题
+
+选题规则默认来自 	ryworld-paper/themes/content-default.json 的 	opic_sources、	opic_rules、platforms 字段。换领域/品牌时修改内容主题 JSON，无需改本 SKILL.md。
+
 ## 流程
 
 1. **拉数据**：运行 `scripts/fetch_aihot.ps1`（Windows PowerShell；拉最近 7 天精选 + 最新日报，落盘到 `work/aihot/`）。非 Windows 环境按 `references/api.md` 的端点用 curl 拉取（**必须带浏览器 UA**，否则 403）。

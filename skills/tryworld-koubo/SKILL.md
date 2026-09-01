@@ -16,6 +16,24 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 - **选题**：帮我选题 / 我要选题 / 口播选题 / 给我几个选题 / 这周做什么口播 / 最近有什么值得做的 AI 选题 / 本周 AI 圈有什么可讲的
 - **资讯盘点**：做个 AI 资讯盘点 / AI 资讯盘点
 
+## 内容主题
+
+出片前确认内容主题（默认 	ryworld-paper/themes/content-default.json）。内容主题定义选题域、受众、写稿规范、平台列表等。换品牌/换领域时复制此 JSON 并修改——流水线逻辑不变。用户说「用 <主题名> 内容主题」时切换。
+
+```json
+{
+  "domain": "你的领域",
+  "audience": "你的目标受众",
+  "topic_sources": ["rss", "manual"],
+  "topic_rules": "你的选题筛选标准",
+  "tone": "你的写作语调",
+  "standard_length_chars": [2000, 3000],
+  "platforms": ["你的目标平台"],
+  "topic_dedup_dir": "你的成片目录",
+  "writing_rules": "tryworld 或 custom"
+}
+```
+
 ## 模式判定
 
 - 输入包含口播稿正文或稿子文件（.md/.txt），且意图是"优化/出片" → **模式 A**

@@ -2,10 +2,16 @@ name: check
 on: [push, pull_request]
 jobs:
   check-skills:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.12"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
+      - run: pip install pytest
       - run: python -X utf8 scripts/check_skills.py
+      - run: python -m pytest tests/ -v --tb=short

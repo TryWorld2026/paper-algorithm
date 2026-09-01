@@ -1,0 +1,13 @@
+{
+  "domain": "AI",
+  "audience": "对 AI 感兴趣的普通人",
+  "topic_sources": ["aihot"],
+  "topic_rules": "关注 AI 与普通人的交叉点，选题须能回答「所以呢」",
+  "tone": "人话，不用术语堆砌，写给耳朵",
+  "standard_length_chars": [2500, 2800],
+  "short_length_seconds": [30, 60],
+  "sign_off_key": "brand.sign_off",
+  "platforms": ["小红书", "抖音", "B站", "微信视频号"],
+  "topic_dedup_dir": "E:\\Codex口播视频",
+  "writing_rules": "tryworld"
+}

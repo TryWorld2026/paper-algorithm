@@ -69,7 +69,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 
 **第 3 步 · 收货**——流水线末端交付：渲染成片、横竖封面、平台标题、字幕、四平台发布计划，外加一封自动邮件通知。
 
-**检查环境**——出第一条视频前，先跑 `python -X utf8 scripts/check_skills.py`（应输出 `All checks passed`）和 `powershell -File scripts/doctor.ps1`（列出缺失工具）。参与贡献见 [CONTRIBUTING.md](CONTRIBUTING.md)，近期改动见 [CHANGELOG.md](CHANGELOG.md)，社区准则见 [行为准则](CODE_OF_CONDUCT.md)。
+**检查环境**——出第一条视频前，先跑 `python -X utf8 scripts/check_skills.py`（应输出 `All checks passed`）和 `python scripts/doctor.py`（列出缺失工具，跨平台）。参与贡献见 [CONTRIBUTING.md](CONTRIBUTING.md)，近期改动见 [CHANGELOG.md](CHANGELOG.md)，社区准则见 [行为准则](CODE_OF_CONDUCT.md)。
 
 ---
 
@@ -253,13 +253,13 @@ flowchart LR
 
 1. **路由**——读 `tryworld-koubo/SKILL.md`，判定模式 A（用户给了稿 → 优化并出片）或模式 B（要选题 → 选题 → 写稿 → 出片）。
 2. **环境自检**——`node --version`（≥22）、`python --version`（≥3.10）、`python -c "import edge_tts"`、`ffmpeg -version`、`npx hyperframes doctor`。缺什么先装或明确告知，再继续。
-3. **仅模式 B**——运行 `tryworld-topics/scripts/fetch_aihot.ps1`（Windows）或其 `references/api.md` 的 curl 替代，按 `references/selection-rules.md` 产出 3-8 个候选选题。
+3. **仅模式 B**——运行 `python tryworld-topics/scripts/fetch_aihot.py`（跨平台）或其 `references/api\.md` 的 curl 替代，按 `references/selection-rules.md` 产出 3-8 个候选选题。
 4. **闸门 1（停下）**——展示选题清单，等用户挑选。未经允许不得继续。
 5. **写稿**——按 koubo SKILL.md 的写稿规范（标准版 2500-2800 字、数据点必须带来源、活人感规则）。
 6. **优化过门禁**——转入 `tryworld-paper/SKILL.md`：优化净化，然后跑 `scripts/check_prose.py` 直到硬禁项清零。
 7. **闸门 2（停下）**——完整展示优化稿 + 修改说明 + 元素落点 + 数据来源。等用户明确确认，未经确认禁止渲染。
 8. **出片**——读主题文件（`skills/tryworld-paper/themes/paper-algorithm.json`）获取全部品牌值 → 分段 → `scripts/tts_yunxi.py` 配音（产 `sentences.json` 时间轴）→ 按 `references/style-system.md` 写 HyperFrames 构图 → `npx hyperframes lint` / `validate` / `inspect --strict` 全部通过 → 渲染（先 draft 后 high）→ 封面（独立设计，禁止截帧）→ 按 `references/titles.md` 出标题 → 全部产物进 `outputs/` + `发布计划.txt`。
-9. **通知**——运行 `tryworld-koubo/scripts/notify_delivery.ps1 -ProjectDir <目录>`；凭证或 node 缺失时脚本自动跳过，不阻塞交付。
+9. **通知**——运行 `python tryworld-koubo/scripts/notify_delivery\.py --project-dir <目录>`；凭证或 node 缺失时脚本自动跳过，不阻塞交付。
 10. **交付核验（硬性闸门）**——运行 `python -X utf8 tryworld-paper/scripts/verify_output.py --dir <outputs目录>`；每一项都必须 PASS（音轨存在、时长对齐、双封面尺寸、标题、发布计划）。出现 FAIL 就修复重跑——禁止把未核验的 outputs 文件夹交给用户。
 
 项目各自独立文件夹（默认约定 `E:\Codex口播视频\<slug>\`，内含 `work/` 与 `outputs/`）。
@@ -339,14 +339,15 @@ Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\s
 
 ### 仓库内检查脚本
 
-- `python -X utf8 scripts/check_skills.py`：编译技能 Python 脚本，并对 `examples/` 的口播稿与标题跑活人感门禁。
-- `powershell -ExecutionPolicy Bypass -File scripts/doctor.ps1`：检查 Python、Node、FFmpeg/ffprobe、edge-tts、HyperFrames 与可选邮件凭证。缺失必需项时退出码为 1。
+- `python -X utf8 scripts/check_skills.py`：编译技能 Python 脚本，并对 `examples/` 的口播稿与标题跑活人感门禁
+- `python -m pytest tests/ -v`：运行 23 个单元测试（check_prose、verify_output、tts_yunxi、check_skills）。
+- `python scripts/doctor\.py`：检查 Python、Node、FFmpeg/ffprobe、edge-tts、HyperFrames 与可选邮件凭证。缺失必需项时退出码为 1。
 
 ### 环境要求
 
 运行 `npx hyperframes doctor` 可一键检查环境。这些技能按试界自己的工作流定制，默认假设如下——全部都可以在技能文件里自行调整：
 
-- **Windows PowerShell**——拉取数据（tryworld-topics）与发通知邮件（tryworld-koubo）的脚本是 PowerShell（`scripts/*.ps1`）；tryworld-topics 的 `references/` 里提供了非 Windows 的 curl 替代。
+- **跨平台**——拉取数据（tryworld-topics）与发通知邮件（tryworld-koubo）的脚本均为 Python（同时保留 `.ps1` 回退版本）；`tryworld-topics` 的 `references/` 里提供了 curl 替代。
 - **Python 3.10+**——`pip install edge-tts` 用于配音管线（`tryworld-paper/scripts/tts_yunxi.py`，默认云希、内置多音色预设）；`tryworld-paper/scripts/check_prose.py` 无需第三方包。
 - **Node.js >= 22 + HyperFrames**——渲染（`npx hyperframes render` / `lint` / `validate` / `inspect`）。
 - **FFmpeg**（含 ffprobe，加入 PATH）——音频处理。
@@ -401,3 +402,32 @@ paper-algorithm/
 ---
 
 <p align="center"><sub>试界TryWorld · 持续把 AI 讲清楚 · 让每个普通人都看得懂、用得上</sub></p>
+
+### Docker 一键环境
+
+不想装 Node/Python/FFmpeg？用 Docker 跳过所有依赖安装：
+
+```bash
+docker build -t paper-algorithm .
+docker run --rm paper-algorithm
+```
+
+容器内包含 Node.js 22、FFmpeg、Python 3.12、edge-tts、mutagen。渲染类操作需要额外挂载 GPU（可选）：
+
+```bash
+docker run --rm -v "$(pwd)/output:/app/output" paper-algorithm
+```
+### 内容主题
+
+除视觉主题外，本项目还支持**内容主题**（`skills/tryworld-paper/themes/content-default.json`），用于定义选题域、受众、写稿规范、目标平台等。换品牌或换领域时，复制该 JSON 并修改，无需改 SKILL.md：
+
+```json
+{
+  "domain": "你的领域",
+  "audience": "你的目标受众",
+  "topic_sources": ["rss", "manual"],
+  "topic_rules": "你的选题筛选标准",
+  "platforms": ["你的目标平台"],
+  "topic_dedup_dir": "你的成片目录"
+}
+```

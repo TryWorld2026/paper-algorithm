@@ -40,8 +40,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import edge_tts
-
 SENTENCE_END = "。！？…!?"
 
 
@@ -65,6 +63,7 @@ def find_bin(name: str) -> Path | None:
     return None
 
 
+
 async def synth(
     text: str, out_path: Path, voice: str, rate: str, volume: str, pitch: str
 ) -> list[dict]:
@@ -72,7 +71,7 @@ async def synth(
     last_error: Exception | None = None
     for attempt in range(2):
         try:
-            comm = edge_tts.Communicate(text, voice, rate=rate, volume=volume, pitch=pitch)
+            comm = _get_edge_tts().Communicate(text, voice, rate=rate, volume=volume, pitch=pitch)
             sentences: list[dict] = []
             with open(out_path, "wb") as audio_file:
                 async for chunk in comm.stream():
@@ -163,6 +162,19 @@ def strip_markdown(line: str) -> str | None:
     for token in ("**", "__", "`", "~~"):
         line = line.replace(token, "")
     return line.strip() or None
+
+
+
+_edge_tts = None
+
+
+def _get_edge_tts():
+    """Lazy import edge_tts so the module can be imported without the dependency."""
+    global _edge_tts
+    if _edge_tts is None:
+        import edge_tts
+        _edge_tts = edge_tts
+    return _edge_tts
 
 
 def normalize_paragraph(paragraph: str) -> str:

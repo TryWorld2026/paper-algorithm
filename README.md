@@ -69,7 +69,7 @@ That's it. The request is recognized and routed through the whole pipeline autom
 
 **3 · Receive** — the pipeline ends with the rendered video, horizontal/vertical covers, platform titles, captions, a four-platform publish plan, and an automatic email notice.
 
-**Check your setup** — run `python -X utf8 scripts/check_skills.py` (should output `All checks passed`) and `powershell -File scripts/doctor.ps1` (lists missing tools) before producing your first video. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute, [CHANGELOG.md](CHANGELOG.md) for recent changes, and the [Code of Conduct](CODE_OF_CONDUCT.md).
+**Check your setup** — run `python -X utf8 scripts/check_skills.py` (should output `All checks passed`) and `python scripts/doctor\.py` (lists missing tools, cross-platform) before producing your first video. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute, [CHANGELOG.md](CHANGELOG.md) for recent changes, and the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ---
 
@@ -253,13 +253,13 @@ After installation into `~/.agents/skills`, hosts trigger these by the `descript
 
 1. **Route** — read `tryworld-koubo/SKILL.md`, decide Mode A (user gave a script → optimize & produce) or Mode B (topic request → select → write → produce).
 2. **Environment check** — `node --version` (≥22) · `python --version` (≥3.10) · `python -c "import edge_tts"` · `ffmpeg -version` · `npx hyperframes doctor`. Install or warn on whatever is missing before proceeding.
-3. **Mode B only** — run `tryworld-topics/scripts/fetch_aihot.ps1` (Windows) or the curl fallback in its `references/api.md`, apply `references/selection-rules.md`, produce 3–8 candidate topics.
+3. **Mode B only** — run `python tryworld-topics/scripts/fetch_aihot\.py` (cross-platform) or the curl fallback in its `references/api\.md`, apply `references/selection-rules.md`, produce 3–8 candidate topics.
 4. **Gate 1 (STOP)** — present the topic list and wait for the user's pick. Do not proceed unasked.
 5. **Write** — follow the writing rules in koubo's SKILL.md (2,500–2,800 chars standard, sources for every datapoint, aliveness rules).
 6. **Polish & gate** — hand over to `tryworld-paper/SKILL.md`: optimize, then run `scripts/check_prose.py` until zero hard violations.
 7. **Gate 2 (STOP)** — show the full polished script + what/why of edits + element mapping + data sources. Wait for explicit confirmation. Never render without it.
 8. **Produce** — read the theme file (`skills/tryworld-paper/themes/paper-algorithm.json`) for all brand values → segment → `scripts/tts_yunxi.py` (voiceover + `sentences.json` timeline) → build HyperFrames compositions per `references/style-system.md` → `npx hyperframes lint` / `validate` / `inspect --strict` all pass → render (draft first, then high) → covers (independent design, never video frames) → titles per `references/titles.md` → everything into `outputs/` + `发布计划.txt`.
-9. **Notify** — run `tryworld-koubo/scripts/notify_delivery.ps1 -ProjectDir <dir>`; missing credentials/node → skip gracefully, never block delivery.
+9. **Notify** — run `python tryworld-koubo/scripts/notify_delivery\.py --project-dir <dir>`; missing credentials/node → skip gracefully, never block delivery.
 10. **Verify before delivery (hard gate)** — run `python -X utf8 tryworld-paper/scripts/verify_output.py --dir <outputs>`; every item must PASS (audio track present, durations aligned, both cover sizes, titles, publish plan). A FAIL means fix and re-run — never deliver an unverified outputs folder.
 
 Projects live in their own folder (default convention: `E:\Codex口播视频\<slug>\` with `work/` and `outputs/`).
@@ -339,14 +339,15 @@ A skill fires when the request matches its trigger words — no commands to memo
 
 ### In-repo check scripts
 
-- `python -X utf8 scripts/check_skills.py`: compiles skill Python scripts and runs the aliveness gate over `examples/` scripts and titles.
-- `powershell -ExecutionPolicy Bypass -File scripts/doctor.ps1`: checks Python, Node, FFmpeg/ffprobe, edge-tts, HyperFrames, and optional email credentials. Exits 1 when a required item is missing.
+- `python -X utf8 scripts/check_skills.py`: compiles skill Python scripts and runs the aliveness gate
+- `python -m pytest tests/ -v`: run 23 unit tests (check_prose, verify_output, tts_yunxi, check_skills) over `examples/` scripts and titles.
+- `python scripts/doctor\.py`: checks Python, Node, FFmpeg/ffprobe, edge-tts, HyperFrames, and optional email credentials. Exits 1 when a required item is missing.
 
 ### Environment
 
 Run `npx hyperframes doctor` to check the environment at once. These skills are built for TryWorld's own production workflow, so a few things are assumed — all adjustable in the skill files:
 
-- **Windows PowerShell** — data-fetching (`tryworld-topics`) and email-notice (`tryworld-koubo`) scripts are PowerShell (`scripts/*.ps1`); `tryworld-topics` documents a curl fallback for non-Windows in its `references/`.
+- **Cross-platform** — data-fetching (`tryworld-topics`) and email-notice (`tryworld-koubo`) scripts are Python (`.ps1` fallback versions retained); `tryworld-topics` documents a curl fallback in its `references/`.
 - **Python 3.10+** — `pip install edge-tts` for the voiceover pipeline (`tryworld-paper/scripts/tts_yunxi.py`, default Yunxi + voice presets); `tryworld-paper/scripts/check_prose.py` needs no third-party packages.
 - **Node.js >= 22 + HyperFrames** — rendering (`npx hyperframes render` / `lint` / `validate` / `inspect`).
 - **FFmpeg** (with ffprobe, on PATH) — audio processing.
@@ -401,3 +402,17 @@ This work is licensed under a **Creative Commons Attribution-ShareAlike 4.0 Inte
 ---
 
 <p align="center"><sub>TryWorld · Making AI clear for everyone</sub></p>
+
+### Docker One-Shot Environment
+
+Skip all dependency installs with Docker:
+
+```bash
+docker build -t paper-algorithm .
+docker run --rm paper-algorithm
+```
+
+The container includes Node.js 22, FFmpeg, Python 3.12, edge-tts, and mutagen.
+### Content Theme
+
+Beyond visual themes, this project supports a **content theme** (`skills/tryworld-paper/themes/content-default.json`) that defines topic domain, audience, writing rules, and target platforms. Copy and modify the JSON to rebrand or change domain — no SKILL.md changes needed.
