@@ -398,13 +398,26 @@ def read_text(path: str) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description="检查中文成稿的硬禁令与模型化形状")
     parser.add_argument("path", help="Markdown 或文本文件路径。使用 - 从标准输入读取")
+    parser.add_argument("--whitelist", type=str, default=None, help="Path to whitelist file. Each line is a regex pattern to strip from analysis.")
     args = parser.parse_args()
-
     try:
         text = read_text(args.path)
     except (OSError, UnicodeError) as error:
         print(f"无法读取稿件。{error}", file=sys.stderr)
         return 2
+
+    if args.whitelist:
+        import re as _re
+        try:
+            wl_text = Path(args.whitelist).read_text(encoding="utf-8")
+            wl_patterns = [line.strip() for line in wl_text.splitlines() if line.strip() and not line.startswith("#")]
+            for pattern in wl_patterns:
+                try:
+                    text = _re.sub(pattern, "", text)
+                except _re.error as e:
+                    print(f"WARNING: invalid whitelist regex '{pattern}': {e}", file=sys.stderr)
+        except (OSError, UnicodeError) as e:
+            print(f"WARNING: cannot read whitelist file: {e}", file=sys.stderr)
 
     prose = mask_non_prose(text)
     total_han = han_count(prose)
