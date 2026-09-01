@@ -5,7 +5,7 @@ description: 基于 aihot.virxact.com 最新 AI 资讯，为 AI 口播频道（�
 
 # AIHOT 口播选题
 
-为试界TryWorld 的 AI 口播频道做选题：先拉取 AIHOT 最新 AI 资讯，再按频道选题规则筛出值得做的选题清单。
+为当前频道的 `content.domain` 领域做选题：先拉取选题数据源（默认 AIHOT，可替换），再按频道选题规则（`content.topic_rules`）筛出值得做的选题清单。默认主题为试界TryWorld 的 AI 口播频道。
 
 ## 内容主题
 
@@ -31,5 +31,5 @@ description: 基于 aihot.virxact.com 最新 AI 资讯，为 AI 口播频道（�
 
 - `scripts/fetch_aihot.ps1`：一键拉取并生成 UTF-8 报告（Windows）
 - `references/api.md`：AIHOT API 端点、路由规则、输出规范
-- `references/selection-rules.md`：试界TryWorld 选题规则与输出模板
+- `references/selection-rules.md`：试界TryWorld 选题规则与输出模板（默认；可通过 content.topic_rules 替换）
 - `references/done-topics.md`：已做选题清单（持续维护）
