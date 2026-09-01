@@ -69,6 +69,8 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 
 **第 3 步 · 收货**——流水线末端交付：渲染成片、横竖封面、平台标题、字幕、四平台发布计划，外加一封自动邮件通知。
 
+**检查环境**——出第一条视频前，先跑 `python -X utf8 scripts/check_skills.py`（应输出 `All checks passed`）和 `powershell -File scripts/doctor.ps1`（列出缺失工具）。参与贡献见 [CONTRIBUTING.md](CONTRIBUTING.md)，近期改动见 [CHANGELOG.md](CHANGELOG.md)，社区准则见 [行为准则](CODE_OF_CONDUCT.md)。
+
 ---
 
 ## 📑 目录

@@ -69,6 +69,8 @@ That's it. The request is recognized and routed through the whole pipeline autom
 
 **3 · Receive** — the pipeline ends with the rendered video, horizontal/vertical covers, platform titles, captions, a four-platform publish plan, and an automatic email notice.
 
+**Check your setup** — run `python -X utf8 scripts/check_skills.py` (should output `All checks passed`) and `powershell -File scripts/doctor.ps1` (lists missing tools) before producing your first video. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute, [CHANGELOG.md](CHANGELOG.md) for recent changes, and the [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ---
 
 ## 📑 Contents

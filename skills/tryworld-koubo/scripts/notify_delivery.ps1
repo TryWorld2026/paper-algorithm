@@ -1,22 +1,31 @@
 ﻿# tryworld-koubo · 成片交付邮件通知（Windows PowerShell）
-# 用法: powershell -File scripts/notify_delivery.ps1 -ProjectDir <项目目录> [-DryRun]
+# 用法: powershell -File scripts/notify_delivery.ps1 -ProjectDir <项目目录> [-ThemeFile <主题JSON路径>] [-DryRun]
 param(
   [string]$ProjectDir = (Get-Location).Path,
   [string]$Recipient = "",
+  [string]$ThemeFile = "",
   [switch]$DryRun
 )
 $ErrorActionPreference = "Stop"
 
-$qqCandidates = @(
-  (Join-Path $env:USERPROFILE ".agents\skills\qq-email"),
-  (Join-Path $env:USERPROFILE ".codex\skills\qq-email")
-)
-$qqEmailSkill = $qqCandidates | Where-Object { Test-Path -LiteralPath (Join-Path $_ "scripts\send.js") } | Select-Object -First 1
-if (-not $qqEmailSkill) {
-  Write-Warning "未找到 qq-email 技能(请安装到 ~/.agents/skills 或 ~/.codex/skills),跳过邮件通知(不阻塞交付)。"
-  exit 0
+
+# ---- 主题文件：品牌名与发布计划（可选；缺失时用硬编码默认值） ----
+if ($ThemeFile -and -not (Test-Path -LiteralPath $ThemeFile)) { Write-Warning ("指定的主题文件不存在: " + $ThemeFile + "，使用默认品牌值") }
+$defaultTheme = Join-Path $PSScriptRoot "..\..\tryworld-paper\themes\paper-algorithm.json"
+$themePath = if ($ThemeFile) { $ThemeFile } elseif (Test-Path -LiteralPath $defaultTheme) { $defaultTheme } else { "" }
+$brandName = "TryWorld"
+$planTitle = "试界TryWorld · 平台发布计划"
+$planLines = @("小红书：中午 12:30","抖音：晚上 19:30","B站：晚上 20:30","微信视频号：晚上 20:30")
+if ($themePath -and (Test-Path -LiteralPath $themePath)) {
+  try {
+    $cfg = Get-Content -LiteralPath $themePath -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($cfg.brand.platform_name) { $brandName = $cfg.brand.platform_name }
+    if ($cfg.publish_plan.title) { $planTitle = $cfg.publish_plan.title }
+    if ($cfg.publish_plan.platforms) {
+      $planLines = @($cfg.publish_plan.platforms | ForEach-Object { "{0}：{1}" -f $_.name, $_.time })
+    }
+  } catch { Write-Warning "主题文件解析失败，使用默认品牌值: $themePath" }
 }
-$sendJs = Join-Path $qqEmailSkill "scripts\send.js"
 $VideoAttachLimitMB = 35   # QQ 邮箱附件上限约 50MB,含 base64 开销,单文件安全阈值 35MB
 
 # ---- 收集产物 ----
@@ -53,7 +62,7 @@ $attachments = @($videoAttach, $coverH.FullName, $coverV.FullName) | Where-Objec
 
 $proj = Split-Path -Leaf $ProjectDir
 $date = Get-Date -Format "yyyy-MM-dd"
-$subject = "✅ TryWorld 口播成片已交付 · $proj · $date"
+$subject = "✅ $brandName 口播成片已交付 · $proj · $date"
 $body = @"
 成片已交付，产物已作为附件随邮件发送：
 
@@ -62,11 +71,8 @@ $videoNote
 【平台标题】
 $titlesText
 
-【四平台发布计划】
-小红书：中午 12:30
-抖音：晚上 19:30
-B站：晚上 20:30
-微信视频号：晚上 20:30
+【发布计划】
+$($planLines -join "`n")
 
 —— tryworld-koubo 自动通知
 "@
@@ -81,6 +87,17 @@ if ($DryRun) {
   Write-Output $body
   exit 0
 }
+
+$qqCandidates = @(
+  (Join-Path $env:USERPROFILE ".agents\skills\qq-email"),
+  (Join-Path $env:USERPROFILE ".codex\skills\qq-email")
+)
+$qqEmailSkill = $qqCandidates | Where-Object { Test-Path -LiteralPath (Join-Path $_ "scripts\send.js") } | Select-Object -First 1
+if (-not $qqEmailSkill) {
+  Write-Warning "未找到 qq-email 技能(请安装到 ~/.agents/skills 或 ~/.codex/skills),跳过邮件通知(不阻塞交付)。"
+  exit 0
+}
+$sendJs = Join-Path $qqEmailSkill "scripts\send.js"
 
 # ---- 凭证检查(进程环境变量 -> 注册表用户环境变量) ----
 if (-not $env:QQ_EMAIL_ACCOUNT) {

@@ -1,0 +1,30 @@
+name: Bug report
+description: 报告一个问题
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 发生了什么
+      description: 描述问题现象与预期行为的差异。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 执行了什么命令
+        2. 看到了什么输出
+        3. 期望看到什么
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境
+      description: 操作系统、Python/Node 版本、FFmpeg 是否可用。
+      placeholder: "Windows 11, Python 3.12, Node 24, ffprobe MISSING"
+    validations:
+      required: true

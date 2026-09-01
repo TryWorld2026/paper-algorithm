@@ -107,10 +107,9 @@ Get-ChildItem -LiteralPath "E:\Codex口播视频" -Directory | ForEach-Object {
 - cover_4x3.png / cover_3x4.png
 - titles.txt
 - narration.mp3、sentences.json（字幕时间轴）、plan.json
-- 发布计划.txt（固定内容）
+- 发布计划.txt（内容以当前主题文件的 `publish_plan` 为准，见下方模板）
 
-发布计划.txt 内容模板：
-
+发布计划.txt 内容以当前主题文件的 `publish_plan` 字段为准。自定义品牌主题时，在主题 JSON 的 `publish_plan.platforms` 数组中定义你的平台与时间，脚本与文档将自动使用。默认主题（试界TryWorld）的值如下：
 ```
 试界TryWorld · 平台发布计划
 小红书：中午 12:30
@@ -127,7 +126,9 @@ B站：晚上 20:30
 powershell -File "$env:USERPROFILE\.agents\skills\tryworld-koubo\scripts\notify_delivery.ps1" -ProjectDir "E:\Codex口播视频\<项目slug>"
 ```
 
-- 邮件内容：主题 `✅ TryWorld 口播成片已交付 · <项目> · <日期>`；正文 = 完成提示 + 【平台标题】文字（读取 titles.txt 直接写入正文，不作为附件）+ 【四平台发布计划】。
+- 邮件主题与发布计划从主题文件（`paper-algorithm.json` 或 `-ThemeFile` 指定的文件）读取 `brand.platform_name` 与 `publish_plan`；文件缺失或字段不存在时回退到硬编码默认值。
+
+- 邮件内容：主题 `✅ {品牌名} 口播成片已交付 · <项目> · <日期>`（品牌名取自主题文件 `brand.platform_name`）；正文 = 完成提示 + 【平台标题】文字（读取 titles.txt 直接写入正文，不作为附件）+ 【发布计划】（内容取自主题文件 `publish_plan`）。
 - 附件规则（QQ 邮箱附件上限约 50MB，含 base64 开销，单文件安全阈值 35MB）：
   - 横版封面 / 竖版封面：总是作为附件；
   - 平台标题：不附文件，文字写入正文；
