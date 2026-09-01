@@ -28,15 +28,21 @@ def main() -> int:
         print("FAIL: npx not found. Install Node.js >= 22.")
         return 1
 
-    # Check hyperframes availability
-    hf_check = subprocess.run(
-        [npx, "--no-install", "hyperframes", "--version"],
-        capture_output=True, text=True, timeout=30,
-    )
-    if hf_check.returncode != 0:
-        print("WARNING: hyperframes CLI not available.")
+    # Check hyperframes availability (with timeout and error handling)
+    try:
+        hf_check = subprocess.run(
+            [npx, "--no-install", "hyperframes", "--version"],
+            capture_output=True, text=True, timeout=15,
+        )
+        hf_available = hf_check.returncode == 0
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        hf_available = False
+
+    if not hf_available:
+        print("WARNING: hyperframes CLI not available or timed out.")
         print("Fallback: audio + captions only (no video rendering).")
-        return 0  # Non-blocking: output audio and let user know
+        print("Output files in work/audio/ are still valid for manual assembly.")
+        return 0  # Non-blocking: audio is still usable, but no video
 
     print(f"Rendering with hyperframes ({args.quality})...")
     out_dir = args.project_dir / "outputs"

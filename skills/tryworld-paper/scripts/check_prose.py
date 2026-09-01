@@ -412,6 +412,8 @@ def main() -> int:
             wl_text = Path(args.whitelist).read_text(encoding="utf-8")
             wl_patterns = [line.strip() for line in wl_text.splitlines() if line.strip() and not line.startswith("#")]
             for pattern in wl_patterns:
+                if pattern in (".*", ".+", ".*?", ".+?"):
+                    print("WARNING: whitelist pattern is too broad, this will clear the entire text.", file=sys.stderr)
                 try:
                     text = _re.sub(pattern, "", text)
                 except _re.error as e:

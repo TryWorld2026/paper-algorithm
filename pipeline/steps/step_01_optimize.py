@@ -20,7 +20,13 @@ def main() -> int:
     content_theme = args.theme_content if args.theme_content else DEFAULT_THEME
     theme = {}
     if content_theme.exists():
-        theme = json.loads(content_theme.read_text(encoding="utf-8"))
+        try:
+            theme = json.loads(content_theme.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeError) as e:
+            print(f"ERROR: cannot parse content theme JSON: {content_theme}")
+            print(f"  Detail: {e}")
+            print("  Please check the JSON syntax and fix, then re-run.")
+            return 1
         domain = theme.get("domain", "AI")
         audience = theme.get("audience", "")
         min_chars, max_chars = theme.get("standard_length_chars", [2500, 2800])
