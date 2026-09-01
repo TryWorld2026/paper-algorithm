@@ -335,6 +335,11 @@ Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\s
 | 这周做什么口播 | 经 koubo → tryworld-topics | 3–8 个选题（角度 · 来源 · 优先级） |
 | 把这篇稿子做成视频 | 经 koubo → tryworld-paper | 16:9 成片 · 横竖封面 · 标题 · 字幕 |
 
+### 仓库内检查脚本
+
+- `python -X utf8 scripts/check_skills.py`：编译技能 Python 脚本，并对 `examples/` 的口播稿与标题跑活人感门禁。
+- `powershell -ExecutionPolicy Bypass -File scripts/doctor.ps1`：检查 Python、Node、FFmpeg/ffprobe、edge-tts、HyperFrames 与可选邮件凭证。缺失必需项时退出码为 1。
+
 ### 环境要求
 
 运行 `npx hyperframes doctor` 可一键检查环境。这些技能按试界自己的工作流定制，默认假设如下——全部都可以在技能文件里自行调整：
@@ -360,6 +365,7 @@ paper-algorithm/
 │   └── license-badge.svg        # 许可徽章
 ├── README.md                    # 索引（English）
 ├── README.zh-CN.md              # 索引（简体中文）
+├── scripts/                      # 仓库内检查脚本（静态门禁 + 环境自检）
 ├── LICENSE                      # CC BY-SA 4.0
 ├── examples/                    # 真实流水线产出（效果展示）
 │   ├── cordis-paper/            # 示例：720p 预览 · 封面 · 标题 · 口播稿

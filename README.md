@@ -335,6 +335,11 @@ A skill fires when the request matches its trigger words — no commands to memo
 | 这周做什么口播 | via koubo → tryworld-topics | 3–8 topic picks (angle · source · priority) |
 | 把这篇稿子做成视频 | via koubo → tryworld-paper | 16:9 video · covers · titles · captions |
 
+### In-repo check scripts
+
+- `python -X utf8 scripts/check_skills.py`: compiles skill Python scripts and runs the aliveness gate over `examples/` scripts and titles.
+- `powershell -ExecutionPolicy Bypass -File scripts/doctor.ps1`: checks Python, Node, FFmpeg/ffprobe, edge-tts, HyperFrames, and optional email credentials. Exits 1 when a required item is missing.
+
 ### Environment
 
 Run `npx hyperframes doctor` to check the environment at once. These skills are built for TryWorld's own production workflow, so a few things are assumed — all adjustable in the skill files:
@@ -360,6 +365,7 @@ paper-algorithm/
 │   └── license-badge.svg        # License badge
 ├── README.md                    # Index (English)
 ├── README.zh-CN.md              # Index (简体中文)
+├── scripts/                      # In-repo checks (static gates + doctor)
 ├── LICENSE                      # CC BY-SA 4.0
 ├── examples/                    # Real pipeline outputs (showcase)
 │   ├── cordis-paper/            # Sample: 720p preview · covers · titles · script

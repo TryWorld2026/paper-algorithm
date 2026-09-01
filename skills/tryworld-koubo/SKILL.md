@@ -90,3 +90,7 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 - `references/workflow.md`：两种模式详细步骤、去重扫描命令、写稿细节、异常处理
 - `scripts/notify_delivery.ps1`：成片交付邮件通知（调用 `$qq-email` 发信）
 - `../tryworld-paper/scripts/check_prose.py`：活人感硬禁项检查脚本（TryWorld 改造版，源自 KKKKhazix/human-writing v1.1.0，MIT；禁令上移到修辞动作级）
+
+### 品牌适配边界
+
+- 本入口当前默认试界品牌与发布计划。`tryworld-paper` 支持通过主题文件替换出片品牌值；但写稿方法论、topics 选题定位、发布计划模板与 AIHOT 依赖仍是试界视角。换品牌时需同步调整本技能、`tryworld-topics` 的选题规则，或改用自定义素材。

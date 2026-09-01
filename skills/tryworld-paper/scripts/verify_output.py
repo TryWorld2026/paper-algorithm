@@ -65,7 +65,8 @@ def main() -> int:
             check(dur_f > 1, "主视频时长 > 1s", f"{dur_f:.1f}s")
 
     # 2. 字幕时间轴与主视频时长一致（±1s）
-    tl = out / "字幕时间轴_sentences.json"
+    tl_candidates = [out / "字幕时间轴_sentences.json", out / "sentences.json"]
+    tl = next((f for f in tl_candidates if f.exists()), tl_candidates[0])
     if tl.exists() and video:
         try:
             total = json.loads(tl.read_text(encoding="utf-8")).get("totalDuration", 0)
@@ -76,9 +77,14 @@ def main() -> int:
     else:
         check(tl.exists(), "字幕时间轴_sentences.json 存在")
 
-    # 3. 双封面存在且尺寸正确
-    for name, size in [("封面_横版4x3.png", (1920, 1440)), ("封面_竖版3x4.png", (1080, 1440))]:
-        f = out / name
+    # 3. 双封面存在且尺寸正确（兼容文档约定 cover_* 与中文交付命名）
+    cover_specs = [
+        (("封面_横版4x3.png", "cover_4x3.png"), (1920, 1440), "横版封面"),
+        (("封面_竖版3x4.png", "cover_3x4.png"), (1080, 1440), "竖版封面"),
+    ]
+    for names, size, label in cover_specs:
+        f = next((out / name for name in names if (out / name).exists()), out / names[0])
+        name = f.name
         if not f.exists():
             check(False, f"{name} 存在")
             continue

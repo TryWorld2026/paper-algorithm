@@ -211,8 +211,8 @@ ffmpeg -y -i covers/v.mp4 -frames:v 1 outputs/cover_3x4.png
 - `tryworld_<slug>.mp4`（主视频）
 - `cover_4x3.png`、`cover_3x4.png`
 - `titles.txt`（含平台推荐）
+- `发布计划.txt`（四平台推荐发布时间与发布状态记录）
 - `narration.mp3` + `sentences.json`（配音与字幕时间轴，便于二次编辑）
-- `plan.json`（场景规划，便于复用章节结构）
 
 **交付核验（硬性，不通过不交付）**——整理完 `outputs/` 后必须运行：
 
