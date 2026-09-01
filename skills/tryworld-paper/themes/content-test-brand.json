@@ -1,0 +1,13 @@
+{
+  "domain": "效率工具",
+  "audience": "经常用电脑工作但效率不高的职场人",
+  "topic_sources": ["manual"],
+  "topic_rules": "关注工具的隐藏用法和效率提升技巧，选题须能回答「用了能省多少时间」",
+  "tone": "实用、具体、不绕弯子",
+  "standard_length_chars": [1800, 2200],
+  "short_length_seconds": [30, 45],
+  "sign_off_key": "brand.sign_off",
+  "platforms": ["B站", "抖音"],
+  "topic_dedup_dir": "E:\\TestVideos",
+  "writing_rules": "tryworld"
+}

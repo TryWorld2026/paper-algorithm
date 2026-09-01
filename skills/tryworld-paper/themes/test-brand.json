@@ -1,0 +1,49 @@
+{
+  "theme": "test-brand",
+  "name": "Test Brand",
+  "description": "Test theme for brand parameterization validation.",
+  "brand": {
+    "platform_name": "TestChannel",
+    "seal_text": "测试原创",
+    "sign_off": "我是TestChannel，每周拆解一个工具的隐藏用法。如果你也有效率困惑，点个赞，关注我不迷路，下期见。",
+    "cover_brand_line": "TestChannel · 效率工具"
+  },
+  "palette": {
+    "background": "#FAFAFA",
+    "text": "#222222",
+    "accent": "#0066CC",
+    "secondary": "#888888",
+    "cover_background": "#111111",
+    "cover_card": "#222222"
+  },
+  "fonts": {
+    "heading": "Noto Serif SC（思源宋体，900/700 字重）",
+    "notes": "ZCOOL XiaoWei（小薇宋体）",
+    "data": "JetBrains Mono / 等宽字体"
+  },
+  "assets": {
+    "seal": "assets/seal.svg",
+    "grain": "assets/paper-grain.svg"
+  },
+  "voice": {
+    "engine": "edge-tts",
+    "preset": "xiaoxiao"
+  },
+  "motion_signatures": [
+    "ink_drop 墨落纸（主入场）",
+    "brush_write 笔写入（小元素/批注）",
+    "seal_stamp 盖章（数字/结论/印章）"
+  ],
+  "transition": "ink_bleed 墨染过渡",
+  "cover": {
+    "style": "dark_poster 深墨海报（与视频浅纸面两套语言）",
+    "background": "#111111"
+  },
+  "publish_plan": {
+    "title": "TestChannel · 平台发布计划",
+    "platforms": [
+      { "name": "B站", "time": "晚上 20:00" },
+      { "name": "抖音", "time": "晚上 18:00" }
+    ]
+  }
+}

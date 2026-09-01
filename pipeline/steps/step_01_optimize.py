@@ -6,26 +6,31 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-THEME_PATH = REPO / "skills" / "tryworld-paper" / "themes" / "content-default.json"
+DEFAULT_THEME = REPO / "skills" / "tryworld-paper" / "themes" / "content-default.json"
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Step 01: Optimize script")
     parser.add_argument("--project-dir", type=Path, default=Path.cwd())
     parser.add_argument("--script", type=Path, required=True, help="Path to input script (.md/.txt)")
+    parser.add_argument("--theme-content", type=Path, default=None, help="Path to content theme JSON (default: themes/content-default.json)")
     args = parser.parse_args()
 
     # Load content theme
+    content_theme = args.theme_content if args.theme_content else DEFAULT_THEME
     theme = {}
-    if THEME_PATH.exists():
-        theme = json.loads(THEME_PATH.read_text(encoding="utf-8"))
+    if content_theme.exists():
+        theme = json.loads(content_theme.read_text(encoding="utf-8"))
         domain = theme.get("domain", "AI")
         audience = theme.get("audience", "")
         min_chars, max_chars = theme.get("standard_length_chars", [2500, 2800])
-        print(f"Content theme: domain={domain}, audience={audience}")
+        print(f"Content theme: {content_theme.name}")
+        print(f"Domain: {domain}")
+        print(f"Audience: {audience}")
         print(f"Target length: {min_chars}-{max_chars} chars")
+        print(f"Tone: {theme.get('tone', 'default')}")
     else:
-        print("WARNING: content-default.json not found, using defaults")
+        print(f"WARNING: content theme not found: {content_theme}, using defaults")
 
     # Read script
     if not args.script.exists():
