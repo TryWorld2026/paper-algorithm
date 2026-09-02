@@ -166,10 +166,10 @@ npx hyperframes inspect --strict --samples 15
 1. **脚本净化**：全稿无写作标记残留（"一、开场钩子"、括号指令、写作提示等均不朗读、不上字幕、不显示为画面文字）。
 2. **配音**：按 `--voice` 指定的音色（默认取主题 voice 字段，当前为真云希 Azure YunxiNeural）、语速默认 +8%、句级切分、无句中停顿/卡顿；`sentences.json` 时间轴与口播对得上；结尾为主题签名句（默认主题为试界TryWorld 标准收尾，见主题文件 sign_off）。
 3. **字幕**：全片烧录在画面内、无字幕空段；样式为墨黑字 + 当前句关键词朱红，与配音句级同步；与画面动画文字无重复（同一信息同屏只呈现一次）。
-4. **风格与动效**：4 色板无越界色、字体合规（无被禁字体）、三种签名动效；动效丰富度达标（无连续 3 秒静止、每场有 ambient、≥3 层视觉、≥2 焦点）；安全护栏通过（无字幕/印章区入侵、同屏并发 ≤3、无诡异运动、无重叠）；场景间有墨染转场、无硬切。
+4. **风格与动效**：4 色板无越界色、字体合规（无被禁字体）、三种签名动效；动效丰富度达标（无连续 3 秒静止、每场有 ambient、≥3 层视觉、≥2 焦点）；安全护栏通过（无字幕/印章区入侵、同屏并发 ≤3、无诡异运动、无重叠）；场景间有墨染转场、无硬切。**所有场景与数据动画的 `data-start` 必须从 `sentences.json` 句级 `start` 反推，禁止手动估时。**
 5. **防伪**：右上角朱红"试界原创"印章全程常驻显示（抽查首/中/尾帧确认）；与字幕/内容/动画保持安全距离，无重叠、不贴近；封面同样适用；视频与封面无"试界TryWorld 纸上算法"文字水印。
 6. **图片与图表**：所有外部图片已纸面化处理，无原图直出；图表已重绘为本风格动态图表（GSAP/SVG、无原图截图、数字有视觉载体）。
-7. **封面**：独立深墨海报构图、横 4:3 / 竖 3:4、素材与视频完全独立、不截取视频画面。
+7. **封面**：独立深墨海报构图、横 4:3 / 竖 3:4、素材与视频完全独立、不截取视频画面；封面 HTML 无 `gsap.from`（元素 CSS 默认 opacity 1，截帧 t=0 即完整画面）。
 8. **工程**：`lint` / `validate` / `inspect --strict` 全部通过（错误与警告清零，无排版错误/元素重叠/文字溢出）；封面构图同样核验；视频时长与口播 + 头尾留白对齐。
 
 渲染策略：先 `--quality draft` 预览确认整体效果，再 `--quality high` 出片；draft 阶段发现问题直接修改，避免 high 渲染返工。
@@ -189,7 +189,7 @@ npx hyperframes render --fps 30 --quality high --output outputs/tryworld_<slug>.
 - `covers/horizontal.html`：1920x1440（4:3）
 - `covers/vertical.html`：1080x1440（3:4）
 
-构图规则见 style-system.md 封面系统，标题与信息块为封面单独设计，不复用视频画面；印章（右上角）为保护区，主标题与信息卡片不得与其重叠或贴近。封面 HTML 必须为独立构图（standalone composition，不可用 </template> 包裹）。**硬性**：封面禁用 `gsap.from` 动画（from 初始态为透明，截帧可能得到全黑画面）——封面元素用 CSS 默认可见（opacity 1），如需入场预备态用 `gsap.set`；截帧在 t=0 即得完整画面。渲染时用 `--composition` 指定封面文件（否则默认渲染主视频 index.html）。渲染后取帧为 PNG：
+构图规则见 style-system.md 封面系统，标题与信息块为封面单独设计，不复用视频画面；印章（右上角）为保护区，主标题与信息卡片不得与其重叠或贴近。封面 HTML 必须为独立构图（standalone composition，不可用 <template> 包裹）。**硬性**：封面禁用 `gsap.from` 动画（from 初始态为透明，截帧可能得到全黑画面）——封面元素用 CSS 默认可见（opacity 1），如需入场预备态用 `gsap.set`；截帧在 t=0 即得完整画面。渲染时用 `--composition` 指定封面文件（否则默认渲染主视频 index.html）。渲染后取帧为 PNG：
 
 ```powershell
 npx hyperframes render --composition covers/horizontal.html --output covers/h.mp4
