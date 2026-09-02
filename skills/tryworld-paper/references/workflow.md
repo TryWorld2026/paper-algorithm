@@ -189,7 +189,7 @@ npx hyperframes render --fps 30 --quality high --output outputs/tryworld_<slug>.
 - `covers/horizontal.html`：1920x1440（4:3）
 - `covers/vertical.html`：1080x1440（3:4）
 
-构图规则见 style-system.md 封面系统，标题与信息块为封面单独设计，不复用视频画面；印章（右上角）为保护区，主标题与信息卡片不得与其重叠或贴近。封面 HTML 必须为独立构图（standalone composition，不可用 <template> 包裹）。**硬性**：封面禁用 `gsap.from` 动画（from 初始态为透明，截帧可能得到全黑画面）——封面元素用 CSS 默认可见（opacity 1），如需入场预备态用 `gsap.set`；截帧在 t=0 即得完整画面。渲染时用 `--composition` 指定封面文件（否则默认渲染主视频 index.html）。渲染后取帧为 PNG：
+构图规则见 style-system.md 封面系统，标题与信息块为封面单独设计，不复用视频画面；印章（右上角）为保护区，主标题与信息卡片不得与其重叠或贴近。封面 HTML 必须为独立构图（standalone composition，不可用 `<template>` 包裹）。推荐直接复制 `templates/cover-horizontal.html` 模板改占位符（`{{TITLE}}` / `{{SUBTITLE}}` / `{{CARDS}}` / `{{BRAND_LINE}}` / `{{DATE_LINE}}` / `{{SEAL_SVG_PATH}}`），模板已符合下方硬性规则。**硬性**：封面禁用 `gsap.from` 动画（from 初始态为透明，截帧可能得到全黑画面）——封面元素用 CSS 默认可见（opacity 1），如需入场预备态用 `gsap.set`；截帧在 t=0 即得完整画面。渲染时用 `--composition` 指定封面文件（否则默认渲染主视频 index.html）。渲染后取帧为 PNG：
 
 ```powershell
 npx hyperframes render --composition covers/horizontal.html --output covers/h.mp4

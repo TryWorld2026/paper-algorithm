@@ -13,7 +13,7 @@ description: 基于 aihot.virxact.com 最新 AI 资讯，为 AI 口播频道（�
 
 ## 流程
 
-1. **拉数据**：运行 `scripts/fetch_aihot.ps1`（Windows PowerShell；拉最近 7 天精选 + 最新日报，落盘到 `work/aihot/`）。非 Windows 环境按 `references/api.md` 的端点用 curl 拉取（**必须带浏览器 UA**，否则 403）。
+1. **拉数据**：运行 `scripts/fetch_aihot.ps1`（Windows PowerShell；拉最近 7 天精选 + 最新日报，落盘到 `work/aihot/`；`-BaseUrl` 可指定其他 AIHOT 兼容端点，默认官方地址）。非 Windows 环境按 `references/api.md` 的端点用 curl 拉取（**必须带浏览器 UA**，否则 403）。
 2. **读规则**：打开 `references/selection-rules.md`，按频道定位与筛选清单处理数据。
 3. **筛选题**：从拉到的条目中选出 3-8 个候选，每条标注：选题名、为什么选（命中哪个增长原理）、核心素材与原文链接、切入角度、优先级。
 4. **输出**：用 `references/selection-rules.md` 的模板输出选题清单（markdown，人话，不暴露接口细节）。用户选中某个选题后，可继续给口播稿骨架或直接转入 `$tryworld-paper` 流程。

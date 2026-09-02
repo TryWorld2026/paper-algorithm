@@ -2,7 +2,7 @@
 
 ## 路径约定（本机环境）
 
-- 工作区根目录：`E:\Codex口播视频`（下文以 `<WORKSPACE>` 代指；项目按 `<slug>` 建独立子文件夹）
+- 工作区根目录：由内容主题 JSON 的 `content.topic_dedup_dir` 定义（默认 `E:\Codex口播视频`；下文以 `<WORKSPACE>` 代指；项目按 `<slug>` 建独立子文件夹）
 - 技能根目录：`$env:USERPROFILE\.agents\skills\tryworld-koubo`（下文以 `<SKILL_DIR>` 代指）
 - 兄弟技能：`<SKILL_DIR>` 同级目录下的 `tryworld-paper`、`tryworld-topics`、`qq-email`
 - 换机器或更换安装位置时：先替换本小节变量，再执行正文命令；正文中的绝对路径均为本机实际值，对应上述变量
@@ -39,10 +39,10 @@
 
 ### B2 去重判定（以工作区实际成片为准）
 
-扫描 `E:\Codex口播视频` 一级子文件夹，并**递归**查找其中的 outputs 目录（项目可能嵌套，如 deepseek-v4-flash）：
+扫描 `<WORKSPACE>`（见上方路径约定）一级子文件夹，并**递归**查找其中的 outputs 目录（项目可能嵌套，如 deepseek-v4-flash）：
 
 ```powershell
-Get-ChildItem -LiteralPath "E:\Codex口播视频" -Directory | ForEach-Object {
+Get-ChildItem -LiteralPath "<WORKSPACE>" -Directory | ForEach-Object {
   $proj = $_.FullName
   $outs = Get-ChildItem -LiteralPath $proj -Recurse -Directory -Filter "outputs" -ErrorAction SilentlyContinue
   $done = $false

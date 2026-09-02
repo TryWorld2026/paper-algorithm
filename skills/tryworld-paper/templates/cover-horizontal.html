@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1440" />
+    <!--
+      Cover HTML template. Hard rule (workflow.md): NO gsap.from (initial opacity 0
+      can yield a black frame on capture). All elements CSS-visible (opacity 1);
+      no JS needed for a complete t=0 frame. Copy to <project>/covers/horizontal.html,
+      replace {{TITLE}} / {{SUBTITLE}} / {{CARDS}} / {{BRAND_LINE}} / {{DATE_LINE}} / {{SEAL_SVG_PATH}}.
+    -->
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { margin: 0; width: 1920px; height: 1440px; overflow: hidden; background: #12100D; }
+body { font-family: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif; }
+#root { position: relative; width: 1920px; height: 1440px; overflow: hidden; background: #12100D; }
+.grain { position: absolute; inset: 0; background-image: url("../assets/paper-grain.svg"); background-size: 640px 640px; opacity: 0.15; mix-blend-mode: overlay; pointer-events: none; }
+.glow { position: absolute; top: 220px; left: 0; width: 1200px; height: 800px; background: radial-gradient(ellipse at 30% 40%, rgba(192, 69, 47, 0.10), transparent 70%); pointer-events: none; }
+.brand-line { position: absolute; top: 56px; left: 80px; font-family: "ZCOOL XiaoWei", "KaiTi", serif; font-size: 28px; color: #F4EFE4; opacity: 0.7; letter-spacing: 0.06em; }
+.brand-line .dot { color: #C0452F; }
+.seal { position: absolute; top: 48px; right: 64px; width: 110px; height: 110px; z-index: 50; }
+.hero-title { position: absolute; left: 80px; top: 320px; width: 1080px; font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 108px; line-height: 1.12; color: #F4EFE4; letter-spacing: -0.04em; }
+.hero-title .red { color: #C0452F; }
+.hero-sub { position: absolute; left: 80px; top: 780px; width: 900px; font-family: "ZCOOL XiaoWei", "KaiTi", serif; font-size: 38px; color: #2E5E8C; letter-spacing: 0.04em; line-height: 1.5; }
+.info-cards { position: absolute; right: 80px; top: 320px; width: 640px; display: flex; flex-direction: column; gap: 28px; }
+.card { background: #221F1B; border: 2px solid rgba(244, 239, 228, 0.18); border-radius: 14px; padding: 32px 36px; }
+.card .num { font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; font-size: 56px; font-weight: 700; color: #C0452F; line-height: 1.1; }
+.card .label { font-family: "ZCOOL XiaoWei", "KaiTi", serif; font-size: 26px; color: rgba(244, 239, 228, 0.65); margin-top: 8px; }
+.foot { position: absolute; bottom: 48px; left: 80px; font-family: "JetBrains Mono", monospace; font-size: 20px; color: rgba(46, 94, 140, 0.7); }
+    </style>
+  </head>
+  <body>
+  <div id="root" data-composition-id="cover-h" data-start="0" data-duration="1" data-width="1920" data-height="1440">
+    <div class="grain" data-layout-ignore></div>
+    <div class="glow" data-layout-ignore></div>
+    <div class="brand-line">{{BRAND_LINE}} <span class="dot">·</span> 纸上算法</div>
+    <img class="seal" src="{{SEAL_SVG_PATH}}" alt="seal" />
+    <h1 class="hero-title">{{TITLE}}</h1>
+    <p class="hero-sub">{{SUBTITLE}}</p>
+    <div class="info-cards">
+{{CARDS}}
+    </div>
+    <div class="foot">{{DATE_LINE}}</div>
+  </div>
+  </body>
+</html>

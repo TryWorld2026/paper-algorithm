@@ -24,6 +24,37 @@ def ffprobe(path: Path, args: list[str]) -> str:
     return r.stdout.strip() if r.returncode == 0 else ""
 
 
+
+def _cover_brightness(path: Path) -> float | None:
+    """Read first frame of image and return mean brightness 0-255. None if tools unavailable."""
+    try:
+        from PIL import Image
+        import statistics
+        img = Image.open(path).convert("L").resize((64, 64))
+        return round(statistics.mean(img.getdata()), 1)
+    except ImportError:
+        pass
+    except Exception:
+        pass
+    import shutil, tempfile
+    ffmpeg = shutil.which("ffmpeg")
+    if not ffmpeg:
+        return None
+    try:
+        with tempfile.NamedTemporaryFile(suffix=".gray", delete=False) as tmp:
+            tmp_path = tmp.name
+        subprocess.run([ffmpeg, "-y", "-i", str(path), "-vframes", "1",
+                        "-f", "rawvideo", "-pix_fmt", "gray", tmp_path],
+                       capture_output=True, check=True)
+        data = Path(tmp_path).read_bytes()
+        Path(tmp_path).unlink(missing_ok=True)
+        if not data:
+            return None
+        sample = data[::16]
+        return round(sum(sample) / len(sample), 1)
+    except (subprocess.SubprocessError, OSError):
+        return None
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="交付核验硬门禁")
     ap.add_argument("--dir", type=Path, default=Path("outputs"), help="outputs 目录")
@@ -92,6 +123,11 @@ def main() -> int:
         nums = [int(x) for x in dim.split() if x.strip().isdigit()]
         ok = len(nums) >= 2 and (nums[0], nums[1]) == size
         check(ok, f"{name} 尺寸 {size[0]}x{size[1]}", "x".join(str(n) for n in nums[:2]))
+        # 黑帧检测：封面第一帧不应全黑（gsap.from 竞态的兜底防线）
+        brightness = _cover_brightness(f)
+        if brightness is not None:
+            check(brightness > 8.0, f"{name} 非全黑（均值亮度 {brightness:.1f}）",
+                  "封面可能被截到透明帧（gsap.from 竞态）；重新渲染封面" if brightness <= 8.0 else "")
 
     # 4. 标题与发布计划
     titles = out / "titles.txt"

@@ -3,11 +3,12 @@
 param(
   [int]$Days = 7,
   [int]$Take = 100,
-  [string]$OutDir = "work/aihot"
+  [string]$OutDir = "work/aihot",
+  [string]$BaseUrl = "https://aihot.virxact.com"
 )
 $ErrorActionPreference = "Stop"
 $UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-$base = "https://aihot.virxact.com"
+$base = $BaseUrl
 
 function Get-U8($url) {
   for ($try = 1; $try -le 3; $try++) {
