@@ -55,3 +55,15 @@ class TestPureFunctions:
         assert callable(m.normalize_paragraph)
         assert callable(m.split_sentences)
         assert callable(m.build_segments)
+
+class TestCli:
+    def test_tts_help(self):
+        import subprocess
+        import sys
+        r = subprocess.run(
+            [sys.executable, "-X", "utf8", str(TTS), "--help"],
+            capture_output=True, text=True,
+            encoding="utf-8", errors="replace",
+        )
+        assert r.returncode == 0
+        assert "Chinese narration pipeline" in r.stdout

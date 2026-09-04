@@ -238,8 +238,8 @@ def main() -> int:
         "--theme", type=Path, default=None,
         help="theme JSON file; its voice.preset is used when --voice is omitted",
     )
-    parser.add_argument("--rate", default="+8%", help="speech rate, e.g. +5% / +8% / +15%")
-    parser.add_argument("--volume", default="+0%", help="volume, e.g. +0%")
+    parser.add_argument("--rate", default="+8%", help="speech rate, e.g. +5%% / +8%% / +15%%")
+    parser.add_argument("--volume", default="+0%", help="volume, e.g. +0%%")
     parser.add_argument("--pitch", default="+0Hz", help="pitch, e.g. +0Hz")
     parser.add_argument("--max-chars", type=int, default=700, help="max chars per segment")
     args = parser.parse_args()

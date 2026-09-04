@@ -59,6 +59,7 @@ class TestEdgeCases:
         r = subprocess.run(
             [sys.executable, "-X", "utf8", str(CHECKER), "--help"],
             capture_output=True, text=True,
+            encoding="utf-8", errors="replace",
         )
         assert r.returncode == 0
         assert r.returncode == 0

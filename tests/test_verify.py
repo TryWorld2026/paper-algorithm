@@ -63,6 +63,7 @@ class TestVerifierHelp:
         r = subprocess.run(
             [sys.executable, "-X", "utf8", str(VERIFY), "--help"],
             capture_output=True, text=True,
+            encoding="utf-8", errors="replace",
         )
         assert r.returncode == 0
         assert r.returncode == 0
