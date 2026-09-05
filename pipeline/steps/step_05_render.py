@@ -6,6 +6,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+try:
+    from pipeline.state import marker_matches_draft
+except ModuleNotFoundError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from pipeline.state import marker_matches_draft
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Step 05: Render")
@@ -16,6 +22,9 @@ def main() -> int:
     confirmed = args.project_dir / "work" / ".confirmed"
     if not confirmed.exists():
         print("FAIL: draft not confirmed.")
+        return 1
+    if not marker_matches_draft(confirmed, args.project_dir / "work" / "draft.md"):
+        print("FAIL: confirmation is stale for the current draft. Re-run step_03_confirm.py --confirm.")
         return 1
 
     audio_dir = args.project_dir / "work" / "audio"
@@ -42,7 +51,7 @@ def main() -> int:
         print("WARNING: hyperframes CLI not available or timed out.")
         print("Fallback: audio + captions only (no video rendering).")
         print("Output files in work/audio/ are still valid for manual assembly.")
-        return 0  # Non-blocking: audio is still usable, but no video
+        return 1
 
     print(f"Rendering with hyperframes ({args.quality})...")
     out_dir = args.project_dir / "outputs"

@@ -12,6 +12,15 @@ import sys
 from pathlib import Path
 
 
+def is_within_directory(path: Path, directory: Path) -> bool:
+    """Return whether path resolves inside directory, including the directory itself."""
+    try:
+        path.resolve().relative_to(directory.resolve())
+        return True
+    except ValueError:
+        return False
+
+
 def ffprobe(path: Path, args: list[str]) -> str:
     try:
         r = subprocess.run(
@@ -80,7 +89,9 @@ def main() -> int:
         else:
             check(False, "主视频 *.mp4 存在")
     else:
-        if not video.exists():
+        if not is_within_directory(video, out):
+            check(False, "主视频位于 outputs 目录内", str(video))
+        elif not video.is_file():
             check(False, "主视频存在（--video 指定的文件不存在）", str(video))
         else:
             streams = ffprobe(video, ["-show_entries", "stream=codec_type"])

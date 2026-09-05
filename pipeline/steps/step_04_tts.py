@@ -5,6 +5,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+try:
+    from pipeline.state import marker_matches_draft
+except ModuleNotFoundError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from pipeline.state import marker_matches_draft
+
 REPO = Path(__file__).resolve().parents[2]
 TTS = REPO / "skills" / "tryworld-paper" / "scripts" / "tts_yunxi.py"
 DEFAULT_THEME = REPO / "skills" / "tryworld-paper" / "themes" / "paper-algorithm.json"
@@ -22,6 +28,9 @@ def main() -> int:
         return 1
 
     draft = args.project_dir / "work" / "draft.md"
+    if not marker_matches_draft(confirmed, draft):
+        print("FAIL: confirmation is stale for the current draft. Re-run step_03_confirm.py --confirm.")
+        return 1
     out_dir = args.project_dir / "work" / "audio"
 
     cmd = [sys.executable, "-X", "utf8", str(TTS), str(draft), "--out", str(out_dir)]

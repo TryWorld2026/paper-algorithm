@@ -7,6 +7,12 @@ import argparse
 import sys
 from pathlib import Path
 
+try:
+    from pipeline.state import marker_matches_draft, write_marker
+except ModuleNotFoundError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from pipeline.state import marker_matches_draft, write_marker
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Step 03: User confirmation gate")
@@ -23,6 +29,9 @@ def main() -> int:
     if not prose_pass.exists():
         print("FAIL: prose gate has not passed. Run step_02 first.")
         return 1
+    if not marker_matches_draft(prose_pass, draft):
+        print("FAIL: prose gate is stale for the current draft. Run step_02 first.")
+        return 1
 
     if not args.confirm:
         print("=" * 60)
@@ -34,7 +43,7 @@ def main() -> int:
         return 1
 
     confirmed = args.project_dir / "work" / ".confirmed"
-    confirmed.write_text("confirmed", encoding="utf-8")
+    write_marker(confirmed, draft)
     print("Draft confirmed. Proceeding to next steps.")
     return 0
 

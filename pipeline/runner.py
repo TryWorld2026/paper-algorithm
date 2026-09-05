@@ -8,7 +8,6 @@ Each step is a Python script in pipeline/steps/ named step_NN_<name>.py.
 Steps check their own preconditions and fail fast if prerequisites are missing.
 """
 import argparse
-import importlib
 import subprocess
 import sys
 from pathlib import Path
@@ -56,8 +55,13 @@ def main() -> int:
 
     selected = steps
     if args.steps:
-        wanted = {int(x.strip()) for x in args.steps.split(",") if x.strip().isdigit()}
+        tokens = [x.strip() for x in args.steps.split(",")]
+        if any(not token.isdigit() for token in tokens):
+            parser.error("--steps must contain comma-separated step numbers")
+        wanted = {int(x) for x in tokens if x}
         selected = [(n, name, p) for n, name, p in steps if n in wanted]
+        if not selected:
+            parser.error("--steps does not select any available step")
 
     if args.dry_run:
         print("Steps to run:")

@@ -5,6 +5,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+try:
+    from pipeline.state import write_marker
+except ModuleNotFoundError:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from pipeline.state import write_marker
+
 REPO = Path(__file__).resolve().parents[2]
 CHECK_PROSE = REPO / "skills" / "tryworld-paper" / "scripts" / "check_prose.py"
 
@@ -35,7 +41,7 @@ def main() -> int:
     print("\nPROSE GATE: PASS.")
     # Write marker for step_03
     marker = args.project_dir / "work" / ".prose_pass"
-    marker.write_text("pass", encoding="utf-8")
+    write_marker(marker, draft)
     return 0
 
 

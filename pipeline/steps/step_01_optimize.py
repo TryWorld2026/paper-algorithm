@@ -52,6 +52,9 @@ def main() -> int:
     work_dir.mkdir(parents=True, exist_ok=True)
     draft = work_dir / "draft.md"
     draft.write_text(text, encoding="utf-8")
+    # Any new draft invalidates all approvals and prose checks from the old draft.
+    for marker_name in (".prose_pass", ".confirmed"):
+        (work_dir / marker_name).unlink(missing_ok=True)
     print(f"Draft written to: {draft}")
 
     print("\nACTION REQUIRED: Review draft.md and confirm before proceeding to step 02.")
