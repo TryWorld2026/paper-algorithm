@@ -23,6 +23,7 @@ _本分支（`refactor/runner-fixes-docs-consolidation`）的改动记录见下�
 ### Fixed
 
 - `README.md` / `README.zh-CN.md`：测试数量不再硬编码，改为引导用 `pytest --collect-only` 读取实际数量
+- `verify_output.py`：ffprobe/ffmpeg 发现逻辑与 `tts_yunxi.py` 的 `find_bin` 对齐（PATH 优先 → `HYPERFRAMES_FFMPEG_DIR` / `FFMPEG_BIN` → WinGet 目录），PATH 未配置时不再直接判定“工具不可用”而退出
 
 ## [1.0.0] - 2026-09-05
 
