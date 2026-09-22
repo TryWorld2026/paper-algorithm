@@ -317,14 +317,14 @@ python tryworld-paper/scripts/tts_yunxi.py script.txt --out work/audio --voice x
 
 成片之前，每一版口播稿与平台标题都要过一道机器门禁——**禁的是修辞动作，不是字面**。换一套字做同一个动作，仍然算命中。
 
-- **翻案腔**：先立读者没有的误解再推翻抬价。已知外衣不限于「不是……而是……」「并非……而是……」「不在于……而在于……」「表面……实际……」「看似……实则……」「你以为……其实……」「回头才发现」「说到底」「答案恰恰相反」，判断从正面下，先给判断再给依据。
-- **同构排比**：三项以上整齐排比，两项为限。
-- **抒情借喻**：不给抽象名词配具体动词（「时间保管细节」类），写具体事物不受影响。
-- **动词名词化**：「实现了效率的提升」还原成「快了多少、省了几个人」。
-- **标点分级**：破折号全禁；冒号只允许引出人物直接原话。
-- **黑话两档**：绝对禁词 + 语境判断词，清单由检测器维护。
+禁项（翻案腔、同构排比、抒情借喻、动词名词化、标点分级、硬停词、模型路标、黑话两档）只在两处定义，避免多份拷贝互相漂移：
 
-检测器 `tryworld-paper/scripts/check_prose.py`（源自 [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0，MIT）自动执行以上检查，并额外给出统计层提示——句长变异系数、连词密度、模型偏爱抒情词、「」金句密度。**硬禁项清零才允许进入用户确认闸门，失败不交付。**
+| 来源 | 内容 |
+|---|---|
+| `skills/tryworld-paper/references/workflow.md` §1.2.1 第 5 条 | 改稿规则与动作级定义 |
+| `skills/tryworld-paper/scripts/check_prose.py` | 执行检测的脚本——绝对禁词 + 语境判断词，并给出统计层提示（句长变异系数、连词密度、模型偏爱抒情词、「」金句密度） |
+
+措辞不一致时以 `check_prose.py`（源自 [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0，MIT）为准。**硬禁项清零才允许进入用户确认闸门，失败不交付。**
 
 ---
 
@@ -363,7 +363,7 @@ Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\s
 ### 仓库内检查脚本
 
 - `python -X utf8 scripts/check_skills.py`：编译技能 Python 脚本，并对 `examples/` 的口播稿与标题跑活人感门禁
-- `python -m pytest tests/ -v`：运行 23 个单元测试（check_prose、verify_output、tts_yunxi、check_skills）。
+- `python -m pytest tests/ -v`：运行单元测试（check_prose、verify_output、tts_yunxi、check_skills、fetch_aihot、pipeline runner），覆盖 `examples/` 下的脚本与标题。测试数量会随新增用例变化，请用 `python -m pytest tests/ --collect-only -q` 读取实际数量，本文档不再硬编码数字。
 - `python scripts/doctor.py`：检查 Python、Node、FFmpeg/ffprobe、edge-tts、HyperFrames 与可选邮件凭证。缺失必需项时退出码为 1。
 
 ### 环境要求

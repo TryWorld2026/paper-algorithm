@@ -317,14 +317,14 @@ Full edge-tts voice ids are accepted too. By default the pipeline never asks abo
 
 Before delivery, every polished script and platform title passes a machine gate — **the ban targets rhetorical moves, not literal strings**. Repeating the same move with different words still counts.
 
-- **Flip-flop rhetoric**: sets up a misunderstanding the reader never had, then overturns it for dramatic lift. Known guises include 不是……而是……, 并非……而是……, 表面……实际……, 看似……实则……, 你以为……其实……, 回头才发现, 说到底, 答案恰恰相反 — state judgments directly, judgment first, evidence after.
-- **Triple+ parallel structure**: three or more identical constructions; keep at most two.
-- **Lyric metaphor**: no concrete verbs bolted onto abstract nouns ("time keeps the details" type); unaffected when writing about concrete things.
-- **Nominalization**: "实现了效率的提升" → say how much faster, how many people saved.
-- **Punctuation tiers**: all dashes banned; colons only to introduce direct speech.
-- **Jargon tiers**: absolute bans + context-sensitive words, maintained by the checker.
+The banned moves (flip-flop rhetoric, triple+ parallel structure, lyric metaphor, nominalization, punctuation tiers, hard stop-words, model signposts, jargon tiers) are defined in exactly two places, so the list cannot drift between copies:
 
-`tryworld-paper/scripts/check_prose.py` (from [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0, MIT) runs these checks automatically and adds statistical signals — sentence-length variance, conjunction density, model-favorite lyric words, 「」-quote density. **Zero hard violations required before the user-confirmation gate; failing means no delivery.**
+| Source | What it holds |
+|---|---|
+| `skills/tryworld-paper/references/workflow.md` §1.2.1 (item 5) | The prose rules, with action-level definitions |
+| `skills/tryworld-paper/scripts/check_prose.py` | The checker that enforces them — absolute bans + context-sensitive words, plus statistical signals (sentence-length variance, conjunction density, model-favorite lyric words, 「」-quote density) |
+
+`check_prose.py` (from [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0, MIT) is the authority when the two disagree in wording. **Zero hard violations required before the user-confirmation gate; failing means no delivery.**
 
 ---
 
@@ -363,7 +363,7 @@ A skill fires when the request matches its trigger words — no commands to memo
 ### In-repo check scripts
 
 - `python -X utf8 scripts/check_skills.py`: compiles skill Python scripts and runs the aliveness gate
-- `python -m pytest tests/ -v`: run 23 unit tests (check_prose, verify_output, tts_yunxi, check_skills) over `examples/` scripts and titles.
+- `python -m pytest tests/ -v`: run the unit-test suite (check_prose, verify_output, tts_yunxi, check_skills, fetch_aihot, pipeline runner) over `examples/` scripts and titles. The exact count moves as tests are added — read it from `python -m pytest tests/ --collect-only -q` instead of hard-coding it in this file.
 - `python scripts/doctor.py`: checks Python, Node, FFmpeg/ffprobe, edge-tts, HyperFrames, and optional email credentials. Exits 1 when a required item is missing.
 
 ### Environment
