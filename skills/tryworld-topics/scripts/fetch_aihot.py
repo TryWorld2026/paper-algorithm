@@ -12,6 +12,7 @@ from pathlib import Path
 BASE = "https://aihot.virxact.com"
 UA = "Mozilla/5.0 (compatible; paper-algorithm/1.0)"
 
+
 def fetch_json(url: str, retries: int = 3) -> dict | list:
     """Fetch JSON with retry on 429/5xx."""
     last_err = None
@@ -38,20 +39,22 @@ def main() -> int:
     parser.add_argument("--days", type=int, default=7)
     parser.add_argument("--take", type=int, default=100)
     parser.add_argument("--out", type=Path, default=Path("work/aihot"))
+    parser.add_argument("--base-url", default=BASE,
+                        help=f"AIHOT-compatible API base URL (default: {BASE})")
     args = parser.parse_args()
 
     args.out.mkdir(parents=True, exist_ok=True)
 
     daily = None
     try:
-        daily = fetch_json(f"{BASE}/api/public/daily")
+        daily = fetch_json(f"{args.base_url}/api/public/daily")
     except Exception as e:
         print(f"warning: daily fetch failed: {e}", file=sys.stderr)
 
     since = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(time.time() - args.days * 86400))
     items = None
     try:
-        items = fetch_json(f"{BASE}/api/public/items?mode=selected&since={since}&take={args.take}")
+        items = fetch_json(f"{args.base_url}/api/public/items?mode=selected&since={since}&take={args.take}")
     except Exception as e:
         print(f"warning: items fetch failed: {e}", file=sys.stderr)
 
