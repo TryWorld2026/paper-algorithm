@@ -4,12 +4,14 @@
 
 ## [Unreleased]
 
-_本分支（`refactor/runner-fixes-docs-consolidation`）的改动记录见下文；发布时再并入正式版本号。_
+_本区记录 `[1.0.0]` 之后、尚未发布的所有改动；发布时把本区内容并入新的版本号。_
 
 ### Added
 
 - `tests/test_runner.py`：覆盖 pipeline runner 的参数转发、门禁拦截、运行状态文件等行为
 - `tests/test_fetch_aihot.py`：覆盖 `fetch_aihot.py` 的 CLI 与 `fetch_json` 重试逻辑
+- `tests/test_gate_adversarial.py`：8 个对抗式用例，固化“试图绕过用户确认闸门”的几种走法（跳过步骤 03、只传 `--confirm`、过期确认、过期活人感门禁、损坏的运行状态文件），任一步被改坏都会红
+- `skills/tryworld-paper/references/workflow.md` §1.4：写明闸门的技术边界——`.prose_pass` / `.confirmed` 只绑 draft 的 sha256，防漂移不防同用户伪造，因此“等用户确认”必须是对话里真实发生的动作
 
 ### Changed
 
