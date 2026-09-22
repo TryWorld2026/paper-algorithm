@@ -4,7 +4,7 @@
 
 - 调 `/api/public/*` 必须带浏览器 UA，否则 403：
   `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36`
-- PowerShell 用 `System.Net.WebClient` + `Encoding=UTF8`（见 `scripts/fetch_aihot.ps1`）；非 Windows 用 curl `-H "User-Agent: ..."`。
+- 规范做法是直接运行 `scripts/fetch_aihot.py`（跨平台，已内置 UA 与重试）；自行实现时 PowerShell 用 `System.Net.WebClient` + `Encoding=UTF8`（参考 `scripts/fetch_aihot.ps1`，已弃用仅作回退），非 Windows 用 curl `-H "User-Agent: ..."`。
 - 匿名访问，无需 Key；限流 600 req/min/IP，串行调用。
 
 ## 端点

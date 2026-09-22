@@ -16,7 +16,7 @@ paper-algorithm/
 │   └── tryworld-topics/         # 选题技能（AIHOT 数据 → 选题清单）
 ├── scripts/                     # 仓库级检查脚本
 │   ├── check_skills.py          # 编译技能脚本 + 跑活人感门禁
-│   └── doctor.ps1               # 环境自检
+│   └── doctor.py                # 环境自检（跨平台；doctor.ps1 为 Windows 回退，已弃用）
 ├── examples/                    # 默认主题产出的示例
 └── README.md / README.zh-CN.md  # 中英索引
 ```

@@ -48,7 +48,7 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 
 ## 模式 B：选题 → 写稿 → 优化 → 出片
 
-1. 调 `$tryworld-topics`：运行其 `scripts/fetch_aihot.ps1` 拉数据，读 `references/selection-rules.md`，产出 3-8 个候选选题。
+1. 调 `$tryworld-topics`：运行其 `scripts/fetch_aihot.py` 拉数据，读 `references/selection-rules.md`，产出 3-8 个候选选题。
 2. **去重（以工作区实际成片为准）**：扫描 `content.topic_dedup_dir`（内容主题 JSON 定义，默认 `E:\Codex口播视频`）各一级子文件夹，候选选题按关键词与该文件夹名/口播稿标题匹配；若对应文件夹 `outputs/` 同时存在成片视频（*.mp4）与横竖封面（cover_4x3.png / cover_3x4.png 或等价命名）→ 判定已做，从清单排除；反之保留。命令见 `references/workflow.md`。
 3. **闸门 1：展示选题清单，停，等用户挑选**（用户可要求换一批或给自定义主题）。
 4. 按选中选题 + 素材链接写初稿（规范见"写稿规范"）。
@@ -80,7 +80,7 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 
 - 主视频（烧录字幕）、口播稿/文案、横竖封面、平台标题、字幕时间轴
 - **发布计划.txt**（固定内容）：小红书 中午 12:30 / 抖音 晚上 19:30 / B站 晚上 20:30 / 微信视频号 晚上 20:30
-- **成片交付后自动发通知邮件**：运行 `scripts/notify_delivery.ps1 -ProjectDir <项目目录>`，邮件含产物路径（视频/横竖封面/平台标题）+ 四平台发布时间提醒；凭证未配置时跳过，不阻塞交付。详见 `references/workflow.md`。
+- **成片交付后自动发通知邮件**：运行 `python -X utf8 scripts/notify_delivery.py --project-dir <项目目录>`，邮件含产物路径（视频/横竖封面/平台标题）+ 四平台发布时间提醒；凭证未配置时跳过，不阻塞交付。详见 `references/workflow.md`。
 
 ## 活人感门禁（不通过不进闸门）
 
@@ -96,7 +96,7 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 ## 资源
 
 - `references/workflow.md`：两种模式详细步骤、去重扫描命令、写稿细节、异常处理
-- `scripts/notify_delivery.ps1`：成片交付邮件通知（调用 `$qq-email` 发信）
+- `scripts/notify_delivery.py`：成片交付邮件通知（调用 `$qq-email` 发信；跨平台规范路径，`.ps1` 为 Windows 回退，已弃用）
 - `../tryworld-paper/scripts/check_prose.py`：活人感硬禁项检查脚本（TryWorld 改造版，源自 KKKKhazix/human-writing v1.1.0，MIT；禁令上移到修辞动作级）
 
 ### 品牌适配边界

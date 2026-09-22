@@ -370,7 +370,7 @@ A skill fires when the request matches its trigger words — no commands to memo
 
 Run `npx hyperframes doctor` to check the environment at once. These skills are built for TryWorld's own production workflow, so a few things are assumed — all adjustable in the skill files:
 
-- **Cross-platform** — data-fetching (`tryworld-topics`) and email-notice (`tryworld-koubo`) scripts are Python (`.ps1` fallback versions retained); `tryworld-topics` documents a curl fallback in its `references/`.
+- **Cross-platform** — data-fetching (`tryworld-topics`) and email-notice (`tryworld-koubo`) scripts are Python (`.ps1` fallback versions retained but deprecated — the `.py` scripts are the canonical path); `tryworld-topics` documents a curl fallback in its `references/`.
 - **Python 3.10+** — `pip install edge-tts` for the voiceover pipeline (`tryworld-paper/scripts/tts_yunxi.py`, default Yunxi + voice presets); `tryworld-paper/scripts/check_prose.py` needs no third-party packages.
 - **Node.js >= 22 + HyperFrames** — rendering (`npx hyperframes render` / `lint` / `validate` / `inspect`).
 - **FFmpeg** (with ffprobe, on PATH) — audio processing.

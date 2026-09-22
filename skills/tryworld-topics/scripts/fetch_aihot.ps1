@@ -1,4 +1,6 @@
-﻿# AIHOT 口播选题 · 数据拉取脚本（Windows PowerShell）
+﻿# DEPRECATED: 保留作 Windows PowerShell 回退。规范路径为同名 .py（跨平台）
+# scripts/fetch_aihot.py，详见 README「Environment」。新功能不再同步到本脚本。
+# AIHOT 口播选题 · 数据拉取脚本（Windows PowerShell）
 # 拉最近 N 天精选 + 最新日报，落盘 UTF-8 报告与原始 JSON。
 param(
   [int]$Days = 7,

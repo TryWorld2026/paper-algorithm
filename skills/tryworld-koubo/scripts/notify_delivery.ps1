@@ -1,4 +1,6 @@
-﻿# tryworld-koubo · 成片交付邮件通知（Windows PowerShell）
+﻿# DEPRECATED: 保留作 Windows PowerShell 回退。规范路径为同名 .py（跨平台）
+# scripts/notify_delivery.py，详见 README「Environment」。新功能不再同步到本脚本。
+# tryworld-koubo · 成片交付邮件通知（Windows PowerShell）
 # 用法: powershell -File scripts/notify_delivery.ps1 -ProjectDir <项目目录> [-ThemeFile <主题JSON路径>] [-DryRun]
 param(
   [string]$ProjectDir = (Get-Location).Path,

@@ -1,4 +1,6 @@
-﻿param(
+﻿# DEPRECATED: 保留作 Windows PowerShell 回退。规范路径为同名 .py（跨平台）
+# scripts/doctor.py，详见 README「Environment」。新功能不再同步到本脚本。
+param(
     [switch]$Json
 )
 
