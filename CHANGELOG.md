@@ -4,6 +4,31 @@
 
 ## [Unreleased]
 
+_本分支（`refactor/runner-fixes-docs-consolidation`）的改动记录见下文；发布时再并入正式版本号。_
+
+### Added
+
+- `tests/test_runner.py`：覆盖 pipeline runner 的参数转发、门禁拦截、运行状态文件等行为
+- `tests/test_fetch_aihot.py`：覆盖 `fetch_aihot.py` 的 CLI 与 `fetch_json` 重试逻辑
+
+### Changed
+
+- `pipeline/runner.py`：修复参数转发缺失（README 中的命令此前无法直接运行）、改为以模块方式调用各步骤、新增 `--list` 与运行诊断 JSON、明确报错与门禁提示
+- `fetch_aihot.py`：新增 `--base-url`（默认 `https://aihot.virxact.com`），与 `.ps1` 回退脚本的 `-BaseUrl` 对齐
+- `scripts/notify_delivery.ps1`、`skills/tryworld-topics/scripts/fetch_aihot.ps1`、`scripts/doctor.ps1`：标注为已废弃的 Windows 回退脚本，`.py` 为唯一规范路径
+- `README.md` / `README.zh-CN.md` / `CONTRIBUTING.md` / 各 `SKILL.md` / `references/`：统一指向 `.py` 脚本，移除 `.ps1` 作为规范路径的表述
+- `pipeline/steps/step_04_tts.py`：澄清 `--theme-content` 帮助文本（品牌/视觉主题，默认 `themes/paper-algorithm.json`），并提示与 step 01 的“内容主题”同名不同义
+- `CHANGELOG.md`：将此前 `[Unreleased]` 内容并入 `[1.0.0]`，改为真正的“未发布”区
+
+### Fixed
+
+- `README.md` / `README.zh-CN.md`：测试数量不再硬编码，改为引导用 `pytest --collect-only` 读取实际数量
+- `verify_output.py`：ffprobe/ffmpeg 发现逻辑与 `tts_yunxi.py` 的 `find_bin` 对齐（PATH 优先 → `HYPERFRAMES_FFMPEG_DIR` / `FFMPEG_BIN` → WinGet 目录），PATH 未配置时不再直接判定“工具不可用”而退出
+
+## [1.0.0] - 2026-09-05
+
+首个正式版本。
+
 ### Added
 
 - `scripts/check_skills.py`：仓库级检查脚本，编译技能 Python 脚本并跑活人感门禁

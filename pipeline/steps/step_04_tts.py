@@ -19,7 +19,10 @@ DEFAULT_THEME = REPO / "skills" / "tryworld-paper" / "themes" / "paper-algorithm
 def main() -> int:
     parser = argparse.ArgumentParser(description="Step 04: TTS")
     parser.add_argument("--project-dir", type=Path, default=Path.cwd())
-    parser.add_argument("--theme-content", type=Path, default=None, help="Path to visual theme JSON (default: paper-algorithm.json)")
+    parser.add_argument("--theme-content", type=Path, default=None,
+                        help="Brand/visual theme JSON (default: themes/paper-algorithm.json). "
+                             "Note: step 01 uses the same flag name for the *content* theme "
+                             "(themes/content-default.json) — the two are different files.")
     args = parser.parse_args()
 
     confirmed = args.project_dir / "work" / ".confirmed"

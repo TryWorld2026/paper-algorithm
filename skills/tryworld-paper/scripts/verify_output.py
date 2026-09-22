@@ -7,6 +7,8 @@ titles.txt 非空、发布计划.txt 存在、字幕时间轴存在。
 """
 import argparse
 import json
+import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -21,14 +23,41 @@ def is_within_directory(path: Path, directory: Path) -> bool:
         return False
 
 
+def find_bin(name: str) -> str | None:
+    """Locate ffmpeg/ffprobe: PATH first, then env override, then WinGet locations.
+
+    Kept in sync with tts_yunxi.find_bin so both scripts resolve the same binaries.
+    """
+    which = shutil.which(name)
+    if which:
+        return which
+    env_dir = os.environ.get("HYPERFRAMES_FFMPEG_DIR") or os.environ.get("FFMPEG_BIN")
+    if env_dir:
+        candidate = Path(env_dir) / (name + ".exe")
+        if candidate.exists():
+            return str(candidate)
+    localappdata = os.environ.get("LOCALAPPDATA", "")
+    winget = Path(localappdata) / "Microsoft" / "WinGet" / "Packages"
+    if winget.exists():
+        for sub in sorted(winget.glob("Gyan.FFmpeg*/ffmpeg-*/bin")):
+            candidate = sub / (name + ".exe")
+            if candidate.exists():
+                return str(candidate)
+    return None
+
+
 def ffprobe(path: Path, args: list[str]) -> str:
+    binary = find_bin("ffprobe")
+    if not binary:
+        print("error: ffprobe 不可用（请安装 FFmpeg 并加入 PATH，或设置 HYPERFRAMES_FFMPEG_DIR / FFMPEG_BIN），无法执行核验。")
+        sys.exit(2)
     try:
         r = subprocess.run(
-            ["ffprobe", "-v", "error", *args, "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
+            [binary, "-v", "error", *args, "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
             capture_output=True, text=True,
         )
     except FileNotFoundError:
-        print("error: ffprobe 不可用（请安装 FFmpeg 并加入 PATH），无法执行核验。")
+        print("error: ffprobe 不可用（请安装 FFmpeg 并加入 PATH，或设置 HYPERFRAMES_FFMPEG_DIR / FFMPEG_BIN），无法执行核验。")
         sys.exit(2)
     return r.stdout.strip() if r.returncode == 0 else ""
 
@@ -45,8 +74,8 @@ def _cover_brightness(path: Path) -> float | None:
         pass
     except Exception:
         pass
-    import shutil, tempfile
-    ffmpeg = shutil.which("ffmpeg")
+    import tempfile
+    ffmpeg = find_bin("ffmpeg")
     if not ffmpeg:
         return None
     try:

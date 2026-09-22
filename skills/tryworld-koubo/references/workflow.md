@@ -33,7 +33,7 @@
 ### B1 拉数据与产出选题
 
 1. 进入 `$tryworld-topics`：
-   - 运行 `scripts/fetch_aihot.ps1`（默认 7 天、100 条，落盘 `work/aihot/`）；
+   - 运行 `python -X utf8 scripts/fetch_aihot.py`（跨平台规范路径；默认 7 天、100 条，落盘 `work/aihot/`；`--base-url` 可指定其他 AIHOT 兼容端点）；
    - 读 `references/selection-rules.md`；
    - 产出 3-8 个候选选题（选题名、为什么选、核心素材+原文链接、切入角度、优先级、命中原理）。
 
@@ -123,10 +123,12 @@ B站：晚上 20:30
 成片交付后自动运行（不阻塞交付）：
 
 ```powershell
-powershell -File "$env:USERPROFILE\.agents\skills\tryworld-koubo\scripts\notify_delivery.ps1" -ProjectDir "E:\Codex口播视频\<项目slug>"
+python -X utf8 "$env:USERPROFILE\.agents\skills\tryworld-koubo\scripts\notify_delivery.py" --project-dir "E:\Codex口播视频\<项目slug>"
 ```
 
-- 邮件主题与发布计划从主题文件（`paper-algorithm.json` 或 `-ThemeFile` 指定的文件）读取 `brand.platform_name` 与 `publish_plan`；文件缺失或字段不存在时回退到硬编码默认值。
+（`scripts/notify_delivery.ps1` 为 Windows PowerShell 回退，已弃用，文件头有 DEPRECATED 声明；仅在没有 Python 环境时使用，且不支持下文「凭证读取顺序」中的注册表回退。）
+
+- 邮件主题与发布计划从主题文件（`paper-algorithm.json` 或 `--theme-file` 指定的文件）读取 `brand.platform_name` 与 `publish_plan`；文件缺失或字段不存在时回退到硬编码默认值。
 
 - 邮件内容：主题 `✅ {品牌名} 口播成片已交付 · <项目> · <日期>`（品牌名取自主题文件 `brand.platform_name`）；正文 = 完成提示 + 【平台标题】文字（读取 titles.txt 直接写入正文，不作为附件）+ 【发布计划】（内容取自主题文件 `publish_plan`）。
 - 附件规则（QQ 邮箱附件上限约 50MB，含 base64 开销，单文件安全阈值 35MB）：
@@ -137,8 +139,8 @@ powershell -File "$env:USERPROFILE\.agents\skills\tryworld-koubo\scripts\notify_
 - 如需把大视频随邮件发送：先将视频压到 35MB 内（如降低码率/分辨率），或改用网盘/仓库链接。
 - 前置：调用 `$qq-email` 的 `send.js`，需要环境变量 `QQ_EMAIL_ACCOUNT`（收件人=自己）与 `QQ_EMAIL_AUTH_CODE`（IMAP/SMTP 授权码）。
 - 凭证未配置或 send.js 缺失：脚本警告并跳过，不影响交付。
-- 凭证读取顺序：进程环境变量 → 注册表用户环境变量（HKCU:\Environment）→ 缺失则跳过；setx 配置后无需重启即生效。
-- 预览不发送：加 `-DryRun` 参数。
+- 凭证读取顺序：进程环境变量 → 注册表用户环境变量（HKCU:\Environment，仅 .ps1 回退支持）→ 缺失则跳过；.py 规范路径只读进程环境变量，setx 配置后需重开终端（或在本会话先 `$env:` 赋值）再运行。
+- 预览不发送：加 `--dry-run` 参数（.ps1 回退为 `-DryRun`）。
 - 配置方式（用户自行执行，勿在对话中粘贴授权码）：
   `setx QQ_EMAIL_ACCOUNT "你的QQ邮箱"` 与 `setx QQ_EMAIL_AUTH_CODE "授权码"`，重开终端生效。
 
