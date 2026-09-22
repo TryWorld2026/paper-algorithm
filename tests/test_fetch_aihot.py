@@ -47,6 +47,31 @@ class TestCli:
         assert "https://aihot.virxact.com" in r.stdout
 
 
+class TestBaseUrl:
+    def test_help_exposes_base_url_is_default(self):
+        m = load_module()
+        assert m.BASE == "https://aihot.virxact.com"
+
+    def test_trailing_slash_is_normalized_in_endpoint_urls(self, tmp_path, monkeypatch):
+        m = load_module()
+        seen: list[str] = []
+
+        def fake_fetch(url, retries=3):
+            seen.append(url)
+            return {"items": []}
+
+        monkeypatch.setattr(m, "fetch_json", fake_fetch)
+        monkeypatch.setattr(sys, "argv", [
+            "fetch_aihot.py", "--base-url", "https://mirror.example.com/",
+            "--out", str(tmp_path / "aihot"),
+        ])
+        assert m.main() == 0
+        assert len(seen) == 2
+        assert seen[0] == "https://mirror.example.com/api/public/daily"
+        assert seen[1].startswith("https://mirror.example.com/api/public/items?")
+        assert all("//api" not in url for url in seen)
+
+
 class TestFetchJsonRetry:
     def test_retries_on_429_then_succeeds(self):
         m = load_module()

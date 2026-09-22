@@ -24,6 +24,9 @@ _本分支（`refactor/runner-fixes-docs-consolidation`）的改动记录见下�
 
 - `README.md` / `README.zh-CN.md`：测试数量不再硬编码，改为引导用 `pytest --collect-only` 读取实际数量
 - `verify_output.py`：ffprobe/ffmpeg 发现逻辑与 `tts_yunxi.py` 的 `find_bin` 对齐（PATH 优先 → `HYPERFRAMES_FFMPEG_DIR` / `FFMPEG_BIN` → WinGet 目录），PATH 未配置时不再直接判定“工具不可用”而退出
+- `pipeline/runner.py`：在仓库根目录以外启动时，用户写的相对路径不再解析错位（步骤以 `cwd=REPO` 运行，runner 现在先把 `--project-dir` / `--script` / `--theme-content` / `--video` 解析为绝对路径）；`--steps` 容忍空格与空 token（如 `"1, 2,"`），非法 token 的报错直接指出问题值
+- `fetch_aihot.py`：`--base-url` 归一化去掉尾部斜杠，避免拼出 `//api/...`
+- `notify_delivery.ps1` / `fetch_aihot.ps1`：DEPRECATED 头中的规范路径改为仓库相对路径，避免与 `scripts/` 混淆
 
 ## [1.0.0] - 2026-09-05
 

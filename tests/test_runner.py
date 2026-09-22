@@ -64,10 +64,49 @@ class TestStepSelection:
         assert "--script" in (r.stdout + r.stderr)
 
     def test_invalid_step_selection_rejected(self, tmp_path):
-        for selection in ("999", "abc"):
+        for selection in ("999", "abc", "1,abc"):
             r = run_runner(tmp_path, "--steps", selection)
             assert r.returncode != 0
             assert "step" in (r.stdout + r.stderr).lower()
+
+    def test_step_selection_tolerates_spaces_and_trailing_comma(self, tmp_path):
+        r = run_runner(tmp_path, "--dry-run", "--steps", " 1 , 2 ,", "--script", "x.md")
+        assert r.returncode == 0
+        assert "optimize" in r.stdout and "check_prose" in r.stdout
+        assert "tts" not in r.stdout.split("Skipped:")[0]
+
+    def test_out_of_order_selection_runs_in_pipeline_order(self, tmp_path):
+        r = run_runner(tmp_path, "--dry-run", "--steps", "2,1", "--script", "x.md")
+        assert r.returncode == 0
+        body = r.stdout.split("Skipped:")[0]
+        assert body.index("optimize") < body.index("check_prose")
+
+
+class TestCwdIndependence:
+    """Steps run with cwd=REPO, so relative user paths must be resolved first."""
+
+    def test_relative_paths_resolve_against_the_callers_cwd(self, tmp_path):
+        caller = tmp_path / "caller"
+        caller.mkdir()
+        (caller / "script.md").write_text(
+            CLEAN_FIXTURE.read_text(encoding="utf-8"), encoding="utf-8")
+
+        r = subprocess.run(
+            [sys.executable, "-X", "utf8", str(REPO / "pipeline" / "runner.py"),
+             "--project-dir", "proj", "--steps", "1,2", "--script", "script.md"],
+            cwd=str(caller), capture_output=True, text=True,
+            encoding="utf-8", errors="replace",
+        )
+        assert r.returncode == 0, f"runner failed outside repo root:\n{r.stdout}\n{r.stderr}"
+
+        state_path = caller / "proj" / "work" / "pipeline_run.json"
+        assert state_path.exists()
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        assert Path(state["projectDir"]) == (caller / "proj").resolve()
+        assert (caller / "proj" / "work" / "draft.md").exists()
+        # Nothing leaked into the repo root, where the step's cwd points.
+        assert not (REPO / "proj").exists()
+        assert not (REPO / "script.md").exists()
 
 
 class TestSteps12:
@@ -90,7 +129,7 @@ class TestSteps12:
         state_path = tmp_path / "work" / "pipeline_run.json"
         assert state_path.exists()
         state = json.loads(state_path.read_text(encoding="utf-8"))
-        assert state["projectDir"] == str(tmp_path)
+        assert state["projectDir"] == str(tmp_path.resolve())
         assert [s["step"] for s in state["steps"]] == [1, 2]
         assert all(s["status"] == "ok" for s in state["steps"])
         assert state["steps"][0]["args"].get("--script")

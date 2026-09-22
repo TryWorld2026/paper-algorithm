@@ -134,12 +134,22 @@ def main() -> int:
     selected = steps
     if args.steps:
         tokens = [x.strip() for x in args.steps.split(",")]
-        if any(not token.isdigit() for token in tokens):
-            parser.error("--steps must contain comma-separated step numbers")
+        bad = [t for t in tokens if t and not t.isdigit()]
+        if bad:
+            parser.error(f"--steps must contain comma-separated step numbers (got {bad[0]!r})")
         wanted = {int(x) for x in tokens if x}
         selected = [(n, name, p) for n, name, p in steps if n in wanted]
         if not selected:
             parser.error("--steps does not select any available step")
+
+    # Steps run with cwd=REPO, so every path the user typed relative to *their*
+    # shell must be made absolute here — otherwise a runner started outside the
+    # repo root would hand the step a path that resolves somewhere else entirely.
+    args.project_dir = args.project_dir.expanduser().resolve()
+    for flag in ("script", "theme_content", "video"):
+        value = getattr(args, flag)
+        if value is not None:
+            setattr(args, flag, value.expanduser().resolve())
 
     selected_nums = {num for num, _, _ in selected}
 
