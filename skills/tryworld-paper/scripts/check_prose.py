@@ -104,6 +104,12 @@ FORBIDDEN_PUNCTUATION = {
     "–": "连接号式破折号",
 }
 
+# 技术记法豁免：比例、时间、数值区间是这类内容的必备写法，不是修辞动作。
+# 「16:9 横版」「发布时间 12:30」「2024–2026」不应被标点禁令打死。
+# 豁免只认「数字 X 数字」这一种紧贴形态（X 为半角冒号或连接号 –），
+# 中文冒号「：」与破折号「——」的所有用法照旧拦截/警告。
+TECH_DIGIT = re.compile(r"\A\d")
+
 PIVOT_PATTERNS = (
     re.compile(r"(?:并)?不是[^。！？\n]{0,90}而是"),
     re.compile(r"并非[^。！？\n]{0,90}而是"),
@@ -431,20 +437,44 @@ def main() -> int:
     warnings = []
 
     quote_colons = []
+    tech_punct = []
     for symbol, label in FORBIDDEN_PUNCTUATION.items():
         matches = list(re.finditer(re.escape(symbol), prose))
         if symbol in ("：", ":"):
             hard = []
             for match in matches:
-                tail = prose[match.end() : match.end() + 2].lstrip()
-                if tail[:1] in ("「", "『", "“", "‘", '"'):
+                head = prose[match.start() - 1 : match.start()]
+                tail_raw = prose[match.end() : match.end() + 2]
+                tail = tail_raw.lstrip()
+                if TECH_DIGIT.match(head) and TECH_DIGIT.match(tail_raw):
+                    # 数字:数字（16:9、4:3、12:30）属技术记法，不是提示性冒号
+                    tech_punct.append(("比例/时间", match))
+                elif tail[:1] in ("「", "『", "“", "‘", '"'):
                     quote_colons.append(match)
+                else:
+                    hard.append(match)
+            matches = hard
+        elif symbol == "–":
+            # 数值区间的连接号（2024–2026、第 3–5 章）同属技术记法；破折号「——」照旧全禁
+            hard = []
+            for match in matches:
+                head = prose[match.start() - 1 : match.start()]
+                tail_raw = prose[match.end() : match.end() + 2]
+                if TECH_DIGIT.match(head) and TECH_DIGIT.match(tail_raw):
+                    tech_punct.append(("数值区间", match))
                 else:
                     hard.append(match)
             matches = hard
         if matches:
             lines = "、".join(str(line_number(text, match.start())) for match in matches[:8])
             failures.append(f"{label}共 {len(matches)} 处，出现在第 {lines} 行。")
+    if tech_punct:
+        lines = "、".join(
+            str(line_number(text, match.start())) for _, match in tech_punct[:8]
+        )
+        warnings.append(
+            f"技术记法标点 {len(tech_punct)} 处（数字间的比例/时间/区间，如 16:9、12:30、2024–2026），第 {lines} 行。已豁免，不算违规。"
+        )
     if quote_colons:
         lines = "、".join(
             str(line_number(text, match.start())) for match in quote_colons[:8]

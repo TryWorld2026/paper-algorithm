@@ -32,6 +32,7 @@ STEPS_DIR = Path(__file__).resolve().parent / "steps"
 # (or, for --confirm, when the flag is present).
 STEP_ARGS: dict[int, list[str]] = {
     1: ["--script", "--theme-content"],
+    2: ["--whitelist"],
     3: ["--confirm"],
     4: ["--theme-content"],
     5: ["--quality"],
@@ -111,6 +112,9 @@ def main() -> int:
                         help="Theme JSON forwarded to step 01 (content theme) / step 04 (brand/visual theme)")
     parser.add_argument("--confirm", action="store_true",
                         help="Forward the confirmation flag to step 03; without it the gate blocks")
+    parser.add_argument("--whitelist", type=Path, default=None,
+                        help="Regex-per-line file forwarded to step 02, exempting literal terms "
+                             "from the prose gate. Visible opt-out, recorded in the run output.")
     parser.add_argument("--quality", choices=["draft", "high"], default=None,
                         help="Render quality forwarded to step 05 (default: the step's own default, high)")
     parser.add_argument("--video", type=Path, default=None,
@@ -146,7 +150,7 @@ def main() -> int:
     # shell must be made absolute here — otherwise a runner started outside the
     # repo root would hand the step a path that resolves somewhere else entirely.
     args.project_dir = args.project_dir.expanduser().resolve()
-    for flag in ("script", "theme_content", "video"):
+    for flag in ("script", "theme_content", "video", "whitelist"):
         value = getattr(args, flag)
         if value is not None:
             setattr(args, flag, value.expanduser().resolve())

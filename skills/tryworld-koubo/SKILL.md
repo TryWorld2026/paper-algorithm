@@ -18,7 +18,7 @@ description: 试界TryWorld AI 口播视频的统一定位入口，覆盖口播�
 
 ## 内容主题
 
-出片前确认内容主题（默认 	ryworld-paper/themes/content-default.json）。内容主题定义选题域、受众、写稿规范、平台列表等。换品牌/换领域时复制此 JSON 并修改——流水线逻辑不变。用户说「用 <主题名> 内容主题」时切换。
+出片前确认内容主题（默认 tryworld-paper/themes/content-default.json）。内容主题定义选题域、受众、写稿规范、平台列表等。换品牌/换领域时复制此 JSON 并修改——流水线逻辑不变。用户说「用 <主题名> 内容主题」时切换。
 
 ```json
 {
