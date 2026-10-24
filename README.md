@@ -76,7 +76,7 @@ That's it. The request is recognized and routed through the whole pipeline autom
 
 ### Pipeline Runner (Optional)
 
-After installation, use the pipeline runner instead of manually executing steps. The runner runs 6 step scripts in order, checks preconditions at each step, and stops on failure:
+The runner is a **gate bookkeeper for steps 2–4**, not a replacement for the agent's work. It runs the preconditions in order and stops on the first failure, but the content itself (optimising and sanitising the script, authoring the HyperFrames composition, covers, titles, publish plan, email) stays in the SKILL.md prose — the runner never writes or renders it. Step 01 copies the input verbatim to `work/draft.md`; the agent then optimises it, re-runs step 02, and step 03 blocks until the user confirms. Steps 05/06 require a composition that no step produces, so run them only once that project exists.
 
 ```bash
 # List all steps
@@ -92,7 +92,7 @@ python -m pipeline.runner --project-dir <project-dir> --steps 1,2
 python -m pipeline.runner --project-dir <project-dir> --steps 3,4,5,6
 ```
 
-Six steps: `01 optimize` → `02 check_prose` → `03 confirm` (hard gate) → `04 tts` → `05 render` → `06 verify` (hard gate).
+Six steps: `01 ingest` → `02 check_prose` → `03 confirm` (hard gate) → `04 tts` → `05 render` → `06 verify` (hard gate).
 
 ---
 ## 📑 Contents
@@ -315,16 +315,29 @@ Full edge-tts voice ids are accepted too. By default the pipeline never asks abo
 
 ## 🔒 The Aliveness Gate
 
-Before delivery, every polished script and platform title passes a machine gate — **the ban targets rhetorical moves, not literal strings**. Repeating the same move with different words still counts.
+Before delivery, every polished script and platform title passes a machine gate. Be clear about what that gate is and what it is not.
 
-The banned moves (flip-flop rhetoric, triple+ parallel structure, lyric metaphor, nominalization, punctuation tiers, hard stop-words, model signposts, jargon tiers) are defined in exactly two places, so the list cannot drift between copies:
+**What blocks.** `check_prose.py` runs ~22 signal families, but only five of them can fail the run (exit 1): punctuation (colons / dashes), hard stop-words (3 terms), absolute jargon (27 terms), model insight signposts (6 phrases), and the flip-flop construction (`不是……而是……` and 7 regex variants). Everything else — parallel structure, lyric metaphor, nominalization, conjunction density, 「」-quote density, sentence-length variance, context jargon — is reported as a **warning for a human to judge** and never blocks delivery.
+
+**What it cannot do.** These are surface-form regex and word-list rules, not semantic analysis. The rules catch a wide set of *literal fingerprints* of model prose, and rewriting the same rhetorical move in different words can slip past them. The gate is a formatting-and-cliché linter, not an aliveness detector. The real anti-AI writing quality lives in the instructions addressed to the agent — the seven-pass rewrite in `references/workflow.md` §1.2.1 and `writing-methodology.md` — which no script enforces. Treat a green gate as "no fingerprints found", not as "this reads like a human".
+
+**Known trade-off, and how to override.** The five blocking rules are aggressive by design, so some legitimate prose trips them (a plain causal correction like `不是因为A，而是B` is flagged). Technical notation is exempt: `16:9`, `4:3`, `12:30`, `2024–2026` pass as a warning, because that notation is unavoidable in this genre. For anything else you judge to be a false positive, `--whitelist <file>` (one regex per line) strips matched text before analysis:
+
+```bash
+python -X utf8 skills/tryworld-paper/scripts/check_prose.py draft.md --whitelist exemptions.txt
+python -m pipeline.runner --project-dir <dir> --steps 1,2 --script draft.md --whitelist exemptions.txt
+```
+
+The whitelist deletes matched text, so exempted content is *not checked at all* — it is an explicit, visible opt-out (the run prints a `NOTE:` line), not a silent bypass. Keep it to specific terms; a too-broad pattern empties the text and the checker exits 2.
+
+The banned moves are defined in exactly two places, so the list cannot drift between copies:
 
 | Source | What it holds |
 |---|---|
 | `skills/tryworld-paper/references/workflow.md` §1.2.1 (item 5) | The prose rules, with action-level definitions |
-| `skills/tryworld-paper/scripts/check_prose.py` | The checker that enforces them — absolute bans + context-sensitive words, plus statistical signals (sentence-length variance, conjunction density, model-favorite lyric words, 「」-quote density) |
+| `skills/tryworld-paper/scripts/check_prose.py` | The checker: the five blocking rules plus ~17 advisory statistical signals |
 
-`check_prose.py` (from [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0, MIT) is the authority when the two disagree in wording. **Zero hard violations required before the user-confirmation gate; failing means no delivery.**
+`check_prose.py` (from [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0, MIT) is the authority when the two disagree in wording. **Zero blocking violations required before the user-confirmation gate; failing means no delivery.**
 
 ---
 

@@ -76,7 +76,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 
 ### Pipeline Runner（可选）
 
-安装后可以用 pipeline runner 代替手动执行流程。Runner 按编号顺序运行 6 个步骤脚本，每步检查前置条件，失败即停：
+Runner 是**步骤 2–4 的门禁记账器**，不是手动流程的替代品。它按编号顺序检查前置条件、失败即停，但内容本身（优化与净化稿子、编写 HyperFrames 构图、封面、标题、发布计划、邮件通知）仍由 SKILL.md 的散文流程负责——Runner 不写稿也不渲染。步骤 01 只把输入逐字复制成 `work/draft.md`；由 agent 完成优化后重跑步骤 02，步骤 03 在用户确认前一直拦截。步骤 05/06 依赖一个没有任何步骤会生成的构图，只有该项目已存在时才执行：
 
 ```bash
 # 查看所有步骤
@@ -92,7 +92,7 @@ python -m pipeline.runner --project-dir <项目目录> --steps 1,2
 python -m pipeline.runner --project-dir <项目目录> --steps 3,4,5,6
 ```
 
-六个步骤：`01 optimize` → `02 check_prose` → `03 confirm`（硬闸门）→ `04 tts` → `05 render` → `06 verify`（硬闸门）。
+六个步骤：`01 ingest` → `02 check_prose` → `03 confirm`（硬闸门）→ `04 tts` → `05 render` → `06 verify`（硬闸门）。
 
 ---
 ## 📑 目录
@@ -315,16 +315,29 @@ python tryworld-paper/scripts/tts_yunxi.py script.txt --out work/audio --voice x
 
 ## 🔒 活人感门禁
 
-成片之前，每一版口播稿与平台标题都要过一道机器门禁——**禁的是修辞动作，不是字面**。换一套字做同一个动作，仍然算命中。
+成片之前，每一版口播稿与平台标题都要过一道机器门禁。这道门禁是什么、不是什么，先说清楚。
 
-禁项（翻案腔、同构排比、抒情借喻、动词名词化、标点分级、硬停词、模型路标、黑话两档）只在两处定义，避免多份拷贝互相漂移：
+**会拦截的（exit 1）。** `check_prose.py` 共约 22 类信号，但只有 5 类能判失败：标点（冒号/破折号）、硬停词（3 个）、绝对黑话（27 个）、模型洞察路标（6 个短语）、翻案句式（`不是……而是……` 等 7 个正则变体）。其余全部——同构排比、抒情借喻、名词化、连词密度、「」金句密度、句长变异系数、语境判断词——只作为**警告交给人判断**，不拦交付。
+
+**拦不住的。** 这些是字面正则和词表规则，不是语义分析。它能抓住大量模型腔的*字面指纹*，但同一个修辞动作换一套字，可能查不出来。这道门禁是格式与套话检查器，不是活人感检测器。真正决定"像不像人写的"，是给 agent 的写作指令——`references/workflow.md` §1.2.1 的七遍改稿和 `writing-methodology.md`——那部分没有任何脚本在强制。门禁通过请理解为"未发现字面指纹"，不等于"读起来像人写的"。
+
+**已知代价与豁免。** 5 条拦截规则刻意从严，正常行文偶尔误伤（平实因果句"不是因为A，而是B"会被判翻案）。技术记法已豁免：`16:9`、`4:3`、`12:30`、`2024–2026` 只提示不拦截，因为这类内容绕不开这些写法。其余误伤可用 `--whitelist <文件>`（每行一个正则）在分析前剔除匹配文本：
+
+```bash
+python -X utf8 skills/tryworld-paper/scripts/check_prose.py draft.md --whitelist exemptions.txt
+python -m pipeline.runner --project-dir <项目目录> --steps 1,2 --script draft.md --whitelist exemptions.txt
+```
+
+白名单是删除文本，被豁免的内容*完全没有被检查*——所以它是显式、可见的退出（运行会打印 `NOTE:` 行），不是静默绕过。只写具体词条；过宽的模式会把全文清空，检查器直接 exit 2。
+
+禁项只在两处定义，避免多份拷贝互相漂移：
 
 | 来源 | 内容 |
 |---|---|
 | `skills/tryworld-paper/references/workflow.md` §1.2.1 第 5 条 | 改稿规则与动作级定义 |
-| `skills/tryworld-paper/scripts/check_prose.py` | 执行检测的脚本——绝对禁词 + 语境判断词，并给出统计层提示（句长变异系数、连词密度、模型偏爱抒情词、「」金句密度） |
+| `skills/tryworld-paper/scripts/check_prose.py` | 执行检测的脚本——5 类拦截规则 + 约 17 类咨询性统计信号 |
 
-措辞不一致时以 `check_prose.py`（源自 [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0，MIT）为准。**硬禁项清零才允许进入用户确认闸门，失败不交付。**
+措辞不一致时以 `check_prose.py`（源自 [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0，MIT）为准。**拦截项清零才允许进入用户确认闸门，失败不交付。**
 
 ---
 
