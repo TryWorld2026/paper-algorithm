@@ -9,7 +9,7 @@ description: 基于 aihot.virxact.com 最新 AI 资讯，为 AI 口播频道（�
 
 ## 内容主题
 
-选题规则默认来自 	ryworld-paper/themes/content-default.json 的 	opic_sources、	opic_rules、platforms 字段。换领域/品牌时修改内容主题 JSON，无需改本 SKILL.md。
+选题规则默认来自 tryworld-paper/themes/content-default.json 的 topic_sources、topic_rules、platforms 字段。换领域/品牌时修改内容主题 JSON，无需改本 SKILL.md。
 
 ## 流程
 

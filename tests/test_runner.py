@@ -43,7 +43,7 @@ class TestDryRun:
         r = run_runner(tmp_path, "--dry-run", "--script", "x.md", "--confirm", "--quality", "draft")
         assert r.returncode == 0
         out = r.stdout
-        for name in ("optimize", "check_prose", "confirm", "tts", "render", "verify"):
+        for name in ("ingest", "check_prose", "confirm", "tts", "render", "verify"):
             assert name in out
         # forwarded args appear on the right steps only
         assert "--script" in out and "x.md" in out
@@ -72,14 +72,14 @@ class TestStepSelection:
     def test_step_selection_tolerates_spaces_and_trailing_comma(self, tmp_path):
         r = run_runner(tmp_path, "--dry-run", "--steps", " 1 , 2 ,", "--script", "x.md")
         assert r.returncode == 0
-        assert "optimize" in r.stdout and "check_prose" in r.stdout
+        assert "ingest" in r.stdout and "check_prose" in r.stdout
         assert "tts" not in r.stdout.split("Skipped:")[0]
 
     def test_out_of_order_selection_runs_in_pipeline_order(self, tmp_path):
         r = run_runner(tmp_path, "--dry-run", "--steps", "2,1", "--script", "x.md")
         assert r.returncode == 0
         body = r.stdout.split("Skipped:")[0]
-        assert body.index("optimize") < body.index("check_prose")
+        assert body.index("ingest") < body.index("check_prose")
 
 
 class TestCwdIndependence:
