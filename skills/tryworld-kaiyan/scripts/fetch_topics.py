@@ -33,10 +33,77 @@ USER_AGENT = (
 DEFAULT_TIMEOUT = 20
 DEFAULT_ATTEMPTS = 3
 MAX_RETRY_AFTER = 60
+MIN_POLL_INTERVAL = 60
+DEFAULT_CACHE_PATH = Path(__file__).resolve().parent.parent / "state" / "http-cache.json"
 
 
 class FetchError(RuntimeError):
     """A user-actionable AIHOT fetch failure."""
+
+
+def _header_value(headers: Any, name: str) -> str:
+    if headers is None:
+        return ""
+    getter = getattr(headers, "get", None)
+    if not callable(getter):
+        return ""
+    try:
+        value = getter(name)
+    except Exception:
+        return ""
+    return str(value).strip() if value is not None else ""
+
+
+class HttpCache:
+    """Small full-URL ETag/body cache stored beside the skill state."""
+
+    def __init__(self, path: Path | None):
+        self.path = path
+        self.entries: dict[str, dict[str, str]] = {}
+        self._load()
+
+    def _load(self) -> None:
+        if self.path is None or not self.path.exists():
+            return
+        try:
+            raw = json.loads(self.path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return
+        if isinstance(raw, dict) and isinstance(raw.get("entries"), dict):
+            raw = raw["entries"]
+        if not isinstance(raw, dict):
+            return
+        for url, entry in raw.items():
+            if not isinstance(url, str) or not isinstance(entry, dict):
+                continue
+            body = entry.get("body")
+            etag = entry.get("etag", "")
+            if isinstance(body, str):
+                self.entries[url] = {
+                    "etag": etag if isinstance(etag, str) else "",
+                    "body": body,
+                }
+
+    def get(self, url: str) -> dict[str, str] | None:
+        entry = self.entries.get(url)
+        return entry if isinstance(entry, dict) else None
+
+    def put(self, url: str, etag: str, body: str) -> None:
+        if self.path is None:
+            return
+        self.entries[url] = {"etag": etag or "", "body": body}
+        try:
+            _write_json(self.path, self.entries)
+        except OSError:
+            pass
+
+    def clear(self) -> None:
+        self.entries = {}
+        if self.path is not None:
+            try:
+                self.path.unlink(missing_ok=True)
+            except OSError:
+                pass
 
 
 def _retry_after_seconds(headers: Any, default: float) -> float:
@@ -83,39 +150,58 @@ def request_json(
     timeout: int = DEFAULT_TIMEOUT,
     attempts: int = DEFAULT_ATTEMPTS,
     sleep: Callable[[float], None] = time.sleep,
+    cache: HttpCache | None = None,
+    send_etag: bool = True,
 ) -> dict[str, Any]:
-    """Request one JSON object with serial, bounded retries."""
+    """Request one JSON object with gzip, ETag revalidation, and serial retries."""
 
     if attempts < 1:
         raise ValueError("attempts must be at least 1")
 
-    request = urllib.request.Request(
-        url,
-        headers={
+    last_error = "未知错误"
+    for attempt in range(1, attempts + 1):
+        cached = cache.get(url) if cache is not None else None
+        headers = {
             "User-Agent": USER_AGENT,
             "Accept": "application/json",
             "Accept-Encoding": "gzip",
-        },
-        method="GET",
-    )
-
-    last_error = "未知错误"
-    for attempt in range(1, attempts + 1):
+        }
+        if send_etag and cached and cached.get("etag"):
+            headers["If-None-Match"] = cached["etag"]
+        request = urllib.request.Request(url, headers=headers, method="GET")
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
                 raw = response.read()
                 body = _decode_body(raw, response.headers)
+                etag = _header_value(response.headers, "ETag")
             try:
-                parsed = json.loads(body.decode("utf-8"))
+                text = body.decode("utf-8")
+                parsed = json.loads(text)
             except (UnicodeDecodeError, json.JSONDecodeError) as error:
                 raise FetchError(
                     "AIHOT 返回了无法解析的 JSON。请稍后重试，或直接提供一个选题或链接。"
                 ) from error
             if not isinstance(parsed, dict):
                 raise FetchError("AIHOT 返回的 JSON 顶层不是对象，接口可能已变化。")
+            if cache is not None:
+                cache.put(url, etag, text)
             return parsed
         except urllib.error.HTTPError as error:
             status = error.code
+            if status == 304:
+                if cached and cached.get("body"):
+                    try:
+                        return json.loads(cached["body"])
+                    except json.JSONDecodeError as invalid:
+                        raise FetchError(
+                            "AIHOT 返回 304，但本地缓存已损坏。请删除缓存后重试。"
+                        ) from invalid
+                if send_etag and attempt < attempts:
+                    send_etag = False
+                    continue
+                raise FetchError(
+                    "AIHOT 返回 304，但本地没有可用的缓存。请删除缓存后重试。"
+                ) from error
             if status == 403:
                 raise FetchError(
                     "AIHOT 拒绝了这次请求（HTTP 403）。请检查网络、访问规则，"
@@ -204,6 +290,7 @@ def fetch_topics(
     query: str | None = None,
     *,
     request: Callable[[str], dict[str, Any]] | None = None,
+    cache: HttpCache | None = None,
 ) -> list[dict[str, Any]]:
     """Fetch and compact recent selected items without ranking them."""
 
@@ -217,8 +304,7 @@ def fetch_topics(
         raise ValueError("query must contain 2 to 200 characters")
 
     url = _build_url(days, take, query)
-    request_fn = request or request_json
-    payload = request_fn(url)
+    payload = request(url) if request is not None else request_json(url, cache=cache)
     items = payload.get("items")
     if not isinstance(items, list):
         raise FetchError("AIHOT 响应缺少 items 数组，接口可能已变化。")
@@ -242,6 +328,47 @@ def _write_json(path: Path, value: Any) -> None:
             pass
 
 
+def _output_topics(topics: list[dict[str, Any]], out: str | None) -> None:
+    if out and out != "-":
+        _write_json(Path(out).expanduser(), topics)
+    else:
+        print(json.dumps(topics, ensure_ascii=False, indent=2))
+
+
+def run_watch(
+    args: argparse.Namespace,
+    cache: HttpCache | None,
+    *,
+    sleep: Callable[[float], None] = time.sleep,
+    max_iterations: int | None = None,
+) -> int:
+    """Poll at the configured interval and emit only changed snapshots."""
+
+    last_fingerprint: str | None = None
+    iterations = 0
+    while max_iterations is None or iterations < max_iterations:
+        iterations += 1
+        try:
+            topics = fetch_topics(
+                days=args.days,
+                take=args.take,
+                query=args.query,
+                cache=cache,
+            )
+        except (FetchError, ValueError) as error:
+            print(f"抓取失败：{error}", file=sys.stderr)
+        else:
+            fingerprint = json.dumps(topics, ensure_ascii=False, sort_keys=True)
+            if fingerprint != last_fingerprint:
+                _output_topics(topics, args.out)
+                last_fingerprint = fingerprint
+            elif not args.quiet:
+                print(f"无变化，{args.interval} 秒后重试。", file=sys.stderr)
+        if max_iterations is None or iterations < max_iterations:
+            sleep(args.interval)
+    return 0
+
+
 def _positive_int(value: str) -> int:
     try:
         number = int(value)
@@ -249,6 +376,18 @@ def _positive_int(value: str) -> int:
         raise argparse.ArgumentTypeError("必须是整数") from error
     if number < 1:
         raise argparse.ArgumentTypeError("必须大于等于 1")
+    return number
+
+
+def _poll_interval(value: str) -> int:
+    try:
+        number = int(value)
+    except ValueError as error:
+        raise argparse.ArgumentTypeError("必须是整数") from error
+    if number < MIN_POLL_INTERVAL:
+        raise argparse.ArgumentTypeError(
+            f"必须大于等于 {MIN_POLL_INTERVAL} 秒"
+        )
     return number
 
 
@@ -270,22 +409,43 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--query", help="可选关键词，长度 2-200")
     parser.add_argument("--out", help="写入指定 JSON 文件；默认输出到标准输出")
+    parser.add_argument(
+        "--cache",
+        type=Path,
+        default=DEFAULT_CACHE_PATH,
+        help=f"ETag/304 缓存文件（默认：{DEFAULT_CACHE_PATH}）",
+    )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="禁用 ETag/304 缓存",
+    )
+    parser.add_argument(
+        "--watch",
+        action="store_true",
+        help="持续轮询；只有内容变化时才输出",
+    )
+    parser.add_argument(
+        "--interval",
+        type=_poll_interval,
+        default=MIN_POLL_INTERVAL,
+        help=f"轮询间隔秒数，最小 {MIN_POLL_INTERVAL}（默认 {MIN_POLL_INTERVAL}）",
+    )
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="watch 模式下不打印无变化提示",
+    )
     return parser
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = build_parser()
-    args = parser.parse_args(argv)
-    if args.days > 7:
-        parser.error("--days 最大为 7")
-    if args.query is not None and not (2 <= len(args.query.strip()) <= 200):
-        parser.error("--query 长度必须在 2 到 200 个字符之间")
-
+def _run_once(args: argparse.Namespace, cache: HttpCache | None) -> int:
     try:
         topics = fetch_topics(
             days=args.days,
             take=args.take,
             query=args.query,
+            cache=cache,
         )
     except (FetchError, ValueError) as error:
         print(f"抓取失败：{error}", file=sys.stderr)
@@ -305,6 +465,24 @@ def main(argv: list[str] | None = None) -> int:
 
     print(json.dumps(topics, ensure_ascii=False, indent=2))
     return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if args.days > 7:
+        parser.error("--days 最大为 7")
+    if args.query is not None and not (2 <= len(args.query.strip()) <= 200):
+        parser.error("--query 长度必须在 2 到 200 个字符之间")
+
+    cache = None if args.no_cache else HttpCache(Path(args.cache).expanduser())
+    try:
+        if args.watch:
+            return run_watch(args, cache)
+        return _run_once(args, cache)
+    except KeyboardInterrupt:
+        print("已停止轮询。", file=sys.stderr)
+        return 0
 
 
 if __name__ == "__main__":

@@ -14,6 +14,7 @@ import urllib.error
 import urllib.parse
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+from types import SimpleNamespace
 from unittest import mock
 
 
@@ -184,6 +185,50 @@ class FetchTopicsTests(unittest.TestCase):
             )
         self.assertEqual(result["items"][0]["id"], "abc123")
 
+    def test_request_saves_etag_and_reuses_cache_on_304(self):
+        url = "https://aihot.news/api/v1/items"
+        with tempfile.TemporaryDirectory() as directory:
+            cache_path = Path(directory) / "http-cache.json"
+            cache = fetch_topics_module.HttpCache(cache_path)
+            first = FakeResponse(
+                json.dumps(v1_payload()).encode("utf-8"),
+                {"ETag": '"v1"', "Content-Type": "application/json"},
+            )
+            with mock.patch.object(
+                fetch_topics_module.urllib.request,
+                "urlopen",
+                return_value=first,
+            ) as first_call:
+                result = fetch_topics_module.request_json(url, cache=cache)
+            self.assertEqual(result["items"][0]["id"], "abc123")
+            self.assertIsNone(
+                first_call.call_args.args[0].get_header("If-none-match")
+            )
+
+            saved = json.loads(cache_path.read_text(encoding="utf-8"))
+            self.assertEqual(saved[url]["etag"], '"v1"')
+            reloaded = fetch_topics_module.HttpCache(cache_path)
+            self.assertEqual(reloaded.get(url)["body"], saved[url]["body"])
+
+            not_modified = urllib.error.HTTPError(
+                url,
+                304,
+                "not modified",
+                {"ETag": '"v1"'},
+                io.BytesIO(b""),
+            )
+            with mock.patch.object(
+                fetch_topics_module.urllib.request,
+                "urlopen",
+                side_effect=not_modified,
+            ) as cached_call:
+                cached_result = fetch_topics_module.request_json(url, cache=cache)
+            self.assertEqual(
+                cached_call.call_args.args[0].get_header("If-none-match"),
+                '"v1"',
+            )
+            self.assertEqual(cached_result["items"][0]["id"], "abc123")
+
     def test_http_429_honors_retry_after_and_retries_serially(self):
         error = urllib.error.HTTPError(
             "https://aihot.news/api/v1/items",
@@ -285,6 +330,45 @@ class FetchTopicsTests(unittest.TestCase):
             with self.assertRaises(SystemExit) as raised:
                 fetch_topics_module.main(["--days", "8"])
         self.assertEqual(raised.exception.code, 2)
+
+    def test_cli_rejects_interval_below_sixty(self):
+        with redirect_stderr(io.StringIO()):
+            with self.assertRaises(SystemExit) as raised:
+                fetch_topics_module.main(["--interval", "30"])
+        self.assertEqual(raised.exception.code, 2)
+        args = fetch_topics_module.build_parser().parse_args(["--interval", "60"])
+        self.assertEqual(args.interval, 60)
+
+    def test_watch_prints_only_changed_snapshots(self):
+        first = [{"id": "a"}]
+        second = [{"id": "b"}]
+        args = SimpleNamespace(
+            days=7,
+            take=100,
+            query=None,
+            out=None,
+            interval=60,
+            quiet=False,
+        )
+        buffer = io.StringIO()
+        sleeps = []
+        with mock.patch.object(
+            fetch_topics_module,
+            "fetch_topics",
+            side_effect=[first, first, second],
+        ), redirect_stdout(buffer), redirect_stderr(io.StringIO()):
+            status = fetch_topics_module.run_watch(
+                args,
+                None,
+                sleep=sleeps.append,
+                max_iterations=3,
+            )
+        self.assertEqual(status, 0)
+        self.assertEqual(sleeps, [60, 60])
+        output = buffer.getvalue()
+        self.assertEqual(output.count("["), 2)
+        self.assertIn('"a"', output)
+        self.assertIn('"b"', output)
 
 
 if __name__ == "__main__":

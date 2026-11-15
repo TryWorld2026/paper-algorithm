@@ -23,6 +23,14 @@
 python scripts/fetch_topics.py --days 7 --take 100
 ```
 
+脚本默认把 ETag 和响应体缓存在 `state/http-cache.json`，下次请求带 `If-None-Match`，收到 304 时直接复用缓存。需要持续轮询时：
+
+```text
+python scripts/fetch_topics.py --days 7 --take 100 --watch --interval 60
+```
+
+`--interval` 不能小于 60 秒；`--no-cache` 可禁用缓存。
+
 检查纯主稿文本。
 
 ```text
@@ -35,4 +43,4 @@ python scripts/check_script.py <file> [--platform master|douyin|xiaohongshu|bili
 
 AIHOT 只用于发现线索。重要事实回到发布方原文。对外商业产品、公开镜像或批量再分发 AIHOT 数据前，需要确认使用授权。
 
-检查器部分逻辑与词表源自 `human-writing`，MIT 许可见 `LICENSES/human-writing-MIT.txt`。
+本 Skill 随仓库以 MIT 发布。检查器部分逻辑与词表源自 `human-writing`，上游 MIT 许可见 `LICENSES/human-writing-MIT.txt`。
