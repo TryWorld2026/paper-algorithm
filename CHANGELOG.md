@@ -6,6 +6,10 @@
 
 _本区记录 `[1.1.0]` 之后、尚未发布的所有改动；发布时把本区内容并入新的版本号。_
 
+### Added
+
+- `skills/tryworld-kaiyan`：新增“试界开言”口播稿 Skill。只交付选题卡、事实来源表、主稿、四平台开头收尾变体、轻提示和自检报告；不做封面、配音、分镜、渲染或 Setpiece 合成。
+
 ### Changed
 
 - `skills/tryworld-topics`：AIHOT 数据源迁移到 `https://aihot.news` 的 `/api/v1`。日报改为读取 `report` 包层，条目字段改用 `links.original`、`links.aihot`、`source.name` 与 `originalTitle`；新增 gzip、ETag/304 缓存、429/503 `Retry-After` 串行重试、精选 `snapshot`/`changes` 同步、`--rebaseline` 和不少于 60 秒的 `--watch` 轮询。`/api/v1/items` 只维护 24 小时/7 天滚动窗口，完整精选历史镜像走 `--sync-selected`。

@@ -22,11 +22,12 @@
 
 ## 🧭 What Is This
 
-**试界TryWorld official AI-agent skill set** — a complete Chinese voiceover-video production line, from one sentence to a delivered video. Topic selection, scriptwriting, polish, rendering, publish plan, and email notice are all packaged into three Skills:
+**试界TryWorld official AI-agent skill set** — a complete Chinese voiceover-video production line, from one sentence to a delivered video. Topic selection, scriptwriting, polish, rendering, publish plan, and email notice are packaged into four Skills: three for the video pipeline, plus one for script-only work.
 
 - **🎬 `tryworld-koubo`** — the single entry. One sentence in, auto-routed through topics → script → polish → video.
 - **🎯 `tryworld-topics`** — AIHOT-based topic selection: hundreds of daily AI headlines distilled into 3–8 fresh picks.
 - **📜 `tryworld-paper`** — the "Paper Algorithm" video pipeline: script → branded 16:9 video with covers, titles, and captions.
+- **✍️ `tryworld-kaiyan`** — script-only writing: one judgment per video, evidence table, 1–3 minute master script, four-platform opening/ending variants, and a self-check report. No covers, voiceover, storyboard, or render.
 
 Install them into `~/.agents/skills`, open a session in any agent host that reads that directory (e.g. Agent SDK / ZCode), and say one sentence in Chinese. The skills pick up the whole chain from there — topic list, scripts, rendered video, covers, titles, even the automatic email notice.
 
@@ -34,7 +35,7 @@ Install them into `~/.agents/skills`, open a session in any agent host that read
 <table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
 <tr><td style="border-left:4px solid #C0452F; padding:14px 18px;">
   <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:16px;">Paper is the stage, ink is the text, vermilion is the accent, the seal is the signature.</b><br/>
-  <span style="color:#5C5445; font-size:13px;">Three skills, each guarding one page — together they form a single moving page of algorithm notes: from "what should I make this week" to delivered videos, automatic email notices, and a four-platform publishing schedule.</span>
+  <span style="color:#5C5445; font-size:13px;">Three video-pipeline skills plus one script-only skill — together they cover the full path from "what should I make this week" to delivered videos, automatic email notices, and a four-platform publishing schedule.</span>
 </td></tr>
 </table>
 </div>
@@ -144,6 +145,8 @@ Six steps: `01 ingest` → `02 check_prose` → `03 confirm` (hard gate) → `04
 </tr>
 </table>
 </div>
+
+Script-only work is handled by `tryworld-kaiyan`: it stops at the writing pack and does not render.
 
 ---
 
@@ -269,6 +272,7 @@ Each folder under `skills/` is a skill whose `SKILL.md` is a complete, executabl
 | `skills/tryworld-koubo/SKILL.md` | Single entry / router | Any voiceover request (make an episode, pick topics, optimize a script) |
 | `skills/tryworld-paper/SKILL.md` | Script → video production | Once a script is confirmed for production |
 | `skills/tryworld-topics/SKILL.md` | AIHOT topic selection | Mode B topic picking |
+| `skills/tryworld-kaiyan/SKILL.md` | Script-only writing | When the user wants a spoken script, not a video |
 
 After installation into `~/.agents/skills`, hosts trigger these by the `description` frontmatter; when the user names one (`$tryworld-koubo`), open its SKILL.md and follow it literally.
 
@@ -355,7 +359,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
-> Hosts that support the `~/.agents/skills` convention (e.g. Agent SDK / ZCode) pick these up automatically; for other hosts, point your host's skills directory at this path (see your host's docs). Note that `tryworld-koubo` routes to its sibling skills, so for the full pipeline install all three — see [Environment](#environment) for external dependencies.
+> Hosts that support the `~/.agents/skills` convention (e.g. Agent SDK / ZCode) pick these up automatically; for other hosts, point your host's skills directory at this path (see your host's docs). Note that `tryworld-koubo` routes to its sibling skills, so for the full video pipeline install `tryworld-koubo`, `tryworld-paper`, and `tryworld-topics` together; add `tryworld-kaiyan` for script-only work — see [Environment](#environment) for external dependencies.
 
 ### How to trigger
 
@@ -427,7 +431,8 @@ paper-algorithm/
     ├── tryworld-koubo/          # Voiceover router (routing + email notice)
     ├── tryworld-paper/          # Paper Algorithm video production
     │   ├── themes/              # Brand theme files (paper-algorithm.json)
-    └── tryworld-topics/         # AIHOT topic selection
+    ├── tryworld-topics/         # AIHOT topic selection
+    └── tryworld-kaiyan/         # Script-only writing (topics → script pack)
 ```
 
 ---

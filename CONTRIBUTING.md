@@ -10,10 +10,11 @@
 
 ```text
 paper-algorithm/
-├── skills/                      # 三个技能（口播工作流、出片、选题）
+├── skills/                      # 四个技能（口播工作流、出片、选题、写稿）
 │   ├── tryworld-koubo/          # 口播总入口（选题 → 写稿 → 出片路由）
 │   ├── tryworld-paper/          # 出片技能（视觉/配音/渲染/交付核验）
-│   └── tryworld-topics/         # 选题技能（AIHOT 数据 → 选题清单）
+│   ├── tryworld-topics/         # 选题技能（AIHOT 数据 → 选题清单）
+│   └── tryworld-kaiyan/         # 写稿技能（选题 → 口播稿包，不做出片）
 ├── scripts/                     # 仓库级检查脚本
 │   ├── check_skills.py          # 编译技能脚本 + 跑活人感门禁
 │   └── doctor.py                # 环境自检（跨平台；doctor.ps1 为 Windows 回退，已弃用）

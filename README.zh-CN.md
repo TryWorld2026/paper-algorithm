@@ -22,11 +22,12 @@
 
 ## 🧭 这是什么
 
-**试界TryWorld 官方 AI 技能合集**——一条完整的中文口播视频生产线：从一句话到成片。选题、写稿、优化、出片、发布计划、邮件通知，全部打包成三个 Skill：
+**试界TryWorld 官方 AI 技能合集**——一条完整的中文口播视频生产线：从一句话到成片。选题、写稿、优化、出片、发布计划、邮件通知，全部打包成四个 Skill：三个负责视频生产线，一个只负责写稿。
 
 - **🎬 `tryworld-koubo`**——统一入口。一句人话，自动路由选题 → 写稿 → 优化 → 出片。
 - **🎯 `tryworld-topics`**——AIHOT 选题。每天几百条 AI 资讯，压成 3–8 个能做、能火、不重复的选题。
 - **📜 `tryworld-paper`**——纸上算法出片。口播稿 → 品牌化 16:9 横屏视频，含封面、标题、字幕。
+- **✍️ `tryworld-kaiyan`**——只写口播稿。一个视频只讲一个判断，交付事实来源表、1–3 分钟主稿、四平台开头收尾变体和自检报告；不做封面、配音、分镜或渲染。
 
 装进 `~/.agents/skills` 后，在任何支持该目录约定的 AI 工具（如 Agent SDK / ZCode）的会话里说一句中文，整条链路就从选题清单、口播稿、渲染成片、封面标题，一直到自动邮件通知自动走完，不需要你记任何命令。
 
@@ -34,7 +35,7 @@
 <table style="border:1px solid #E4DCC8; border-radius:8px; background:#FBF7EC;">
 <tr><td style="border-left:4px solid #C0452F; padding:14px 18px;">
   <b style="font-family:Georgia,'Noto Serif SC','Songti SC',serif; color:#1C1916; font-size:16px;">纸面是舞台，墨迹是文字，朱红是重点，印章是签名。</b><br/>
-  <span style="color:#5C5445; font-size:13px;">三个技能各守一页，合起来就是一页会动的算法笔记——从「这周做什么」到成片交付、自动邮件通知、四平台发布计划。</span>
+  <span style="color:#5C5445; font-size:13px;">三个视频技能各守一页，再加一个只写稿技能，合起来覆盖从「这周做什么」到成片交付、自动邮件通知、四平台发布计划的完整路径。</span>
 </td></tr>
 </table>
 </div>
@@ -144,6 +145,8 @@ python -m pipeline.runner --project-dir <项目目录> --steps 3,4,5,6
 </tr>
 </table>
 </div>
+
+只写稿的交付由 `tryworld-kaiyan` 负责：停在写稿包，不进入出片。
 
 ---
 
@@ -269,6 +272,7 @@ flowchart LR
 | `skills/tryworld-koubo/SKILL.md` | 统一入口 / 路由 | 任何口播类请求（做一期、要选题、优化稿子） |
 | `skills/tryworld-paper/SKILL.md` | 稿子 → 成片生产 | 稿子确认进入出片阶段时 |
 | `skills/tryworld-topics/SKILL.md` | AIHOT 选题 | 模式 B 挑选题时 |
+| `skills/tryworld-kaiyan/SKILL.md` | 只写口播稿 | 用户只要稿子、不做视频时 |
 
 安装到 `~/.agents/skills` 后，宿主按 frontmatter 的 description 自动触发；用户点名（`$tryworld-koubo`）时，直接打开对应 SKILL.md 逐条照做。
 
@@ -355,7 +359,7 @@ Copy-Item -Path .\skills\* -Destination "$env:USERPROFILE\.agents\skills" -Recur
 Copy-Item -Path .\skills\tryworld-paper -Destination "$env:USERPROFILE\.agents\skills" -Recurse
 ```
 
-> 支持 `~/.agents/skills` 目录约定的宿主（如 Agent SDK / ZCode）会自动识别；其他宿主请把各自的技能目录指向这里（见宿主文档）。注意 `tryworld-koubo` 会路由到同级技能，走完整链路请三个一起装——外部依赖见[环境要求](#环境要求)。
+> 支持 `~/.agents/skills` 目录约定的宿主（如 Agent SDK / ZCode）会自动识别；其他宿主请把各自的技能目录指向这里（见宿主文档）。注意 `tryworld-koubo` 会路由到同级技能，走完整视频链路请把 `tryworld-koubo`、`tryworld-paper`、`tryworld-topics` 三个一起装；只写稿再加 `tryworld-kaiyan`——外部依赖见[环境要求](#环境要求)。
 
 ### 怎么触发
 
@@ -427,7 +431,8 @@ paper-algorithm/
     ├── tryworld-koubo/          # 口播总入口（路由 + 邮件通知）
     ├── tryworld-paper/          # 纸上算法视频制作
     │   ├── themes/              # Brand theme files (paper-algorithm.json)
-    └── tryworld-topics/         # AIHOT 口播选题
+    ├── tryworld-topics/         # AIHOT 口播选题
+    └── tryworld-kaiyan/         # 只写口播稿（选题 → 写稿包）
 ```
 
 ---
