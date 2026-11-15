@@ -6,6 +6,14 @@
 
 _本区记录 `[1.1.0]` 之后、尚未发布的所有改动；发布时把本区内容并入新的版本号。_
 
+### Changed
+
+- `skills/tryworld-topics`：AIHOT 数据源迁移到 `https://aihot.news` 的 `/api/v1`。日报改为读取 `report` 包层，条目字段改用 `links.original`、`links.aihot`、`source.name` 与 `originalTitle`；新增 gzip、ETag/304 缓存、429/503 `Retry-After` 串行重试、精选 `snapshot`/`changes` 同步、`--rebaseline` 和不少于 60 秒的 `--watch` 轮询。`/api/v1/items` 只维护 24 小时/7 天滚动窗口，完整精选历史镜像走 `--sync-selected`。
+
+### Removed
+
+- `skills/tryworld-topics/scripts/fetch_aihot.ps1`：删除已弃用的 PowerShell 回退，统一使用最新的 `fetch_aihot.py`。
+
 ## [1.1.0] - 2026-10-24
 
 自 `[1.0.0]` 以来的全部改动（含 2026-09-22 的 runner/测试批次与 2026-10-24 的第一性原理用户视角修复）。
