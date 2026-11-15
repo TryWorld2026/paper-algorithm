@@ -15,4 +15,4 @@
 | [cordis-paper](cordis-paper/) | DeepSeek 论文精读：把拆插件讲成数学 | 8.8 分钟 | 12 MB |
 | [cursor-spacex](cursor-spacex/) | SpaceX 买下 Cursor | 6.6 分钟 | 8 MB |
 
-这些内容按仓库根 LICENSE（CC BY-SA 4.0）授权。
+这些内容按仓库根 LICENSE（MIT）授权。

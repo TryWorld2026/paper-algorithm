@@ -113,4 +113,4 @@ tryworld-paper/
 
 ## 许可
 
-本仓库采用知识共享 **署名-相同方式共享 4.0 国际（CC BY-SA 4.0）**。其中 `scripts/check_prose.py` 源自 [KKKKhazix/human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0（禁令上移到修辞动作级，检测器补盲区降误伤），按 **MIT License** 使用与改造，版权归原作者所有，完整声明见 [LICENSE-MIT](LICENSE-MIT)。
+本仓库采用 **MIT License**。其中 `scripts/check_prose.py` 源自 [KKKKhazix/human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0（禁令上移到修辞动作级，检测器补盲区降误伤），按 **MIT License** 使用与改造，版权归原作者所有，完整声明见 [LICENSE-MIT](LICENSE-MIT)。

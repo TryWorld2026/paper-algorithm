@@ -52,7 +52,7 @@ paper-algorithm/
 
 - 违反流水线契约的改动（去掉用户确认闸门、去掉硬禁项检查、去掉交付核验等）
 - 在主题或示例中包含他人商标或未授权的音色克隆
-- 改变根目录 LICENSE（CC BY-SA 4.0）或 `skills/tryworld-paper/LICENSE-MIT` 的归属声明
+- 改变根目录 LICENSE（MIT）或 `skills/tryworld-paper/LICENSE-MIT` 的归属声明
 
 ## 提交流程
 

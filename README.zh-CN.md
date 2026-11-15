@@ -15,7 +15,7 @@
   <img src="https://img.shields.io/badge/状态-已启用-8FAF8C?style=flat-square" alt="status">
   <img src="https://img.shields.io/badge/技能-3-1C1916?style=flat-square" alt="skills">
   <img src="https://img.shields.io/badge/平台-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="platform">
-  <img src="https://img.shields.io/badge/许可-CC%20BY--SA%204.0-C0452F?style=flat-square" alt="license">
+  <img src="https://img.shields.io/badge/许可-MIT-C0452F?style=flat-square" alt="license">
 </p>
 
 ---
@@ -255,7 +255,7 @@ flowchart LR
 }
 ```
 
-欢迎社区贡献主题——PR 到 `skills/tryworld-paper/themes/` 目录并附一段 720p 示例（遵循 CC BY-SA 4.0）。
+欢迎社区贡献主题——PR 到 `skills/tryworld-paper/themes/` 目录并附一段 720p 示例（遵循 MIT）。
 
 ---
 
@@ -423,7 +423,7 @@ paper-algorithm/
 ├── README.md                    # 索引（English）
 ├── README.zh-CN.md              # 索引（简体中文）
 ├── scripts/                      # 仓库内检查脚本（静态门禁 + 环境自检）
-├── LICENSE                      # CC BY-SA 4.0
+├── LICENSE                      # MIT
 ├── examples/                    # 真实流水线产出（效果展示）
 │   ├── cordis-paper/            # 示例：720p 预览 · 封面 · 标题 · 口播稿
 │   └── cursor-spacex/           # 示例：720p 预览 · 封面 · 标题 · 口播稿
@@ -440,19 +440,19 @@ paper-algorithm/
 ## 🤝 使用与二创
 
 - **请 fork，不要复制粘贴。** 用仓库右上角的 fork 按钮使用，保持与上游的连接和提交历史。
-- **保留上游。** 任何二创仓库必须显著标注本仓库（`TryWorld2026/paper-algorithm`）与许可声明。
-- **相同方式共享。** 二创必须使用同一许可（CC BY-SA 4.0）发布；不带本许可声明的仓库，不视为已获授权的二创。
-- **商业使用欢迎**——只要署名与本许可随作品一起保留。
+- **保留声明。** 按 MIT 许可可自由使用、修改和分发；保留版权与许可声明即可。
+- **注明来源是欢迎的，但不是 MIT 的附加条件。** 链接回 `TryWorld2026/paper-algorithm` 很好，但 MIT 只要求保留版权与许可声明。
+- **商业使用欢迎**，同样遵循 MIT 条款。
 
 ---
 
 ## 📄 许可
 
-本仓库采用知识共享 **署名-相同方式共享 4.0 国际（CC BY-SA 4.0）**：允许自由分享与演绎（含商业用途），但必须署名，且任何二创（衍生作品）必须使用同一许可发布。完整条款见 [LICENSE](LICENSE)。
+本仓库采用 **MIT License**：允许使用、复制、修改、合并、发布、分发、再许可和销售，保留版权与许可声明即可。完整条款见 [LICENSE](LICENSE)。
 
-`tryworld-paper/scripts/check_prose.py` 源自 [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0，按 **MIT License** 使用（见 `skills/tryworld-paper/LICENSE-MIT`）；仓库其余内容为 CC BY-SA 4.0。
+`tryworld-paper/scripts/check_prose.py` 与 `tryworld-kaiyan/scripts/check_script.py` 源自 [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0，保留上游 MIT 声明（见 `skills/tryworld-paper/LICENSE-MIT`、`skills/tryworld-kaiyan/LICENSES/human-writing-MIT.txt`）。第三方素材、商标和引用内容仍受各自条款约束。
 
-[![CC BY-SA 4.0](assets/license-badge.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![MIT License](assets/license-badge.svg)](LICENSE)
 
 ---
 

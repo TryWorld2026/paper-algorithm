@@ -15,7 +15,7 @@
   <img src="https://img.shields.io/badge/status-active-8FAF8C?style=flat-square" alt="status">
   <img src="https://img.shields.io/badge/skills-3-1C1916?style=flat-square" alt="skills">
   <img src="https://img.shields.io/badge/platform-Codex%20%E2%80%A2%20Claude-2E5E8C?style=flat-square" alt="platform">
-  <img src="https://img.shields.io/badge/license-CC%20BY--SA%204.0-C0452F?style=flat-square" alt="license">
+  <img src="https://img.shields.io/badge/license-MIT-C0452F?style=flat-square" alt="license">
 </p>
 
 ---
@@ -255,7 +255,7 @@ Want your own brand on this pipeline? Copy the theme JSON, change the values fol
 }
 ```
 
-Community themes are welcome — PR to `skills/tryworld-paper/themes/` with a 720p sample (CC BY-SA 4.0 applies).
+Community themes are welcome — PR to `skills/tryworld-paper/themes/` with a 720p sample (MIT applies).
 
 ---
 
@@ -423,7 +423,7 @@ paper-algorithm/
 ├── README.md                    # Index (English)
 ├── README.zh-CN.md              # Index (简体中文)
 ├── scripts/                      # In-repo checks (static gates + doctor)
-├── LICENSE                      # CC BY-SA 4.0
+├── LICENSE                      # MIT
 ├── examples/                    # Real pipeline outputs (showcase)
 │   ├── cordis-paper/            # Sample: 720p preview · covers · titles · script
 │   └── cursor-spacex/           # Sample: 720p preview · covers · titles · script
@@ -440,19 +440,19 @@ paper-algorithm/
 ## 🤝 Use and Remix
 
 - **Fork, don't copy.** Use the fork button — it keeps the link back to this repository and its commit history.
-- **Keep the upstream.** Every derivative repository must carry a visible attribution to this project (`TryWorld2026/paper-algorithm`) and the license notice.
-- **Share alike.** Remixes must be released under the same license (CC BY-SA 4.0). A repository that doesn't carry this license statement is not licensed for derivative work.
-- **Commercial use is welcome** — as long as the attribution and the license travel with it.
+- **Keep the notice.** Reuse, modification, and redistribution are allowed under MIT; keep the copyright and permission notice with the software.
+- **Credit is welcome, not required.** Linking back to `TryWorld2026/paper-algorithm` is appreciated, but MIT does not add an attribution condition beyond keeping the notice.
+- **Commercial use is welcome** under the same MIT terms.
 
 ---
 
 ## 📄 License
 
-This work is licensed under a **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)** license: share and adapt freely — including commercially — as long as you give credit, and any remix is released under the same license. Full terms: [LICENSE](LICENSE).
+This repository is released under the **MIT License**. You may use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, provided the copyright and permission notice are included. Full text: [LICENSE](LICENSE).
 
-`tryworld-paper/scripts/check_prose.py` is derived from [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0 and remains under the **MIT License** (see `skills/tryworld-paper/LICENSE-MIT`); everything else in this repository is CC BY-SA 4.0.
+`tryworld-paper/scripts/check_prose.py` and the checker in `tryworld-kaiyan/scripts/check_script.py` are derived from [human-writing](https://github.com/KKKKhazix/human-writing) v1.1.0 and retain the upstream MIT notice (`skills/tryworld-paper/LICENSE-MIT`, `skills/tryworld-kaiyan/LICENSES/human-writing-MIT.txt`). Third-party assets, trademarks, and quoted material remain subject to their own terms.
 
-[![CC BY-SA 4.0](assets/license-badge.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![MIT License](assets/license-badge.svg)](LICENSE)
 
 ---
 
