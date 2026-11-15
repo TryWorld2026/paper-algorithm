@@ -110,14 +110,92 @@ VAGUE_JUDGMENTS = (
     "大有可为",
 )
 
+TITLE_LIMITS = {
+    "master": 8,
+    "douyin": 6,
+    "shipinhao": 6,
+    "xiaohongshu": 8,
+    "bilibili": 8,
+}
+
+TITLE_CLICKBAIT = (
+    "震惊",
+    "炸裂",
+    "封神",
+    "必看",
+    "全网",
+    "彻底",
+    "颠覆",
+    "天花板",
+    "王炸",
+    "杀疯",
+    "再不",
+    "就晚了",
+    "99%",
+    "所有人",
+    "看完沉默",
+    "速看",
+    "重磅",
+)
+
+TITLE_VAGUE = (
+    "很重要",
+    "值得关注",
+    "未来已来",
+    "时代变了",
+    "大有可为",
+    "影响深远",
+)
+
+TERM_WATCH = (
+    "大模型",
+    "参数",
+    "推理",
+    "微调",
+    "多模态",
+    "Agent",
+    "RAG",
+    "token",
+    "API",
+    "工作流",
+    "闭环",
+    "赋能",
+    "抓手",
+    "生态",
+    "范式",
+    "底层逻辑",
+    "认知",
+    "维度",
+    "机制",
+    "路径",
+    "体系",
+    "矩阵",
+    "链路",
+    "颗粒度",
+    "对齐",
+    "沉淀",
+    "复用",
+    "编排",
+    "智能体",
+)
+
 OPENING_GREETING = re.compile(
     r"^(?:"
     r"大家(?:好|们好)|"
     r"哈喽|嗨|你好|各位(?:观众|朋友)|"
     r"欢迎(?:来到|收看|收听)|"
     r"我是|"
-    r"今天(?:想|想和|想跟|和|跟|来)?(?:大家|你)?(?:聊|说|讲)"
+    r"今天(?:我们|想|想和|想跟|和|跟|来)?(?:大家|你)?(?:来)?(?:聊|说|讲)"
     r")"
+)
+
+BRAND_OPENING = re.compile(
+    r"^(?:"
+    r"哈喽[，,]\s*我是\s*TryWorld(?![A-Za-z])\s*[。.]?"
+    r"|哈喽大家好[，,]\s*我是\s*TryWorld(?![A-Za-z])\s*[。.]?"
+    r"|我是\s*TryWorld(?![A-Za-z])\s*[。.]?"
+    r")",
+    re.IGNORECASE,
 )
 
 SUMMARY_ENDING = re.compile(
@@ -408,16 +486,28 @@ def pattern_issues(
 def opening_issue(paragraphs: list[Paragraph], original: str) -> list[Issue]:
     if not paragraphs:
         return []
-    first = paragraphs[0]
-    match = OPENING_GREETING.match(first.text)
+    target = paragraphs[0]
+    remainder = target.text
+
+    brand_match = BRAND_OPENING.match(remainder)
+    if brand_match:
+        remainder = remainder[brand_match.end() :].strip()
+        remainder = remainder.lstrip("，,。.！!？? \t")
+        if not remainder:
+            if len(paragraphs) < 2:
+                return []
+            target = paragraphs[1]
+            remainder = target.text
+
+    match = OPENING_GREETING.match(remainder)
     if not match:
         return []
     return [
         Issue(
             code="opening_greeting",
-            line=line_number(original, first.position),
+            line=line_number(original, target.position),
             message="开头在问候或自我介绍，0 到 5 秒应先给冲突、代价或结论。",
-            excerpt=excerpt(first.text),
+            excerpt=excerpt(remainder),
         )
     ]
 
@@ -531,7 +621,129 @@ def parallelism_issues(
     return issues
 
 
-def check_text(text: str, path_label: str, short: bool, platform: str) -> dict:
+def title_char_count(title: str) -> int:
+    """Count displayed characters, ignoring whitespace; punctuation counts."""
+
+    return len([char for char in title if not char.isspace()])
+
+
+def check_title(title: str, platform: str) -> dict:
+    """Validate the short video title against length and tone rules."""
+
+    clean = title.strip()
+    count = title_char_count(clean)
+    limit = TITLE_LIMITS[platform]
+    errors: list[Issue] = []
+    warnings: list[Issue] = []
+
+    if not clean:
+        errors.append(
+            Issue(
+                code="title_empty",
+                line=1,
+                message="标题为空，需要给一个不超过规定字数的视频标题。",
+            )
+        )
+
+    if count > limit:
+        errors.append(
+            Issue(
+                code="title_length",
+                line=1,
+                message=(
+                    f"标题 {count} 个字符，超过 {platform} 的 {limit} 字上限。"
+                    "标点计入，空格不计，短标题优先。"
+                ),
+                excerpt=excerpt(clean),
+            )
+        )
+
+    for term in TITLE_CLICKBAIT:
+        if term in clean:
+            errors.append(
+                Issue(
+                    code="title_clickbait",
+                    line=1,
+                    message=f"标题含夸张或标题党用语“{term}”，换成具体对象或后果。",
+                    excerpt=excerpt(clean),
+                )
+            )
+            break
+
+    for term in TITLE_VAGUE:
+        if term in clean:
+            warnings.append(
+                Issue(
+                    code="title_vague",
+                    line=1,
+                    message=f"标题含空泛判断“{term}”，换成观众能立刻感知的变化。",
+                    excerpt=excerpt(clean),
+                )
+            )
+            break
+
+    punctuation = re.findall(r"[，。！？、,.!?；;：:]", clean)
+    if len(punctuation) > 2:
+        warnings.append(
+            Issue(
+                code="title_punctuation",
+                line=1,
+                message="标题标点偏多，短标题尽量只保留一个语气点。",
+                excerpt=excerpt(clean),
+            )
+        )
+
+    return {
+        "text": clean,
+        "platform": platform,
+        "characters": count,
+        "limit": limit,
+        "remaining": limit - count,
+        "passed": not errors,
+        "errors": [issue.as_dict() for issue in errors],
+        "warnings": [issue.as_dict() for issue in warnings],
+    }
+
+
+def term_density_issues(
+    prose: str, original: str, total_han: int
+) -> list[Issue]:
+    matches = non_overlapping_terms(prose, TERM_WATCH)
+    if not matches:
+        return []
+
+    distinct = sorted({term for _, term in matches})
+    density = len(matches) / total_han * 100 if total_han else 0
+    if len(distinct) < 3 and density <= 2:
+        return []
+
+    first_position, first_term = matches[0]
+    return [
+        Issue(
+            code="term_density",
+            line=line_number(original, first_position),
+            message=(
+                f"检测到 {len(matches)} 处专业或抽象词（{('、'.join(distinct[:6]))}），"
+                "先确认普通观众能不能听懂。能换成动作和场景的，换成动作和场景。"
+            ),
+            excerpt=excerpt(
+                prose[
+                    max(0, first_position - 20) : first_position
+                    + len(first_term)
+                    + 40
+                ]
+            ),
+        )
+    ]
+
+
+def check_text(
+    text: str,
+    path_label: str,
+    short: bool,
+    platform: str,
+    title: str | None = None,
+) -> dict:
     prose = mask_markup(text)
     total_han = han_count(prose)
     paragraphs = prose_paragraphs(prose)
@@ -608,6 +820,7 @@ def check_text(text: str, path_label: str, short: bool, platform: str) -> dict:
 
     warnings.extend(short_streak_issues(paragraphs, text))
     warnings.extend(parallelism_issues(paragraphs, text))
+    warnings.extend(term_density_issues(prose, text, total_han))
 
     if total_han > 0 and not has_concrete_cta(paragraphs):
         final_line = line_number(
@@ -646,12 +859,15 @@ def check_text(text: str, path_label: str, short: bool, platform: str) -> dict:
         if sentence_count
         else 0.0
     )
+    title_report = check_title(title, platform) if title is not None else None
+    passed = not errors and (title_report is None or title_report["passed"])
 
     return {
-        "passed": not errors,
+        "passed": passed,
         "path": path_label,
         "platform": platform,
         "short": short,
+        "title": title_report,
         "metrics": {
             "han": total_han,
             "estimated_seconds": estimated_seconds,
@@ -681,21 +897,42 @@ def print_human_report(report: dict) -> None:
         f" | 段落 {metrics['paragraphs']}"
     )
 
+    title = report.get("title")
+    if title is not None:
+        print(
+            f"标题「{title['text']}」| {title['characters']}/{title['limit']} 字"
+            f" | 剩余 {title['remaining']}"
+        )
+
     if report["errors"]:
         print("\n需要修改")
         for issue in report["errors"]:
             print(f"- [{issue['code']}] 第 {issue['line']} 行 {issue['message']}")
+
+    if title is not None and title["errors"]:
+        print("\n标题需要修改")
+        for issue in title["errors"]:
+            print(f"- [{issue['code']}] {issue['message']}")
 
     if report["warnings"]:
         print("\n需要人工判断")
         for issue in report["warnings"]:
             print(f"- [{issue['code']}] 第 {issue['line']} 行 {issue['message']}")
 
+    if title is not None and title["warnings"]:
+        print("\n标题需要人工判断")
+        for issue in title["warnings"]:
+            print(f"- [{issue['code']}] {issue['message']}")
+
     if report["passed"]:
         suffix = f"，另有 {len(report['warnings'])} 条警告" if report["warnings"] else ""
         print(f"\n结论 通过{suffix}")
     else:
-        print(f"\n结论 不通过，{len(report['errors'])} 处硬伤")
+        title_errors = len(title["errors"]) if title is not None else 0
+        print(
+            f"\n结论 不通过，正文 {len(report['errors'])} 处硬伤，"
+            f"标题 {title_errors} 处硬伤"
+        )
 
 
 def read_text(path: str) -> str:
@@ -712,9 +949,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("path", help="口播稿文件路径，使用 - 从标准输入读取")
     parser.add_argument(
         "--platform",
-        choices=("master", "douyin", "xiaohongshu", "bilibili"),
+        choices=(
+            "master",
+            "douyin",
+            "shipinhao",
+            "xiaohongshu",
+            "bilibili",
+        ),
         default="master",
         help="目标平台，仅用于校验和报告",
+    )
+    parser.add_argument(
+        "--title",
+        help="可选视频标题；同时校验字数、平台上限和标题党用语",
     )
     parser.add_argument(
         "--short",
@@ -738,7 +985,13 @@ def main(argv: list[str] | None = None) -> int:
         print("没有检测到可检查的口播正文。", file=sys.stderr)
         return 2
 
-    report = check_text(text, args.path, args.short, args.platform)
+    report = check_text(
+        text,
+        args.path,
+        args.short,
+        args.platform,
+        title=args.title,
+    )
     if args.json:
         print(json.dumps(report, ensure_ascii=False, indent=2))
     else:

@@ -183,6 +183,82 @@ class CheckerTests(unittest.TestCase):
     def test_greeting_opening_is_hard_error(self) -> None:
         self.assert_hard_error("大家好。" + full_script(), "opening_greeting")
 
+    def test_three_short_brand_signatures_pass(self) -> None:
+        signatures = (
+            "哈喽，我是TryWorld。",
+            "哈喽大家好，我是TryWorld。",
+            "我是TryWorld。",
+        )
+        for signature in signatures:
+            with self.subTest(signature=signature):
+                result, report = self.run_json(signature + full_script())
+                self.assertEqual(
+                    result.returncode, 0, result.stdout + result.stderr
+                )
+                self.assertTrue(report["passed"])
+                self.assertNotIn(
+                    "opening_greeting",
+                    [issue["code"] for issue in report["errors"]],
+                )
+
+    def test_brand_signature_case_and_punctuation_are_flexible(self) -> None:
+        signatures = (
+            "哈喽, 我是 tryworld.",
+            "哈喽大家好, 我是 TRYWORLD.",
+            "我是tryworld.",
+        )
+        for signature in signatures:
+            with self.subTest(signature=signature):
+                result, report = self.run_json(signature + full_script())
+                self.assertEqual(
+                    result.returncode, 0, result.stdout + result.stderr
+                )
+                self.assertNotIn(
+                    "opening_greeting",
+                    [issue["code"] for issue in report["errors"]],
+                )
+
+    def test_brand_signature_then_direct_hook_in_same_paragraph_passes(self) -> None:
+        text = "哈喽，我是TryWorld。" + full_script()
+        result, report = self.run_json(text)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertTrue(report["passed"])
+        self.assertNotIn(
+            "opening_greeting", [issue["code"] for issue in report["errors"]]
+        )
+
+    def test_brand_signature_alone_then_direct_hook_passes(self) -> None:
+        text = "哈喽，我是TryWorld。\n\n" + full_script()
+        result, report = self.run_json(text)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertTrue(report["passed"])
+        self.assertNotIn(
+            "opening_greeting", [issue["code"] for issue in report["errors"]]
+        )
+
+    def test_brand_signature_does_not_allow_following_greeting(self) -> None:
+        same_paragraph = (
+            "我是TryWorld。大家好。" + full_script()
+        )
+        self.assert_hard_error(same_paragraph, "opening_greeting")
+
+        next_paragraph = (
+            "我是TryWorld。\n\n大家好。\n\n" + full_script()
+        )
+        self.assert_hard_error(next_paragraph, "opening_greeting")
+
+        welcome = (
+            "我是TryWorld。欢迎来到我的频道。" + full_script()
+        )
+        self.assert_hard_error(welcome, "opening_greeting")
+
+    def test_long_brand_opening_is_still_rejected(self) -> None:
+        text = (
+            "哈喽大家好，欢迎来到我的频道，我是TryWorld，今天我们聊聊。"
+            + full_script()
+        )
+        self.assert_hard_error(text, "opening_greeting")
+
     def test_summary_ending_is_hard_error(self) -> None:
         text = full_script() + "\n\n总的来说，这件事值得每个人认真想一想。"
         self.assert_hard_error(text, "summary_ending")
@@ -257,8 +333,18 @@ class CheckerTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(
             set(report),
-            {"passed", "path", "platform", "short", "metrics", "errors", "warnings"},
+            {
+                "passed",
+                "path",
+                "platform",
+                "short",
+                "title",
+                "metrics",
+                "errors",
+                "warnings",
+            },
         )
+        self.assertIsNone(report["title"])
         self.assertEqual(
             set(report["metrics"]),
             {
@@ -276,6 +362,154 @@ class CheckerTests(unittest.TestCase):
                 set(report["errors"][0]),
                 {"code", "line", "message", "excerpt"},
             )
+
+    def test_master_title_up_to_eight_characters_passes(self) -> None:
+        result, report = self.run_json(
+            full_script(), "--title", "AI替你规划路线"
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertTrue(report["passed"])
+        self.assertEqual(report["title"]["characters"], 8)
+        self.assertEqual(report["title"]["limit"], 8)
+        self.assertNotIn(
+            "title_length",
+            [issue["code"] for issue in report["title"]["errors"]],
+        )
+
+    def test_master_title_over_eight_characters_fails(self) -> None:
+        result, report = self.run_json(
+            full_script(), "--title", "AI替你规划新路线"
+        )
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertFalse(report["passed"])
+        self.assertEqual(report["title"]["characters"], 9)
+        self.assertIn(
+            "title_length",
+            [issue["code"] for issue in report["title"]["errors"]],
+        )
+        length_error = next(
+            issue
+            for issue in report["title"]["errors"]
+            if issue["code"] == "title_length"
+        )
+        self.assertIn("标点计入，空格不计", length_error["message"])
+
+    def test_title_spaces_do_not_count_but_punctuation_does(self) -> None:
+        spaced = "AI 替 你 规 划 路 线"
+        result, report = self.run_json(full_script(), "--title", spaced)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(report["title"]["characters"], 8)
+
+        with_punctuation = "AI，替你规划路线"
+        result, report = self.run_json(
+            full_script(), "--title", with_punctuation
+        )
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertEqual(report["title"]["characters"], 9)
+        self.assertIn(
+            "title_length",
+            [issue["code"] for issue in report["title"]["errors"]],
+        )
+
+    def test_douyin_six_characters_pass_and_seven_fail(self) -> None:
+        result, report = self.run_json(
+            full_script(),
+            "--platform",
+            "douyin",
+            "--title",
+            "AI替你规划",
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(report["title"]["limit"], 6)
+        self.assertNotIn(
+            "title_length",
+            [issue["code"] for issue in report["title"]["errors"]],
+        )
+
+        result, report = self.run_json(
+            full_script(),
+            "--platform",
+            "douyin",
+            "--title",
+            "AI替你规划路",
+        )
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn(
+            "title_length",
+            [issue["code"] for issue in report["title"]["errors"]],
+        )
+
+    def test_shipinhao_is_supported_and_limits_title_to_six(self) -> None:
+        result, report = self.run_json(
+            full_script(),
+            "--platform",
+            "shipinhao",
+            "--title",
+            "AI替你规划",
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(report["platform"], "shipinhao")
+        self.assertEqual(report["title"]["limit"], 6)
+
+        result, report = self.run_json(
+            full_script(),
+            "--platform",
+            "shipinhao",
+            "--title",
+            "AI替你规划路",
+        )
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn(
+            "title_length",
+            [issue["code"] for issue in report["title"]["errors"]],
+        )
+
+    def test_clickbait_title_is_hard_error(self) -> None:
+        result, report = self.run_json(
+            full_script(), "--title", "震惊AI替你上班"
+        )
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertEqual(report["title"]["characters"], 8)
+        self.assertFalse(report["title"]["passed"])
+        self.assertIn(
+            "title_clickbait",
+            [issue["code"] for issue in report["title"]["errors"]],
+        )
+
+    def test_vague_title_warns_without_blocking_script(self) -> None:
+        result, report = self.run_json(full_script(), "--title", "AI很重要")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertTrue(report["passed"])
+        self.assertTrue(report["title"]["passed"])
+        self.assertIn(
+            "title_vague",
+            [issue["code"] for issue in report["title"]["warnings"]],
+        )
+
+    def test_empty_title_fails(self) -> None:
+        result, report = self.run_json(full_script(), "--title", "   ")
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertFalse(report["passed"])
+        self.assertEqual(report["title"]["characters"], 0)
+        self.assertIn(
+            "title_empty",
+            [issue["code"] for issue in report["title"]["errors"]],
+        )
+
+    def test_term_density_is_warning_not_hard_error(self) -> None:
+        text = full_script() + (
+            "\n\n这段只用来测试大模型、Agent 和工作流这三个词"
+            "会不会触发术语密度提醒。"
+        )
+        result, report = self.run_json(text)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertTrue(report["passed"])
+        self.assertIn(
+            "term_density", [issue["code"] for issue in report["warnings"]]
+        )
+        self.assertNotIn(
+            "term_density", [issue["code"] for issue in report["errors"]]
+        )
 
     def test_light_cues_are_masked(self) -> None:
         base_result, base_report = self.run_json(full_script())

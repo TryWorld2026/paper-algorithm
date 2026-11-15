@@ -27,7 +27,7 @@
 - **🎬 `tryworld-koubo`** — the single entry. One sentence in, auto-routed through topics → script → polish → video.
 - **🎯 `tryworld-topics`** — AIHOT-based topic selection: hundreds of daily AI headlines distilled into 3–8 fresh picks.
 - **📜 `tryworld-paper`** — the "Paper Algorithm" video pipeline: script → branded 16:9 video with covers, titles, and captions.
-- **✍️ `tryworld-kaiyan`** — script-only writing: one judgment per video, evidence table, 1–3 minute master script, four-platform opening/ending variants, and a self-check report. No covers, voiceover, storyboard, or render.
+- **✍️ `tryworld-kaiyan`** — script-only writing: one judgment per video, evidence table, 1–3 minute master script, five quality gates, adversarial short-title review, four-platform opening/ending variants, and a self-check report. No covers, voiceover, storyboard, or render.
 
 Install them into `~/.agents/skills`, open a session in any agent host that reads that directory (e.g. Agent SDK / ZCode), and say one sentence in Chinese. The skills pick up the whole chain from there — topic list, scripts, rendered video, covers, titles, even the automatic email notice.
 
